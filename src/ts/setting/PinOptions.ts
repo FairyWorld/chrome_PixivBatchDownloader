@@ -142,11 +142,6 @@ class PinOptions {
       if (no !== 0 && no !== 1) {
         option.style.display = 'flex'
       }
-      // 在该选项所在的选项卡容器里查找插入点，并把选项显示在插入点后面
-      const target = option.parentElement!.querySelector(
-        '.pinnedOptionTarget'
-      ) as HTMLElement
-      target.insertAdjacentElement('afterend', option)
     }
 
     // 处理被取消置顶的选项
@@ -158,13 +153,6 @@ class PinOptions {
       if (!settings.pinnedOptions.includes(no)) {
         // 移除类名
         option.classList.remove(this.pinnedClassName)
-        // 查找锚点，并把它移动回原来的位置
-        const anchor = document.querySelector(
-          `.centerWrap_con .optionAnchor[data-for-no="${no}"]`
-        ) as HTMLElement
-        if (anchor) {
-          anchor.insertAdjacentElement('afterend', option)
-        }
       }
     }
   }

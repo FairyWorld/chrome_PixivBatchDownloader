@@ -8,6 +8,8 @@ type CategorySchema = {
   [key in Category]: {
     /** 一级分类的 ID */
     id: Category
+    /** 一级分类的顺序 */
+    order: number
     /** 一级分类的名称的 i18n 的 key */
     nameKey: LangTextKey
     // 分类名字只需要保存 key 就行了，不需要获取实际文本，等到需要显示的时候再动态获取即可
@@ -17,6 +19,8 @@ type CategorySchema = {
       [key: string]: {
         /** 二级分类的 ID */
         id: string
+        /** 二级分类的顺序 */
+        order: number
         /** 二级分类的名称的 i18n 的 key */
         nameKey: LangTextKey
       }
@@ -42,6 +46,14 @@ type OptionMeta = {
   searchWordKeys: LangTextKey[]
   /** 该设置的搜索关键词 */
   searchWords: string[]
+}
+
+type AllOptions = {
+    /** 一级分类的 ID */
+  [key in Category]: {
+      /** 二级分类的 ID */
+    [key: string]: OptionMeta[]
+  }
 }
 
 /** 保存所有设置项以及分类的元数据 */
@@ -92,134 +104,165 @@ class OptionConfigs {
   public categorySchema: CategorySchema = {
     crawl: {
       id: 'crawl',
+      order: 0,
       nameKey: '_抓取',
       level2: {
         scope: {
           id: 'scope',
+          order: 0,
           nameKey: '_分组_抓取范围',
         },
         contentType: {
           id: 'contentType',
+          order: 1,
           nameKey: '_分组_内容类型',
         },
         conditions: {
           id: 'conditions',
+          order: 2,
           nameKey: '_分组_过滤条件',
         },
         tagAndTitle: {
           id: 'tagAndTitle',
+          order: 3,
           nameKey: '_分组_标签与标题',
         },
         multiImage: {
           id: 'multiImage',
+          order: 4,
           nameKey: '_分组_多图作品',
         },
         userFilter: {
           id: 'userFilter',
+          order: 5,
           nameKey: '_分组_用户过滤',
         },
         strategy: {
           id: 'strategy',
+          order: 6,
           nameKey: '_分组_执行策略',
         },
       },
     },
     naming: {
       id: 'naming',
+      order: 1,
       nameKey: '_命名',
       level2: {
         namingRules: {
           id: 'namingRules',
+          order: 0,
           nameKey: '_分组_命名规则',
         },
         folderRules: {
           id: 'folderRules',
+          order: 1,
           nameKey: '_分组_文件夹规则',
         },
         tagRules: {
           id: 'tagRules',
+          order: 2,
           nameKey: '_分组_标签规则',
         },
         serialNumber: {
           id: 'serialNumber',
+          order: 3,
           nameKey: '_分组_序号规则',
         },
         details: {
           id: 'details',
+          order: 4,
           nameKey: '_分组_命名细节',
         },
       },
     },
     download: {
       id: 'download',
+      order: 2,
       nameKey: '_下载',
       level2: {
         behavior: {
           id: 'behavior',
+          order: 0,
           nameKey: '_分组_下载行为',
         },
         record: {
           id: 'record',
+          order: 1,
           nameKey: '_分组_下载记录',
         },
         fileFormat: {
           id: 'fileFormat',
+          order: 2,
           nameKey: '_分组_文件格式',
         },
         novel: {
           id: 'novel',
+          order: 3,
           nameKey: '_分组_小说下载',
         },
         extraSave: {
           id: 'extraSave',
+          order: 4,
           nameKey: '_分组_附加保存',
         },
       },
     },
     enhance: {
       id: 'enhance',
+      order: 3,
       nameKey: '_增强',
       level2: {
         page: {
           id: 'page',
+          order: 0,
           nameKey: '_分组_页面增强',
         },
         thumbnail: {
           id: 'thumbnail',
+          order: 1,
           nameKey: '_分组_缩略图',
         },
         preview: {
           id: 'preview',
+          order: 2,
           nameKey: '_分组_预览与查看',
         },
         actions: {
           id: 'actions',
+          order: 3,
           nameKey: '_分组_按钮与操作',
         },
         search: {
           id: 'search',
+          order: 4,
           nameKey: '_分组_搜索页面',
         },
       },
     },
     general: {
       id: 'general',
+      order: 4,
       nameKey: '_通用',
       level2: {
         appearance: {
           id: 'appearance',
+          order: 0,
           nameKey: '_分组_外观',
         },
         language: {
           id: 'language',
+          order: 1,
           nameKey: '_分组_语言',
         },
         log: {
           id: 'log',
+          order: 2,
           nameKey: '_分组_日志',
         },
         settingsManagement: {
           id: 'settingsManagement',
+          order: 3,
           nameKey: '_分组_设置管理',
         },
       },
