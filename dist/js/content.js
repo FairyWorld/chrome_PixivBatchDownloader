@@ -41910,158 +41910,6 @@ new DoNotDownloadLastFewImages();
 
 /***/ }),
 
-/***/ "./src/ts/setting/Form.ts":
-/*!********************************!*\
-  !*** ./src/ts/setting/Form.ts ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EVT__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../EVT */ "./src/ts/EVT.ts");
-/* harmony import */ var _Tools__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Tools */ "./src/ts/Tools.ts");
-/* harmony import */ var _Language__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Language */ "./src/ts/Language.ts");
-/* harmony import */ var _FormHTML__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FormHTML */ "./src/ts/setting/FormHTML.ts");
-/* harmony import */ var _SaveNamingRule__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SaveNamingRule */ "./src/ts/setting/SaveNamingRule.ts");
-/* harmony import */ var _Theme__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Theme */ "./src/ts/Theme.ts");
-/* harmony import */ var _FormSettings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FormSettings */ "./src/ts/setting/FormSettings.ts");
-/* harmony import */ var _utils_Utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/Utils */ "./src/ts/utils/Utils.ts");
-/* harmony import */ var _setting_Settings__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../setting/Settings */ "./src/ts/setting/Settings.ts");
-/* harmony import */ var _setting_Options__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../setting/Options */ "./src/ts/setting/Options.ts");
-/* harmony import */ var _utils_DateFormat__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/DateFormat */ "./src/ts/utils/DateFormat.ts");
-/* harmony import */ var _Toast__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Toast */ "./src/ts/Toast.ts");
-/* harmony import */ var _FormHelpManager__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./FormHelpManager */ "./src/ts/setting/FormHelpManager.ts");
-/* harmony import */ var _FormBeautify__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./FormBeautify */ "./src/ts/setting/FormBeautify.ts");
-/* harmony import */ var _SettingsPanel__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./SettingsPanel */ "./src/ts/setting/SettingsPanel.ts");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 设置表单
-class Form {
-    constructor() {
-        this.form = _Tools__WEBPACK_IMPORTED_MODULE_1__.Tools.useSlot('form', _FormHTML__WEBPACK_IMPORTED_MODULE_3__.formHtml);
-        const allOptions = this.form.querySelectorAll('.option');
-        _Theme__WEBPACK_IMPORTED_MODULE_5__.theme.register(this.form);
-        _Language__WEBPACK_IMPORTED_MODULE_2__.lang.register(this.form);
-        _setting_Options__WEBPACK_IMPORTED_MODULE_9__.options.init(allOptions);
-        new _SaveNamingRule__WEBPACK_IMPORTED_MODULE_4__.SaveNamingRule(this.form.userSetName, 'artwork');
-        new _SaveNamingRule__WEBPACK_IMPORTED_MODULE_4__.SaveNamingRule(this.form.userSetNameForNovel, 'novel');
-        new _FormSettings__WEBPACK_IMPORTED_MODULE_6__.FormSettings(this.form);
-        new _FormBeautify__WEBPACK_IMPORTED_MODULE_13__.FormBeautify(this.form);
-        new _SettingsPanel__WEBPACK_IMPORTED_MODULE_14__.SettingsPanel(this.form);
-        new _FormHelpManager__WEBPACK_IMPORTED_MODULE_12__.FormHelpManager(this.form);
-        this.bindFormEvents();
-        this.bindFunctionBtn();
-        this.bindCopyEvent();
-        // 语言变化时，有些命名标记的父元素的内容会被重设，此时需要重新绑定事件
-        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.langChange, () => {
-            this.bindCopyEvent();
-        });
-    }
-    form;
-    bindFormEvents() {
-        // 用户点击下拉框的选项时，把它插入到输入框里
-        const list = [
-            {
-                select: this.form.fileNameSelect,
-                input: this.form.userSetName,
-            },
-            {
-                select: this.form.fileNameSelectForNovel,
-                input: this.form.userSetNameForNovel,
-            },
-        ];
-        list.forEach(({ select, input }) => {
-            select.addEventListener('change', () => {
-                if (select.value !== 'default') {
-                    // 把选择项插入到光标位置，并设置新的光标位置
-                    const position = input.selectionStart;
-                    input.value =
-                        input.value.substring(0, position) +
-                            select.value +
-                            input.value.substring(position);
-                    input.selectionStart = position + select.value.length;
-                    input.selectionEnd = position + select.value.length;
-                    input.focus();
-                    // 重置下拉框
-                    select.value = 'default';
-                }
-            });
-        });
-        // 投稿时间的输入框后面有 now 按钮，点击之后会把对应的输入框的值设置为现在
-        const setNowBtns = this.form.querySelectorAll('button[role="setDate"]');
-        for (const btn of setNowBtns) {
-            btn.addEventListener('click', () => {
-                const name = btn.dataset.for;
-                const input = this.form.querySelector(`input[name="${name}"]`);
-                if (input) {
-                    // 根据 data-value 的标记修改 input 的值
-                    // 可能是 now，或者是预设的日期时间值
-                    const flag = btn.dataset.value;
-                    let value = flag;
-                    if (flag === 'now') {
-                        value = _utils_DateFormat__WEBPACK_IMPORTED_MODULE_10__.DateFormat.format(new Date(), 'YYYY-MM-DDThh:mm');
-                    }
-                    input.value = value;
-                    (0,_setting_Settings__WEBPACK_IMPORTED_MODULE_8__.setSetting)(name, value);
-                }
-            });
-        }
-    }
-    /** 为表单上的一些功能按钮绑定事件 */
-    bindFunctionBtn() {
-        // 点击 .fireEvent 按钮时会触发特定事件
-        const eventBtns = document.querySelectorAll('.fireEvent');
-        eventBtns.forEach((btn) => {
-            const eventName = btn.dataset.event;
-            if (eventName) {
-                btn.addEventListener('click', () => {
-                    _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.fire(eventName);
-                });
-            }
-        });
-    }
-    /** 点击命名规则帮助区域里的标记名字时，复制到剪贴板 */
-    bindCopyEvent() {
-        const allName = this.form.querySelectorAll('.namingTipArea .name');
-        for (const el of allName) {
-            if (el.dataset.bindCopy) {
-                continue;
-            }
-            // 防止重复绑定
-            el.dataset.bindCopy = 'true';
-            el.addEventListener('click', async () => {
-                const text = el.textContent;
-                if (text) {
-                    const copied = await _utils_Utils__WEBPACK_IMPORTED_MODULE_7__.Utils.writeClipboardText(text);
-                    if (copied) {
-                        _Toast__WEBPACK_IMPORTED_MODULE_11__.toast.success(_Language__WEBPACK_IMPORTED_MODULE_2__.lang.transl('_已复制'));
-                    }
-                    else {
-                        _Toast__WEBPACK_IMPORTED_MODULE_11__.toast.error(_Language__WEBPACK_IMPORTED_MODULE_2__.lang.transl('_复制失败'));
-                    }
-                }
-            });
-        }
-    }
-}
-new Form();
-
-
-/***/ }),
-
 /***/ "./src/ts/setting/FormBeautify.ts":
 /*!****************************************!*\
   !*** ./src/ts/setting/FormBeautify.ts ***!
@@ -47981,6 +47829,153 @@ const setSetting = self.setSetting.bind(self);
 
 /***/ }),
 
+/***/ "./src/ts/setting/SettingsBootstrap.ts":
+/*!*********************************************!*\
+  !*** ./src/ts/setting/SettingsBootstrap.ts ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EVT__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../EVT */ "./src/ts/EVT.ts");
+/* harmony import */ var _Language__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Language */ "./src/ts/Language.ts");
+/* harmony import */ var _Theme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Theme */ "./src/ts/Theme.ts");
+/* harmony import */ var _Tools__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Tools */ "./src/ts/Tools.ts");
+/* harmony import */ var _Toast__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Toast */ "./src/ts/Toast.ts");
+/* harmony import */ var _utils_DateFormat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/DateFormat */ "./src/ts/utils/DateFormat.ts");
+/* harmony import */ var _utils_Utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/Utils */ "./src/ts/utils/Utils.ts");
+/* harmony import */ var _Options__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Options */ "./src/ts/setting/Options.ts");
+/* harmony import */ var _FormHTML__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FormHTML */ "./src/ts/setting/FormHTML.ts");
+/* harmony import */ var _FormBeautify__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./FormBeautify */ "./src/ts/setting/FormBeautify.ts");
+/* harmony import */ var _FormHelpManager__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./FormHelpManager */ "./src/ts/setting/FormHelpManager.ts");
+/* harmony import */ var _FormSettings__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./FormSettings */ "./src/ts/setting/FormSettings.ts");
+/* harmony import */ var _SaveNamingRule__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./SaveNamingRule */ "./src/ts/setting/SaveNamingRule.ts");
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
+/* harmony import */ var _SettingsPanel__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./SettingsPanel */ "./src/ts/setting/SettingsPanel.ts");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** 设置系统入口：创建 form，并装配所有依赖 form 的模块 */
+class SettingsBootstrap {
+    constructor() {
+        this.form = _Tools__WEBPACK_IMPORTED_MODULE_3__.Tools.useSlot('form', _FormHTML__WEBPACK_IMPORTED_MODULE_8__.formHtml);
+        this.initModules();
+        this.bindFormEvents();
+        this.bindFunctionButtons();
+        this.bindCopyEvents();
+        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.langChange, () => {
+            this.bindCopyEvents();
+        });
+    }
+    form;
+    initModules() {
+        const allOptions = this.form.querySelectorAll('.option');
+        _Theme__WEBPACK_IMPORTED_MODULE_2__.theme.register(this.form);
+        _Language__WEBPACK_IMPORTED_MODULE_1__.lang.register(this.form);
+        _Options__WEBPACK_IMPORTED_MODULE_7__.options.init(allOptions);
+        new _SaveNamingRule__WEBPACK_IMPORTED_MODULE_12__.SaveNamingRule(this.form.userSetName, 'artwork');
+        new _SaveNamingRule__WEBPACK_IMPORTED_MODULE_12__.SaveNamingRule(this.form.userSetNameForNovel, 'novel');
+        new _FormSettings__WEBPACK_IMPORTED_MODULE_11__.FormSettings(this.form);
+        new _FormBeautify__WEBPACK_IMPORTED_MODULE_9__.FormBeautify(this.form);
+        new _SettingsPanel__WEBPACK_IMPORTED_MODULE_14__.SettingsPanel(this.form);
+        new _FormHelpManager__WEBPACK_IMPORTED_MODULE_10__.FormHelpManager(this.form);
+    }
+    bindFormEvents() {
+        const list = [
+            {
+                select: this.form.fileNameSelect,
+                input: this.form.userSetName,
+            },
+            {
+                select: this.form.fileNameSelectForNovel,
+                input: this.form.userSetNameForNovel,
+            },
+        ];
+        list.forEach(({ select, input }) => {
+            select.addEventListener('change', () => {
+                if (select.value !== 'default') {
+                    const position = input.selectionStart;
+                    input.value =
+                        input.value.substring(0, position) +
+                            select.value +
+                            input.value.substring(position);
+                    input.selectionStart = position + select.value.length;
+                    input.selectionEnd = position + select.value.length;
+                    input.focus();
+                    select.value = 'default';
+                }
+            });
+        });
+        const setNowBtns = this.form.querySelectorAll('button[role="setDate"]');
+        for (const btn of setNowBtns) {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.for;
+                const input = this.form.querySelector(`input[name="${name}"]`);
+                if (!input) {
+                    return;
+                }
+                const flag = btn.dataset.value;
+                let value = flag;
+                if (flag === 'now') {
+                    value = _utils_DateFormat__WEBPACK_IMPORTED_MODULE_5__.DateFormat.format(new Date(), 'YYYY-MM-DDThh:mm');
+                }
+                input.value = value;
+                (0,_Settings__WEBPACK_IMPORTED_MODULE_13__.setSetting)(name, value);
+            });
+        }
+    }
+    bindFunctionButtons() {
+        const eventBtns = document.querySelectorAll('.fireEvent');
+        eventBtns.forEach((btn) => {
+            const eventName = btn.dataset.event;
+            if (!eventName) {
+                return;
+            }
+            btn.addEventListener('click', () => {
+                _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.fire(eventName);
+            });
+        });
+    }
+    bindCopyEvents() {
+        const allName = this.form.querySelectorAll('.namingTipArea .name');
+        for (const el of allName) {
+            if (el.dataset.bindCopy) {
+                continue;
+            }
+            el.dataset.bindCopy = 'true';
+            el.addEventListener('click', async () => {
+                const text = el.textContent;
+                if (!text) {
+                    return;
+                }
+                const copied = await _utils_Utils__WEBPACK_IMPORTED_MODULE_6__.Utils.writeClipboardText(text);
+                if (copied) {
+                    _Toast__WEBPACK_IMPORTED_MODULE_4__.toast.success(_Language__WEBPACK_IMPORTED_MODULE_1__.lang.transl('_已复制'));
+                }
+                else {
+                    _Toast__WEBPACK_IMPORTED_MODULE_4__.toast.error(_Language__WEBPACK_IMPORTED_MODULE_1__.lang.transl('_复制失败'));
+                }
+            });
+        }
+    }
+}
+new SettingsBootstrap();
+
+
+/***/ }),
+
 /***/ "./src/ts/setting/SettingsPanel.ts":
 /*!*****************************************!*\
   !*** ./src/ts/setting/SettingsPanel.ts ***!
@@ -49218,8 +49213,7 @@ class SettingsPanelSearch {
             if (!element) {
                 continue;
             }
-            this.getCanonicalContainer(option.categoryLevel1, option.categoryLevel2)
-                .append(element);
+            this.getCanonicalContainer(option.categoryLevel1, option.categoryLevel2).append(element);
         }
     }
     updateSearchOptionHighlight(matchMap) {
@@ -70304,7 +70298,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _setting_Settings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./setting/Settings */ "./src/ts/setting/Settings.ts");
 /* harmony import */ var _setting_InvisibleSettings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./setting/InvisibleSettings */ "./src/ts/setting/InvisibleSettings.ts");
 /* harmony import */ var _ListenPageSwitch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ListenPageSwitch */ "./src/ts/ListenPageSwitch.ts");
-/* harmony import */ var _setting_Form__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./setting/Form */ "./src/ts/setting/Form.ts");
+/* harmony import */ var _setting_SettingsBootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./setting/SettingsBootstrap */ "./src/ts/setting/SettingsBootstrap.ts");
 /* harmony import */ var _setting_DoNotDownloadLastFewImages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./setting/DoNotDownloadLastFewImages */ "./src/ts/setting/DoNotDownloadLastFewImages.ts");
 /* harmony import */ var _setting_UseDifferentNameRuleIfWorkHasTag__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./setting/UseDifferentNameRuleIfWorkHasTag */ "./src/ts/setting/UseDifferentNameRuleIfWorkHasTag.ts");
 /* harmony import */ var _ReplaceSquareThumb__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ReplaceSquareThumb */ "./src/ts/ReplaceSquareThumb.ts");

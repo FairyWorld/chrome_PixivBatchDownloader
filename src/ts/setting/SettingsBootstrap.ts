@@ -1,50 +1,53 @@
 import { EVT } from '../EVT'
-import { Tools } from '../Tools'
 import { lang } from '../Language'
-import { formHtml } from './FormHTML'
-import { SettingsForm } from './SettingsForm'
-import { SaveNamingRule } from './SaveNamingRule'
 import { theme } from '../Theme'
-import { FormSettings } from './FormSettings'
-import { Utils } from '../utils/Utils'
-import { setSetting } from '../setting/Settings'
-import { options } from '../setting/Options'
-import { DateFormat } from '../utils/DateFormat'
+import { Tools } from '../Tools'
 import { toast } from '../Toast'
-import { FormHelpManager } from './FormHelpManager'
+import { DateFormat } from '../utils/DateFormat'
+import { Utils } from '../utils/Utils'
+import { options } from './Options'
+import { formHtml } from './FormHTML'
 import { FormBeautify } from './FormBeautify'
+import { FormHelpManager } from './FormHelpManager'
+import { FormSettings } from './FormSettings'
+import { SaveNamingRule } from './SaveNamingRule'
+import { setSetting } from './Settings'
+import { SettingsForm } from './SettingsForm'
 import { SettingsPanel } from './SettingsPanel'
 
-// 设置表单
-class Form {
+/** 设置系统入口：创建 form，并装配所有依赖 form 的模块 */
+class SettingsBootstrap {
   constructor() {
     this.form = Tools.useSlot('form', formHtml) as SettingsForm
+
+    this.initModules()
+    this.bindFormEvents()
+    this.bindFunctionButtons()
+    this.bindCopyEvents()
+
+    window.addEventListener(EVT.list.langChange, () => {
+      this.bindCopyEvents()
+    })
+  }
+
+  private form: SettingsForm
+
+  private initModules() {
     const allOptions = this.form.querySelectorAll('.option')
 
     theme.register(this.form)
     lang.register(this.form)
     options.init(allOptions as NodeListOf<HTMLElement>)
+
     new SaveNamingRule(this.form.userSetName, 'artwork')
     new SaveNamingRule(this.form.userSetNameForNovel, 'novel')
     new FormSettings(this.form)
     new FormBeautify(this.form)
     new SettingsPanel(this.form)
     new FormHelpManager(this.form)
-
-    this.bindFormEvents()
-    this.bindFunctionBtn()
-    this.bindCopyEvent()
-
-    // 语言变化时，有些命名标记的父元素的内容会被重设，此时需要重新绑定事件
-    window.addEventListener(EVT.list.langChange, () => {
-      this.bindCopyEvent()
-    })
   }
 
-  private form: SettingsForm
-
   private bindFormEvents() {
-    // 用户点击下拉框的选项时，把它插入到输入框里
     const list = [
       {
         select: this.form.fileNameSelect,
@@ -55,10 +58,10 @@ class Form {
         input: this.form.userSetNameForNovel,
       },
     ]
+
     list.forEach(({ select, input }) => {
       select.addEventListener('change', () => {
         if (select.value !== 'default') {
-          // 把选择项插入到光标位置，并设置新的光标位置
           const position = input.selectionStart!
           input.value =
             input.value.substring(0, position) +
@@ -67,13 +70,11 @@ class Form {
           input.selectionStart = position + select.value.length
           input.selectionEnd = position + select.value.length
           input.focus()
-          // 重置下拉框
           select.value = 'default'
         }
       })
     })
 
-    // 投稿时间的输入框后面有 now 按钮，点击之后会把对应的输入框的值设置为现在
     const setNowBtns = this.form.querySelectorAll(
       'button[role="setDate"]'
     ) as NodeListOf<HTMLButtonElement>
@@ -83,62 +84,64 @@ class Form {
         const input = this.form.querySelector(
           `input[name="${name}"]`
         ) as HTMLInputElement
-        if (input) {
-          // 根据 data-value 的标记修改 input 的值
-          // 可能是 now，或者是预设的日期时间值
-          const flag = btn.dataset.value!
-          let value = flag
-          if (flag === 'now') {
-            value = DateFormat.format(new Date(), 'YYYY-MM-DDThh:mm')
-          }
-          input.value = value
-          setSetting(name, value)
+        if (!input) {
+          return
         }
+
+        const flag = btn.dataset.value!
+        let value = flag
+        if (flag === 'now') {
+          value = DateFormat.format(new Date(), 'YYYY-MM-DDThh:mm')
+        }
+        input.value = value
+        setSetting(name, value)
       })
     }
   }
 
-  /** 为表单上的一些功能按钮绑定事件 */
-  private bindFunctionBtn() {
-    // 点击 .fireEvent 按钮时会触发特定事件
+  private bindFunctionButtons() {
     const eventBtns = document.querySelectorAll(
       '.fireEvent'
     ) as NodeListOf<HTMLButtonElement>
+
     eventBtns.forEach((btn) => {
       const eventName = btn.dataset.event
-      if (eventName) {
-        btn.addEventListener('click', () => {
-          EVT.fire(eventName as any)
-        })
+      if (!eventName) {
+        return
       }
+
+      btn.addEventListener('click', () => {
+        EVT.fire(eventName as any)
+      })
     })
   }
 
-  /** 点击命名规则帮助区域里的标记名字时，复制到剪贴板 */
-  private bindCopyEvent() {
+  private bindCopyEvents() {
     const allName = this.form.querySelectorAll(
       '.namingTipArea .name'
     ) as NodeListOf<HTMLElement>
+
     for (const el of allName) {
       if (el.dataset.bindCopy) {
         continue
       }
 
-      // 防止重复绑定
       el.dataset.bindCopy = 'true'
       el.addEventListener('click', async () => {
         const text = el.textContent
-        if (text) {
-          const copied = await Utils.writeClipboardText(text)
-          if (copied) {
-            toast.success(lang.transl('_已复制'))
-          } else {
-            toast.error(lang.transl('_复制失败'))
-          }
+        if (!text) {
+          return
+        }
+
+        const copied = await Utils.writeClipboardText(text)
+        if (copied) {
+          toast.success(lang.transl('_已复制'))
+        } else {
+          toast.error(lang.transl('_复制失败'))
         }
       })
     }
   }
 }
 
-new Form()
+new SettingsBootstrap()
