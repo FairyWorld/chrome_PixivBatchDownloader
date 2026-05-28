@@ -48044,14 +48044,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MsgBox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../MsgBox */ "./src/ts/MsgBox.ts");
 /* harmony import */ var _store_Store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/Store */ "./src/ts/store/Store.ts");
 /* harmony import */ var _utils_Utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/Utils */ "./src/ts/utils/Utils.ts");
-/* harmony import */ var _download_DownloadStates__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../download/DownloadStates */ "./src/ts/download/DownloadStates.ts");
-/* harmony import */ var _Theme__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Theme */ "./src/ts/Theme.ts");
-/* harmony import */ var _store_States__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../store/States */ "./src/ts/store/States.ts");
-/* harmony import */ var _BG__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../BG */ "./src/ts/BG.ts");
-/* harmony import */ var _BoldKeywords__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../BoldKeywords */ "./src/ts/BoldKeywords.ts");
-/* harmony import */ var _ShowOneTimeMsg__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../ShowOneTimeMsg */ "./src/ts/ShowOneTimeMsg.ts");
-/* harmony import */ var _OptionConfigs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./OptionConfigs */ "./src/ts/setting/OptionConfigs.ts");
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
+/* harmony import */ var _Theme__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Theme */ "./src/ts/Theme.ts");
+/* harmony import */ var _store_States__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../store/States */ "./src/ts/store/States.ts");
+/* harmony import */ var _BG__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../BG */ "./src/ts/BG.ts");
+/* harmony import */ var _BoldKeywords__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../BoldKeywords */ "./src/ts/BoldKeywords.ts");
+/* harmony import */ var _ShowOneTimeMsg__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../ShowOneTimeMsg */ "./src/ts/ShowOneTimeMsg.ts");
+/* harmony import */ var _OptionConfigs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./OptionConfigs */ "./src/ts/setting/OptionConfigs.ts");
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
+/* harmony import */ var _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./SettingsPanelDownloadSummary */ "./src/ts/setting/SettingsPanelDownloadSummary.ts");
 /* harmony import */ var _OpenSettingsPanel__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../OpenSettingsPanel */ "./src/ts/OpenSettingsPanel.ts");
 
 
@@ -48096,11 +48096,11 @@ class SettingsPanel {
         }
         this.cacheShellElements();
         this.buildLayout();
+        this.downloadSummary = new _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_14__.SettingsPanelDownloadSummary(this.centerPanel.querySelector('#settingsPanelDownloadSummary'), this.form);
         this.bindEvents();
         this.renderHelpActionVisibility();
         this.switchPage('home');
         this.updateSearchResult();
-        this.updateDownloadSummary();
     }
     form;
     centerPanel;
@@ -48216,10 +48216,10 @@ class SettingsPanel {
             document.body.classList.add('mobile');
             this.shell.classList.add('mobile');
         }
-        _Theme__WEBPACK_IMPORTED_MODULE_8__.theme.register(this.shell);
+        _Theme__WEBPACK_IMPORTED_MODULE_7__.theme.register(this.shell);
         _Language__WEBPACK_IMPORTED_MODULE_3__.lang.register(this.shell);
-        _BG__WEBPACK_IMPORTED_MODULE_10__.bg.useBG(this.shell);
-        new _BoldKeywords__WEBPACK_IMPORTED_MODULE_11__.BoldKeywords(this.shell);
+        _BG__WEBPACK_IMPORTED_MODULE_9__.bg.useBG(this.shell);
+        new _BoldKeywords__WEBPACK_IMPORTED_MODULE_10__.BoldKeywords(this.shell);
         this.allLangFlag = _Language__WEBPACK_IMPORTED_MODULE_3__.lang.langTypes.map((type) => 'lang_' + type);
         this.setLangFlag();
         this.bindShellEvents();
@@ -48259,7 +48259,7 @@ class SettingsPanel {
             }
         });
         window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.settingInitialized, () => {
-            _ShowOneTimeMsg__WEBPACK_IMPORTED_MODULE_12__.showOneTimeMsg.show('tipHowToUse', _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_HowToUse') + _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_账户可能被封禁的警告'));
+            _ShowOneTimeMsg__WEBPACK_IMPORTED_MODULE_11__.showOneTimeMsg.show('tipHowToUse', _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_HowToUse') + _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_账户可能被封禁的警告'));
         });
         window.addEventListener('keydown', (ev) => {
             if (ev.altKey && ev.code === 'KeyX') {
@@ -48269,7 +48269,7 @@ class SettingsPanel {
         shell.querySelectorAll('.centerWrap_close').forEach((button) => button.addEventListener('click', () => {
             _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.fire('closeCenterPanel');
             if (!_Config__WEBPACK_IMPORTED_MODULE_1__.Config.mobile) {
-                _ShowOneTimeMsg__WEBPACK_IMPORTED_MODULE_12__.showOneTimeMsg.show('tipAltXToShowControlPanel', _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_快捷键ALTX显示隐藏控制面板'));
+                _ShowOneTimeMsg__WEBPACK_IMPORTED_MODULE_11__.showOneTimeMsg.show('tipAltXToShowControlPanel', _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_快捷键ALTX显示隐藏控制面板'));
             }
         }));
         shell
@@ -48282,7 +48282,7 @@ class SettingsPanel {
         });
         for (const ev of [_EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.crawlComplete, _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.resume]) {
             window.addEventListener(ev, () => {
-                if (!_store_States__WEBPACK_IMPORTED_MODULE_9__.states.quickCrawl && _store_Store__WEBPACK_IMPORTED_MODULE_5__.store.result.length > 0) {
+                if (!_store_States__WEBPACK_IMPORTED_MODULE_8__.states.quickCrawl && _store_Store__WEBPACK_IMPORTED_MODULE_5__.store.result.length > 0) {
                     this.showShell();
                 }
             });
@@ -48344,23 +48344,15 @@ class SettingsPanel {
     homePinnedContent;
     searchSummary;
     searchGroupsWrap;
-    summaryWrap;
-    summaryStateSVG;
-    summaryProgress;
-    summaryStateIconUse;
     helpActionsWrap;
     otherBtnsVisibilityObserver;
-    downloadSummaryState = 'start';
+    downloadSummary;
     debouncedSearch = _utils_Utils__WEBPACK_IMPORTED_MODULE_6__.Utils.debounce(() => this.updateSearchResult(), 200);
     cacheShellElements() {
         this.searchInput = this.centerPanel.querySelector('#settingsPanelSearchInput');
         this.clearSearchBtn = this.centerPanel.querySelector('#settingsPanelClearSearch');
         this.expandAllBtn = this.centerPanel.querySelector('#settingsPanelToggleExpand');
         this.searchNavBtn = this.centerPanel.querySelector('.settingsPanel_navItem[data-page="search"]');
-        this.summaryWrap = this.centerPanel.querySelector('#settingsPanelDownloadSummary');
-        this.summaryStateSVG = this.centerPanel.querySelector('.settingsPanel_downloadSummaryStateIcon');
-        this.summaryProgress = this.centerPanel.querySelector('.settingsPanel_downloadSummaryProgress');
-        this.summaryStateIconUse = this.centerPanel.querySelector('.settingsPanel_downloadSummaryStateIcon use');
         const navButtons = this.centerPanel.querySelectorAll('.settingsPanel_navItem');
         navButtons.forEach((button) => {
             this.navEls.set(button.dataset.page, button);
@@ -48508,10 +48500,10 @@ class SettingsPanel {
         });
     }
     buildCategoryPages() {
-        const allCategories = Object.keys(_OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.categorySchema);
+        const allCategories = Object.keys(_OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.categorySchema);
         allCategories.forEach((page) => {
             const inner = this.pageInners.get(page);
-            const groups = Object.values(_OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.categorySchema[page].level2).sort((a, b) => a.order - b.order);
+            const groups = Object.values(_OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.categorySchema[page].level2).sort((a, b) => a.order - b.order);
             groups.forEach((group) => {
                 const section = this.createSection({
                     page,
@@ -48688,7 +48680,7 @@ class SettingsPanel {
             });
             if (!_Config__WEBPACK_IMPORTED_MODULE_1__.Config.mobile) {
                 button.addEventListener('mouseenter', () => {
-                    if (_Settings__WEBPACK_IMPORTED_MODULE_14__.settings.switchTabBar !== 'click') {
+                    if (_Settings__WEBPACK_IMPORTED_MODULE_13__.settings.switchTabBar !== 'click') {
                         this.handleNavRequest(page);
                     }
                 });
@@ -48705,19 +48697,6 @@ class SettingsPanel {
         });
         this.expandAllBtn.addEventListener('click', () => this.toggleAllSections());
         this.main.addEventListener('scroll', () => this.refreshStickyHeader());
-        this.summaryWrap
-            .querySelector('#settingsPanelSummaryStart')
-            ?.addEventListener('click', () => this.clickRealButton('#startDownload'));
-        this.summaryWrap
-            .querySelector('#settingsPanelSummaryPause')
-            ?.addEventListener('click', () => this.clickRealButton('#pauseDownload'));
-        this.summaryWrap
-            .querySelector('#settingsPanelSummaryStop')
-            ?.addEventListener('click', () => this.clickRealButton('#stopDownload'));
-        const summaryButtons = this.summaryWrap.querySelectorAll('.settingsPanel_downloadSummaryBtn');
-        summaryButtons.forEach((button) => {
-            button.addEventListener('mouseleave', () => button.blur());
-        });
         this.helpActionsWrap.addEventListener('click', (event) => {
             const button = event.target.closest('.settingsPanel_helpAction');
             if (!button) {
@@ -48740,53 +48719,7 @@ class SettingsPanel {
                 this.renderHelpActionVisibility();
                 this.renderCurrentPage();
                 this.updateSearchResult();
-                this.updateDownloadSummary();
             }, 0);
-        });
-        [
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.crawlStart,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.crawlComplete,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.resultChange,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.resume,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadStart,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadPause,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadStop,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadComplete,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadSuccess,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.skipDownload,
-        ].forEach((eventName) => {
-            window.addEventListener(eventName, () => {
-                this.updateDownloadSummary();
-            });
-        });
-        [
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.crawlStart,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.crawlComplete,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.resultChange,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.resume,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.readyDownload,
-            _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadCancel,
-        ].forEach((eventName) => {
-            window.addEventListener(eventName, () => {
-                this.setDownloadSummaryState('start');
-            });
-        });
-        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadStart, () => {
-            this.setDownloadSummaryState('loading');
-        });
-        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadPause, () => {
-            this.setDownloadSummaryState('pause');
-        });
-        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadStop, () => {
-            this.setDownloadSummaryState('stop');
-        });
-        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadComplete, () => {
-            this.setDownloadSummaryState('complete');
-        });
-        [_EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.crawlComplete, _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.resume, _EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.downloadStart].forEach((eventName) => {
-            window.addEventListener(eventName, () => {
-                this.expandHomeDownloadSection();
-            });
         });
         window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_2__.EVT.list.hasNewVer, () => {
             this.helpActionEls.get('recentUpdates')?.classList.add('hasUpdate');
@@ -48836,7 +48769,7 @@ class SettingsPanel {
         this.searchGroupsWrap.innerHTML = '';
         const matchMap = this.findSearchMatches(this.searchKeyword);
         const groupOrder = [];
-        _OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.options.forEach((option) => {
+        _OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.options.forEach((option) => {
             const match = matchMap.get(option.no);
             if (!match) {
                 return;
@@ -48881,7 +48814,7 @@ class SettingsPanel {
     findSearchMatches(keyword) {
         const result = new Map();
         const lowerKeyword = keyword.toLowerCase();
-        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.options) {
+        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.options) {
             const element = this.optionElements.get(option.no);
             if (!element || this.isOptionCardHidden(element)) {
                 continue;
@@ -48909,12 +48842,12 @@ class SettingsPanel {
         return option.style.display === 'none';
     }
     placeOptionsToDefaultContainers(showPinnedOnHome) {
-        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.options) {
+        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.options) {
             const element = this.optionElements.get(option.no);
             if (!element) {
                 continue;
             }
-            const target = showPinnedOnHome && _Settings__WEBPACK_IMPORTED_MODULE_14__.settings.pinnedOptions.includes(option.no)
+            const target = showPinnedOnHome && _Settings__WEBPACK_IMPORTED_MODULE_13__.settings.pinnedOptions.includes(option.no)
                 ? this.homePinnedContent
                 : this.getCanonicalContainer(option.categoryLevel1, option.categoryLevel2);
             target.append(element);
@@ -48922,7 +48855,7 @@ class SettingsPanel {
         this.updateSearchOptionHighlight(new Map());
     }
     placeUnmatchedOptionsBack(matchMap) {
-        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.options) {
+        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.options) {
             if (matchMap.has(option.no)) {
                 continue;
             }
@@ -48934,7 +48867,7 @@ class SettingsPanel {
         }
     }
     updateSearchOptionHighlight(matchMap) {
-        _OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.options.forEach((option) => {
+        _OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.options.forEach((option) => {
             const element = this.optionElements.get(option.no);
             if (!element) {
                 return;
@@ -48993,7 +48926,7 @@ class SettingsPanel {
             .replaceAll("'", '&#39;');
     }
     createSearchSection(level1, level2) {
-        const title = `${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl(_OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.categorySchema[level1].nameKey)} / ${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl(_OptionConfigs__WEBPACK_IMPORTED_MODULE_13__.optionConfigs.categorySchema[level1].level2[level2].nameKey)}`;
+        const title = `${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl(_OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.categorySchema[level1].nameKey)} / ${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl(_OptionConfigs__WEBPACK_IMPORTED_MODULE_12__.optionConfigs.categorySchema[level1].level2[level2].nameKey)}`;
         const root = document.createElement('div');
         root.className = 'settingsPanel_titleSection';
         const header = document.createElement('button');
@@ -49063,12 +48996,12 @@ class SettingsPanel {
             this.applyExpandedState(section, expanded);
             return;
         }
-        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_6__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_14__.settings.expandedCards);
+        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_6__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_13__.settings.expandedCards);
         const pageState = this.getPersistedPageState(section.page, nextExpandedCards);
         if (pageState) {
             pageState[section.id] = expanded;
         }
-        (0,_Settings__WEBPACK_IMPORTED_MODULE_14__.setSetting)('expandedCards', nextExpandedCards);
+        (0,_Settings__WEBPACK_IMPORTED_MODULE_13__.setSetting)('expandedCards', nextExpandedCards);
         this.applyExpandedState(section, expanded);
     }
     applyExpandedState(section, expanded) {
@@ -49087,7 +49020,7 @@ class SettingsPanel {
     }
     toggleAllSections() {
         const shouldExpand = !this.areAllSectionsExpanded();
-        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_6__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_14__.settings.expandedCards);
+        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_6__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_13__.settings.expandedCards);
         this.foldableSections.forEach((section) => {
             const pageState = this.getPersistedPageState(section.page, nextExpandedCards);
             if (pageState) {
@@ -49099,7 +49032,7 @@ class SettingsPanel {
             this.searchState.set(key, shouldExpand);
             this.applyExpandedState(section, shouldExpand);
         });
-        (0,_Settings__WEBPACK_IMPORTED_MODULE_14__.setSetting)('expandedCards', nextExpandedCards);
+        (0,_Settings__WEBPACK_IMPORTED_MODULE_13__.setSetting)('expandedCards', nextExpandedCards);
         this.updateExpandAllButton();
         this.refreshStickyHeader();
     }
@@ -49251,74 +49184,16 @@ class SettingsPanel {
                 return;
         }
     }
-    updateDownloadSummary() {
-        const total = _store_Store__WEBPACK_IMPORTED_MODULE_5__.store.result.length;
-        const downloaded = total > 0 ? _download_DownloadStates__WEBPACK_IMPORTED_MODULE_7__.downloadStates.downloadedCount() : 0;
-        this.summaryProgress.textContent = `${downloaded} / ${total}`;
-        this.summaryWrap.style.display = total > 0 ? 'block' : 'none';
-        if (total === 0) {
-            this.setDownloadSummaryState('start');
-            return;
-        }
-        if (downloaded >= total) {
-            this.setDownloadSummaryState('complete');
-            return;
-        }
-        if (this.downloadSummaryState === 'complete') {
-            this.setDownloadSummaryState('start');
-        }
-    }
-    setDownloadSummaryState(state) {
-        this.downloadSummaryState = state;
-        switch (state) {
-            case 'loading':
-                this.setSummaryState('_正在下载中', 'loading');
-                return;
-            case 'pause':
-                this.setSummaryState('_下载已暂停', 'pause');
-                return;
-            case 'stop':
-                this.setSummaryState('_下载已停止', 'stop');
-                return;
-            case 'complete':
-                this.setSummaryState('_下载完毕', 'complete');
-                return;
-            default:
-                this.setSummaryState('_未开始下载', 'start');
-                return;
-        }
-    }
-    setSummaryState(textKey, iconId) {
-        this.summaryStateSVG.classList.toggle('is-loading', iconId === 'loading');
-        this.summaryStateSVG.setAttribute('title', _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl(textKey));
-        this.summaryStateIconUse.setAttribute('xlink:href', `#${iconId}`);
-    }
-    expandHomeDownloadSection() {
-        const homeState = this.getPersistedPageState('home');
-        if (homeState?.downloadArea) {
-            return;
-        }
-        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_6__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_14__.settings.expandedCards);
-        const nextHomeState = this.getPersistedPageState('home', nextExpandedCards);
-        if (nextHomeState) {
-            nextHomeState.downloadArea = true;
-        }
-        (0,_Settings__WEBPACK_IMPORTED_MODULE_14__.setSetting)('expandedCards', nextExpandedCards);
-    }
     updatePinnedSectionVisibility() {
         const pinnedSection = this.foldableSections.get(this.makeSectionKey('home', 'pinnedOptions'));
         if (!pinnedSection) {
             return;
         }
         pinnedSection.root.style.display =
-            _Settings__WEBPACK_IMPORTED_MODULE_14__.settings.pinnedOptions.length > 0 ? 'block' : 'none';
+            _Settings__WEBPACK_IMPORTED_MODULE_13__.settings.pinnedOptions.length > 0 ? 'block' : 'none';
     }
     updateSearchClearButton() {
         this.clearSearchBtn.classList.toggle('visible', this.searchInput.value.trim() !== '');
-    }
-    clickRealButton(selector) {
-        const button = this.form.querySelector(selector);
-        button?.click();
     }
     playNavRipple(button) {
         this.playRipple(button);
@@ -49349,11 +49224,178 @@ class SettingsPanel {
     makeSectionKey(page, id) {
         return `${page}__${id}`;
     }
-    getPersistedPageState(page, expandedCards = _Settings__WEBPACK_IMPORTED_MODULE_14__.settings.expandedCards) {
+    getPersistedPageState(page, expandedCards = _Settings__WEBPACK_IMPORTED_MODULE_13__.settings.expandedCards) {
         return expandedCards[page];
     }
 }
 SettingsPanel.initShell();
+
+
+
+/***/ }),
+
+/***/ "./src/ts/setting/SettingsPanelDownloadSummary.ts":
+/*!********************************************************!*\
+  !*** ./src/ts/setting/SettingsPanelDownloadSummary.ts ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SettingsPanelDownloadSummary: () => (/* binding */ SettingsPanelDownloadSummary)
+/* harmony export */ });
+/* harmony import */ var _EVT__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../EVT */ "./src/ts/EVT.ts");
+/* harmony import */ var _Language__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Language */ "./src/ts/Language.ts");
+/* harmony import */ var _store_Store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/Store */ "./src/ts/store/Store.ts");
+/* harmony import */ var _utils_Utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/Utils */ "./src/ts/utils/Utils.ts");
+/* harmony import */ var _download_DownloadStates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../download/DownloadStates */ "./src/ts/download/DownloadStates.ts");
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
+
+
+
+
+
+
+class SettingsPanelDownloadSummary {
+    constructor(wrap, form, onStateChanged) {
+        this.wrap = wrap;
+        this.form = form;
+        this.onStateChanged = onStateChanged;
+        this.stateSVG = this.wrap.querySelector('.settingsPanel_downloadSummaryStateIcon');
+        this.progress = this.wrap.querySelector('.settingsPanel_downloadSummaryProgress');
+        this.stateIconUse = this.wrap.querySelector('.settingsPanel_downloadSummaryStateIcon use');
+        this.bindEvents();
+        this.update();
+    }
+    wrap;
+    form;
+    stateSVG;
+    progress;
+    stateIconUse;
+    state = 'start';
+    onStateChanged;
+    bindEvents() {
+        this.wrap
+            .querySelector('#settingsPanelSummaryStart')
+            ?.addEventListener('click', () => this.clickRealButton('#startDownload'));
+        this.wrap
+            .querySelector('#settingsPanelSummaryPause')
+            ?.addEventListener('click', () => this.clickRealButton('#pauseDownload'));
+        this.wrap
+            .querySelector('#settingsPanelSummaryStop')
+            ?.addEventListener('click', () => this.clickRealButton('#stopDownload'));
+        const summaryButtons = this.wrap.querySelectorAll('.settingsPanel_downloadSummaryBtn');
+        summaryButtons.forEach((button) => {
+            button.addEventListener('mouseleave', () => button.blur());
+        });
+        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.langChange, () => {
+            this.setState(this.state);
+        });
+        [
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.crawlStart,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.crawlComplete,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.resultChange,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.resume,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadStart,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadPause,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadStop,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadComplete,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadSuccess,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.skipDownload,
+        ].forEach((eventName) => {
+            window.addEventListener(eventName, () => {
+                this.update();
+            });
+        });
+        [
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.crawlStart,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.crawlComplete,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.resultChange,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.resume,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.readyDownload,
+            _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadCancel,
+        ].forEach((eventName) => {
+            window.addEventListener(eventName, () => {
+                this.setState('start');
+            });
+        });
+        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadStart, () => {
+            this.setState('loading');
+        });
+        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadPause, () => {
+            this.setState('pause');
+        });
+        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadStop, () => {
+            this.setState('stop');
+        });
+        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadComplete, () => {
+            this.setState('complete');
+        });
+        [_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.crawlComplete, _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.resume, _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadStart].forEach((eventName) => {
+            window.addEventListener(eventName, () => {
+                this.expandHomeDownloadSection();
+            });
+        });
+    }
+    update() {
+        const total = _store_Store__WEBPACK_IMPORTED_MODULE_2__.store.result.length;
+        const downloaded = total > 0 ? _download_DownloadStates__WEBPACK_IMPORTED_MODULE_4__.downloadStates.downloadedCount() : 0;
+        this.progress.textContent = `${downloaded} / ${total}`;
+        this.wrap.style.display = total > 0 ? 'block' : 'none';
+        if (total === 0) {
+            this.setState('start');
+            return;
+        }
+        if (downloaded >= total) {
+            this.setState('complete');
+            return;
+        }
+        if (this.state === 'complete') {
+            this.setState('start');
+        }
+    }
+    setState(state) {
+        this.state = state;
+        switch (state) {
+            case 'loading':
+                this.setSummaryState('_正在下载中', 'loading');
+                return;
+            case 'pause':
+                this.setSummaryState('_下载已暂停', 'pause');
+                return;
+            case 'stop':
+                this.setSummaryState('_下载已停止', 'stop');
+                return;
+            case 'complete':
+                this.setSummaryState('_下载完毕', 'complete');
+                return;
+            default:
+                this.setSummaryState('_未开始下载', 'start');
+                return;
+        }
+    }
+    setSummaryState(textKey, iconId) {
+        this.stateSVG.classList.toggle('is-loading', iconId === 'loading');
+        this.stateSVG.setAttribute('title', _Language__WEBPACK_IMPORTED_MODULE_1__.lang.transl(textKey));
+        this.stateIconUse.setAttribute('xlink:href', `#${iconId}`);
+        this.onStateChanged?.();
+    }
+    expandHomeDownloadSection() {
+        if (_Settings__WEBPACK_IMPORTED_MODULE_5__.settings.expandedCards.home?.downloadArea) {
+            return;
+        }
+        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_3__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_5__.settings.expandedCards);
+        if (nextExpandedCards.home) {
+            nextExpandedCards.home.downloadArea = true;
+        }
+        (0,_Settings__WEBPACK_IMPORTED_MODULE_5__.setSetting)('expandedCards', nextExpandedCards);
+    }
+    clickRealButton(selector) {
+        const button = this.form.querySelector(selector);
+        button?.click();
+    }
+}
 
 
 

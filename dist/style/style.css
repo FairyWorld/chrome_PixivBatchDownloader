@@ -1129,7 +1129,7 @@ body.mobile #quickCrawlBtn {
 }
 .centerWrap .centerWrap_con .settingForm .download_area .download_status_text_wrap {
   line-height: 26px;
-  margin-top: 6px;
+  margin-top: 10px;
 }
 .centerWrap .centerWrap_con .settingForm .download_area .download_status_text_wrap > * {
   padding-right: 5px;

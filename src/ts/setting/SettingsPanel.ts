@@ -6,7 +6,6 @@ import { LangTextKey } from '../langText'
 import { msgBox } from '../MsgBox'
 import { store } from '../store/Store'
 import { Utils } from '../utils/Utils'
-import { downloadStates } from '../download/DownloadStates'
 import { theme } from '../Theme'
 import { states } from '../store/States'
 import { bg } from '../BG'
@@ -15,6 +14,7 @@ import { showOneTimeMsg } from '../ShowOneTimeMsg'
 import { optionConfigs } from './OptionConfigs'
 import { OptionCategoryLevel1, settings, setSetting } from './Settings'
 import { SettingsForm } from './SettingsForm'
+import { SettingsPanelDownloadSummary } from './SettingsPanelDownloadSummary'
 import '../OpenSettingsPanel'
 
 type PageId = 'home' | OptionCategoryLevel1 | 'help' | 'search'
@@ -37,8 +37,6 @@ type FoldableSection = {
 type SearchMatch = {
   matchedByName: boolean
 }
-
-type DownloadSummaryState = 'start' | 'loading' | 'pause' | 'stop' | 'complete'
 
 const pageIds: PageId[] = [
   'home',
@@ -73,11 +71,16 @@ class SettingsPanel {
 
     this.cacheShellElements()
     this.buildLayout()
+    this.downloadSummary = new SettingsPanelDownloadSummary(
+      this.centerPanel.querySelector(
+        '#settingsPanelDownloadSummary'
+      ) as HTMLDivElement,
+      this.form
+    )
     this.bindEvents()
     this.renderHelpActionVisibility()
     this.switchPage('home')
     this.updateSearchResult()
-    this.updateDownloadSummary()
   }
 
   private form: SettingsForm
@@ -374,13 +377,9 @@ class SettingsPanel {
   private homePinnedContent!: HTMLDivElement
   private searchSummary!: HTMLParagraphElement
   private searchGroupsWrap!: HTMLDivElement
-  private summaryWrap!: HTMLDivElement
-  private summaryStateSVG!: SVGSVGElement
-  private summaryProgress!: HTMLSpanElement
-  private summaryStateIconUse!: SVGUseElement
   private helpActionsWrap!: HTMLDivElement
   private otherBtnsVisibilityObserver?: MutationObserver
-  private downloadSummaryState: DownloadSummaryState = 'start'
+  private downloadSummary!: SettingsPanelDownloadSummary
   private debouncedSearch = Utils.debounce(() => this.updateSearchResult(), 200)
 
   private cacheShellElements() {
@@ -396,18 +395,6 @@ class SettingsPanel {
     this.searchNavBtn = this.centerPanel.querySelector(
       '.settingsPanel_navItem[data-page="search"]'
     ) as HTMLButtonElement
-    this.summaryWrap = this.centerPanel.querySelector(
-      '#settingsPanelDownloadSummary'
-    ) as HTMLDivElement
-    this.summaryStateSVG = this.centerPanel.querySelector(
-      '.settingsPanel_downloadSummaryStateIcon'
-    ) as SVGSVGElement
-    this.summaryProgress = this.centerPanel.querySelector(
-      '.settingsPanel_downloadSummaryProgress'
-    ) as HTMLSpanElement
-    this.summaryStateIconUse = this.centerPanel.querySelector(
-      '.settingsPanel_downloadSummaryStateIcon use'
-    ) as SVGUseElement
 
     const navButtons = this.centerPanel.querySelectorAll(
       '.settingsPanel_navItem'
@@ -862,22 +849,6 @@ class SettingsPanel {
 
     this.main.addEventListener('scroll', () => this.refreshStickyHeader())
 
-    this.summaryWrap
-      .querySelector('#settingsPanelSummaryStart')
-      ?.addEventListener('click', () => this.clickRealButton('#startDownload'))
-    this.summaryWrap
-      .querySelector('#settingsPanelSummaryPause')
-      ?.addEventListener('click', () => this.clickRealButton('#pauseDownload'))
-    this.summaryWrap
-      .querySelector('#settingsPanelSummaryStop')
-      ?.addEventListener('click', () => this.clickRealButton('#stopDownload'))
-    const summaryButtons = this.summaryWrap.querySelectorAll(
-      '.settingsPanel_downloadSummaryBtn'
-    ) as NodeListOf<HTMLButtonElement>
-    summaryButtons.forEach((button) => {
-      button.addEventListener('mouseleave', () => button.blur())
-    })
-
     this.helpActionsWrap.addEventListener('click', (event: MouseEvent) => {
       const button = (event.target as HTMLElement).closest(
         '.settingsPanel_helpAction'
@@ -905,56 +876,8 @@ class SettingsPanel {
         this.renderHelpActionVisibility()
         this.renderCurrentPage()
         this.updateSearchResult()
-        this.updateDownloadSummary()
       }, 0)
     })
-    ;[
-      EVT.list.crawlStart,
-      EVT.list.crawlComplete,
-      EVT.list.resultChange,
-      EVT.list.resume,
-      EVT.list.downloadStart,
-      EVT.list.downloadPause,
-      EVT.list.downloadStop,
-      EVT.list.downloadComplete,
-      EVT.list.downloadSuccess,
-      EVT.list.skipDownload,
-    ].forEach((eventName) => {
-      window.addEventListener(eventName, () => {
-        this.updateDownloadSummary()
-      })
-    })
-    ;[
-      EVT.list.crawlStart,
-      EVT.list.crawlComplete,
-      EVT.list.resultChange,
-      EVT.list.resume,
-      EVT.list.readyDownload,
-      EVT.list.downloadCancel,
-    ].forEach((eventName) => {
-      window.addEventListener(eventName, () => {
-        this.setDownloadSummaryState('start')
-      })
-    })
-    window.addEventListener(EVT.list.downloadStart, () => {
-      this.setDownloadSummaryState('loading')
-    })
-    window.addEventListener(EVT.list.downloadPause, () => {
-      this.setDownloadSummaryState('pause')
-    })
-    window.addEventListener(EVT.list.downloadStop, () => {
-      this.setDownloadSummaryState('stop')
-    })
-    window.addEventListener(EVT.list.downloadComplete, () => {
-      this.setDownloadSummaryState('complete')
-    })
-    ;[EVT.list.crawlComplete, EVT.list.resume, EVT.list.downloadStart].forEach(
-      (eventName) => {
-        window.addEventListener(eventName, () => {
-          this.expandHomeDownloadSection()
-        })
-      }
-    )
 
     window.addEventListener(EVT.list.hasNewVer, () => {
       this.helpActionEls.get('recentUpdates')?.classList.add('hasUpdate')
@@ -1573,68 +1496,6 @@ class SettingsPanel {
     }
   }
 
-  private updateDownloadSummary() {
-    const total = store.result.length
-    const downloaded = total > 0 ? downloadStates.downloadedCount() : 0
-    this.summaryProgress.textContent = `${downloaded} / ${total}`
-    this.summaryWrap.style.display = total > 0 ? 'block' : 'none'
-
-    if (total === 0) {
-      this.setDownloadSummaryState('start')
-      return
-    }
-
-    if (downloaded >= total) {
-      this.setDownloadSummaryState('complete')
-      return
-    }
-
-    if (this.downloadSummaryState === 'complete') {
-      this.setDownloadSummaryState('start')
-    }
-  }
-
-  private setDownloadSummaryState(state: DownloadSummaryState) {
-    this.downloadSummaryState = state
-    switch (state) {
-      case 'loading':
-        this.setSummaryState('_正在下载中', 'loading')
-        return
-      case 'pause':
-        this.setSummaryState('_下载已暂停', 'pause')
-        return
-      case 'stop':
-        this.setSummaryState('_下载已停止', 'stop')
-        return
-      case 'complete':
-        this.setSummaryState('_下载完毕', 'complete')
-        return
-      default:
-        this.setSummaryState('_未开始下载', 'start')
-        return
-    }
-  }
-
-  private setSummaryState(textKey: LangTextKey, iconId: string) {
-    this.summaryStateSVG.classList.toggle('is-loading', iconId === 'loading')
-    this.summaryStateSVG.setAttribute('title', lang.transl(textKey))
-    this.summaryStateIconUse.setAttribute('xlink:href', `#${iconId}`)
-  }
-
-  private expandHomeDownloadSection() {
-    const homeState = this.getPersistedPageState('home')
-    if (homeState?.downloadArea) {
-      return
-    }
-
-    const nextExpandedCards = Utils.deepCopy(settings.expandedCards)
-    const nextHomeState = this.getPersistedPageState('home', nextExpandedCards)
-    if (nextHomeState) {
-      nextHomeState.downloadArea = true
-    }
-    setSetting('expandedCards', nextExpandedCards)
-  }
-
   private updatePinnedSectionVisibility() {
     const pinnedSection = this.foldableSections.get(
       this.makeSectionKey('home', 'pinnedOptions')
@@ -1651,11 +1512,6 @@ class SettingsPanel {
       'visible',
       this.searchInput.value.trim() !== ''
     )
-  }
-
-  private clickRealButton(selector: string) {
-    const button = this.form.querySelector(selector) as HTMLButtonElement | null
-    button?.click()
   }
 
   private playNavRipple(button: HTMLButtonElement) {
