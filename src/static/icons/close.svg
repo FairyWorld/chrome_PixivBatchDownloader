@@ -1,6 +1,43 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg t="1779627981498" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12143" xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="128">
-	<path d="M548.992 503.744L885.44 167.328a31.968 31.968 0 1 0-45.248-45.248L503.744 458.496 167.328 122.08a31.968 31.968 0 1 0-45.248 45.248l336.416 336.416L122.08 840.16a31.968 31.968 0 1 0 45.248 45.248l336.416-336.416L840.16 885.44a31.968 31.968 0 1 0 45.248-45.248L548.992 503.744z" p-id="12144" fill="#111111">
-	</path>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   t="1779627981498"
+   class="icon"
+   viewBox="0 0 1024 1024"
+   version="1.1"
+   p-id="12143"
+   width="128"
+   height="128"
+   id="svg1"
+   sodipodi:docname="close.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="8.8828125"
+     inkscape:cx="63.943712"
+     inkscape:cy="64"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="M 543.3667,503.74599 837.9722,209.16851 A 28.016075,28.016075 0 1 0 798.35149,169.5478 L 503.74599,464.12528 209.16851,169.5478 A 28.016075,28.016075 0 1 0 169.5478,209.16851 L 464.12528,503.74599 169.5478,798.32347 a 28.016075,28.016075 0 1 0 39.62071,39.62071 L 503.74599,543.3667 798.32347,837.9722 a 28.016075,28.016075 0 1 0 39.62071,-39.62071 z"
+     p-id="12144"
+     fill="#111111"
+     id="path1"
+     style="stroke-width:0.875635" />
 </svg>

@@ -2755,7 +2755,7 @@ iframe[name='expandedFooter'] {
   color: #999;
 }
 .blockTagsForSpecificUserWrap .icon {
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 .blockTagsForSpecificUserWrap .textButton {
   border: none;
@@ -2779,9 +2779,6 @@ iframe[name='expandedFooter'] {
 }
 .blockTagsForSpecificUserWrap .addWrap {
   display: none;
-}
-.blockTagsForSpecificUserWrap .addWrap button.cancel .icon {
-  font-size: 1.3em;
 }
 .blockTagsForSpecificUserWrap .addWrap .addUidInput {
   max-width: 120px;
@@ -2884,7 +2881,7 @@ iframe[name='expandedFooter'] {
   color: #999;
 }
 .setUserNameWrap .icon {
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 .setUserNameWrap .textButton {
   border: none;
@@ -2909,9 +2906,6 @@ iframe[name='expandedFooter'] {
 }
 .setUserNameWrap .addWrap {
   display: none;
-}
-.setUserNameWrap .addWrap button.cancel .icon {
-  font-size: 1.3em;
 }
 .setUserNameWrap .addWrap .addUidInput {
   max-width: 120px;
@@ -3011,7 +3005,7 @@ iframe[name='expandedFooter'] {
   color: #999;
 }
 .DoNotDownloadLastFewImagesWarp .icon {
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 .DoNotDownloadLastFewImagesWarp .textButton {
   border: none;
@@ -3037,9 +3031,6 @@ iframe[name='expandedFooter'] {
 }
 .DoNotDownloadLastFewImagesWarp .addWrap {
   display: none;
-}
-.DoNotDownloadLastFewImagesWarp .addWrap button.cancel .icon {
-  font-size: 1.3em;
 }
 .DoNotDownloadLastFewImagesWarp .addWrap .addUidInput {
   max-width: 120px;
@@ -3114,7 +3105,7 @@ iframe[name='expandedFooter'] {
   color: #999;
 }
 .UseDifferentNameRuleIfWorkHasTagWarp .icon {
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 .UseDifferentNameRuleIfWorkHasTagWarp .textButton {
   border: none;
@@ -3140,9 +3131,6 @@ iframe[name='expandedFooter'] {
 }
 .UseDifferentNameRuleIfWorkHasTagWarp .addWrap {
   display: none;
-}
-.UseDifferentNameRuleIfWorkHasTagWarp .addWrap button.cancel .icon {
-  font-size: 1.3em;
 }
 .UseDifferentNameRuleIfWorkHasTagWarp .settingItem {
   display: flex;
