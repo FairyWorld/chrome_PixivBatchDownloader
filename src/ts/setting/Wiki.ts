@@ -139,7 +139,7 @@ class Wiki {
       84, 87, 68, 63, 55, 62, 40, 56, 86, 48, 88, 18, 34, 14, 102,
     ],
     'More-Others': [31, 78, 36, 41, 45, 53, 32, 37, 93],
-    'More-Hidden': [79, 80, 14, 15],
+    'More-Hidden': [79, 80, 15],
     'Buttons-Crawl': [
       'startCrawling',
       'stopCrawling',

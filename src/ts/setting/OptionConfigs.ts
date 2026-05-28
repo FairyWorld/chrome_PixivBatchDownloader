@@ -41,12 +41,20 @@ type OptionMeta = {
   categoryLevel1: OptionCategoryLevel1
   /** 所属的二级分类 */
   categoryLevel2: string
-  /** 是否置顶 */
-  pinned: boolean
   /** 该设置的搜索关键词的 i18n 的 key。可能是空数组，因为有些设置的名字就够用了，没有其他推荐的关键词 */
   searchWordKeys: LangTextKey[]
   /** 该设置的搜索关键词 */
   searchWords: string[]
+  /** 是否置顶 */
+  pinned: boolean
+  /** 是否是定制选项。只有定制的选项有这个属性。如果没有这个属性或者为 false，则表示不是定制选项 */
+  isCustom?: boolean
+  /** 是否在移动端隐藏。只有需要隐藏时才会有这个属性。如果没有这个属性或者为 false，则表示在移动端显示 */
+  hideOnMobile?: boolean
+  /** 是否在 pixivision 隐藏。只有需要隐藏时才会有这个属性。如果没有这个属性或者为 false，则表示在 pixivision 显示 */
+  hideOnPixivision?: boolean
+  /** 添加该设置项时的时间戳。新增的设置需要添加这个属性，旧设置不需要这个属性，因为它是为了显示“new”角标而存在的，旧设置用不到 */
+  addedAt?: number
 }
 
 /** 把所有设置按照分类层级进行组织 */
@@ -62,48 +70,6 @@ type OptionsByCategory = {
 class OptionConfigs {
   constructor() {
     this.bindEvents()
-  }
-
-  private bindEvents() {
-    // 当置顶的设置发生变化时，更新每个设置项的 pinned 属性
-    window.addEventListener(EVT.list.settingChange, (ev: CustomEventInit) => {
-      const data = ev.detail.data as any
-      if (data.name === 'pinnedOptions') {
-        this.setPinnedOptions()
-      }
-    })
-
-    // 当设置初始化完成时，设置每个属性里的 i18n 文本
-    window.addEventListener(
-      EVT.list.settingInitialized,
-      (ev: CustomEventInit) => {
-        this.setOptionText()
-      }
-    )
-
-    window.addEventListener(EVT.list.langChange, () => {
-      this.setOptionText()
-    })
-  }
-
-  private setPinnedOptions() {
-    for (const option of this.options) {
-      option.pinned = settings.pinnedOptions.includes(option.no)
-    }
-  }
-
-  private setOptionText() {
-    for (const option of this.options) {
-      // 设置名称里含有 span 标签，需要去掉，只保留纯文字
-      option.name = lang.transl(option.nameKey).replace(/<\/?.+?>/g, '')
-      // 设置搜索词数组
-      if (option.searchWordKeys.length > 0) {
-        option.searchWords = []
-        option.searchWords = option.searchWordKeys.map((key) =>
-          lang.transl(key).replace(/<\/?.+?>/g, '')
-        )
-      }
-    }
   }
 
   /** 所有一级分类和二级分类的 schema 信息 */
@@ -323,6 +289,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'scope',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -333,6 +300,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'scope',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -343,6 +311,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'scope',
       pinned: false,
+      isCustom: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -353,6 +322,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workType',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -363,6 +333,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workType',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -373,6 +344,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workType',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -383,8 +355,10 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workType',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1774310400000,
     },
     {
       no: 23,
@@ -393,6 +367,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workType',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -403,6 +378,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workType',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -413,6 +389,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workData',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_书签'],
       searchWords: [],
     },
@@ -423,6 +400,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workData',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -433,6 +411,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workData',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_分辨率'],
       searchWords: [],
     },
@@ -443,6 +422,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workData',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_纵横比'],
       searchWords: [],
     },
@@ -453,6 +433,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workData',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -463,6 +444,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'workData',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_发布时间'],
       searchWords: [],
     },
@@ -473,6 +455,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'tagAndTitle',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_标签'],
       searchWords: [],
     },
@@ -483,6 +466,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'tagAndTitle',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_标签'],
       searchWords: [],
     },
@@ -493,8 +477,10 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'tagAndTitle',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1774137600000,
     },
     {
       no: 95,
@@ -503,8 +489,10 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'tagAndTitle',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1774137600000,
     },
     {
       no: 47,
@@ -513,6 +501,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'multiImage',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -523,6 +512,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'multiImage',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -533,8 +523,10 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'multiImage',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1776147641055,
     },
     {
       no: 103,
@@ -543,8 +535,10 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'multiImage',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1776147641055,
     },
     {
       no: 69,
@@ -553,8 +547,10 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'multiImage',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1776147641055,
     },
     {
       no: 79,
@@ -563,6 +559,8 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'multiImage',
       pinned: false,
+      hideOnPixivision: true,
+      isCustom: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -573,6 +571,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'blockUsers',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_黑名单'],
       searchWords: [],
     },
@@ -583,6 +582,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'blockUsers',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -593,8 +593,10 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'strategy',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_已下载'],
       searchWords: [],
+      addedAt: 1775755273036,
     },
     {
       no: 75,
@@ -603,6 +605,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'strategy',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -613,6 +616,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'strategy',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -623,6 +627,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'strategy',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -633,6 +638,7 @@ class OptionConfigs {
       categoryLevel1: 'crawl',
       categoryLevel2: 'strategy',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -644,6 +650,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'names',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_文件名'],
       searchWords: [],
     },
@@ -654,8 +661,10 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'names',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_文件名'],
       searchWords: [],
+      addedAt: 1777025547205,
     },
     {
       no: 50,
@@ -664,6 +673,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'names',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -674,6 +684,8 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'names',
       pinned: false,
+      hideOnPixivision: true,
+      isCustom: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -684,6 +696,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'names',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_文件名'],
       searchWords: [],
     },
@@ -694,6 +707,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'names',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -704,6 +718,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'names',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -724,8 +739,10 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'adjustFolders',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_文件夹'],
       searchWords: [],
+      addedAt: 1776337453630,
     },
     {
       no: 19,
@@ -734,8 +751,10 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'adjustFolders',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_文件夹'],
       searchWords: [],
+      addedAt: 1776337453630,
     },
     {
       no: 38,
@@ -744,6 +763,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'adjustFolders',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_文件夹'],
       searchWords: [],
     },
@@ -754,6 +774,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'adjustFolders',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_文件夹'],
       searchWords: [],
     },
@@ -764,8 +785,10 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'serial',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1775633245633,
     },
     {
       no: 22,
@@ -774,6 +797,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'serial',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -784,6 +808,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'serial',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -794,8 +819,10 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'alias',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1777025547205,
     },
     {
       no: 66,
@@ -804,6 +831,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'alias',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -816,6 +844,7 @@ class OptionConfigs {
       pinned: false,
       searchWordKeys: ['_表情符号'],
       searchWords: [],
+      addedAt: 1775579018462,
     },
     {
       no: 67,
@@ -824,6 +853,7 @@ class OptionConfigs {
       categoryLevel1: 'naming',
       categoryLevel2: 'removeSpecialChars',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -835,6 +865,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'behavior',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_并发'],
       searchWords: [],
     },
@@ -855,6 +886,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'behavior',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_书签'],
       searchWords: [],
     },
@@ -865,6 +897,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'behavior',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -875,6 +908,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'behavior',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_书签'],
       searchWords: [],
     },
@@ -885,6 +919,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'behavior',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -895,6 +930,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'behavior',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_排序'],
       searchWords: [],
     },
@@ -935,8 +971,10 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'record',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1776098259792,
     },
     {
       no: 28,
@@ -945,6 +983,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'record',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_去重'],
       searchWords: [],
     },
@@ -955,8 +994,10 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'record',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_已下载'],
       searchWords: [],
+      addedAt: 1775914625357,
     },
     {
       no: 30,
@@ -965,6 +1006,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'imageSize',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_分辨率'],
       searchWords: [],
     },
@@ -975,6 +1017,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'ugoira',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -985,6 +1028,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'ugoira',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_并发', '_动图_动态图像'],
       searchWords: [],
     },
@@ -995,6 +1039,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'novel',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1005,6 +1050,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'novel',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1015,6 +1061,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'novel',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1025,6 +1072,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'novel',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_插图'],
       searchWords: [],
     },
@@ -1035,6 +1083,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'novel',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_连载'],
       searchWords: [],
     },
@@ -1045,8 +1094,10 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'novel',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_连载'],
       searchWords: [],
+      addedAt: 1776693866003,
     },
     {
       no: 49,
@@ -1055,6 +1106,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'metadata',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_元信息'],
       searchWords: [],
     },
@@ -1065,6 +1117,7 @@ class OptionConfigs {
       categoryLevel1: 'download',
       categoryLevel2: 'metadata',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_介绍'],
       searchWords: [],
     },
@@ -1076,6 +1129,8 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'preview',
       pinned: false,
+      hideOnPixivision: true,
+      hideOnMobile: true,
       searchWordKeys: ['_预览图片'],
       searchWords: [],
     },
@@ -1086,6 +1141,8 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'preview',
       pinned: false,
+      hideOnPixivision: true,
+      hideOnMobile: true,
       searchWordKeys: ['_原图'],
       searchWords: [],
     },
@@ -1096,6 +1153,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'preview',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1106,6 +1164,8 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'thumbnail',
       pinned: false,
+      hideOnPixivision: true,
+      hideOnMobile: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1116,6 +1176,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'thumbnail',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1126,6 +1187,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'thumbnail',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1136,6 +1198,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'thumbnail',
       pinned: false,
+      isCustom: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1146,8 +1209,10 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'thumbnailButtons',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1776098259792,
     },
     {
       no: 40,
@@ -1156,6 +1221,8 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'thumbnailButtons',
       pinned: false,
+      hideOnPixivision: true,
+      hideOnMobile: true,
       searchWordKeys: ['_放大镜'],
       searchWords: [],
     },
@@ -1166,6 +1233,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'thumbnailButtons',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1176,6 +1244,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'thumbnailButtons',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1186,6 +1255,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'other',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1196,6 +1266,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'other',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_书签'],
       searchWords: [],
     },
@@ -1206,6 +1277,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'searchPage',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_快速搜索'],
       searchWords: [],
     },
@@ -1216,6 +1288,8 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'searchPage',
       pinned: false,
+      hideOnPixivision: true,
+      isCustom: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1226,6 +1300,7 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'searchPage',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1236,6 +1311,8 @@ class OptionConfigs {
       categoryLevel1: 'enhance',
       categoryLevel2: 'searchPage',
       pinned: false,
+      hideOnPixivision: true,
+      hideOnMobile: true,
       searchWordKeys: [],
       searchWords: [],
     },
@@ -1267,6 +1344,7 @@ class OptionConfigs {
       categoryLevel1: 'general',
       categoryLevel2: 'appearance',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_深色模式'],
       searchWords: [],
     },
@@ -1299,6 +1377,7 @@ class OptionConfigs {
       pinned: false,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1772287652821,
     },
     {
       no: 45,
@@ -1319,6 +1398,7 @@ class OptionConfigs {
       pinned: false,
       searchWordKeys: [],
       searchWords: [],
+      addedAt: 1779990279488,
     },
     {
       no: 78,
@@ -1327,6 +1407,7 @@ class OptionConfigs {
       categoryLevel1: 'general',
       categoryLevel2: 'log',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_保存日志'],
       searchWords: [],
     },
@@ -1337,6 +1418,7 @@ class OptionConfigs {
       categoryLevel1: 'general',
       categoryLevel2: 'manageSettings',
       pinned: false,
+      hideOnPixivision: true,
       searchWordKeys: ['_导入设置', '_导出设置', '_重置设置'],
       searchWords: [],
     },
@@ -1364,6 +1446,47 @@ class OptionConfigs {
       )
     }
     return optionsByCategory
+  }
+
+  private bindEvents() {
+    // 当置顶的设置发生变化时，更新每个设置项的 pinned 属性
+    window.addEventListener(EVT.list.settingChange, (ev: CustomEventInit) => {
+      const data = ev.detail.data as any
+      if (data.name === 'pinnedOptions') {
+        this.setPinnedOptions()
+      }
+    })
+
+    // 当设置初始化完成后、界面语言变化后，设置每个配置项里的 i18n 文本
+    const setOptionTextEvents = [
+      EVT.list.settingInitialized,
+      EVT.list.langChange,
+    ]
+    for (const event of setOptionTextEvents) {
+      window.addEventListener(event, () => {
+        this.setOptionText()
+      })
+    }
+  }
+
+  private setPinnedOptions() {
+    for (const option of this.options) {
+      option.pinned = settings.pinnedOptions.includes(option.no)
+    }
+  }
+
+  private setOptionText() {
+    for (const option of this.options) {
+      // 设置名称里含有 span 标签，需要去掉，只保留纯文字
+      option.name = lang.transl(option.nameKey).replace(/<\/?.+?>/g, '')
+      // 设置搜索词数组
+      if (option.searchWordKeys.length > 0) {
+        option.searchWords = []
+        option.searchWords = option.searchWordKeys.map((key) =>
+          lang.transl(key).replace(/<\/?.+?>/g, '')
+        )
+      }
+    }
   }
 }
 
