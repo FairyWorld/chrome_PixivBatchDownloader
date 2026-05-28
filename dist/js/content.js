@@ -48037,16 +48037,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SettingsPanel: () => (/* binding */ SettingsPanel)
 /* harmony export */ });
 /* harmony import */ var _EVT__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../EVT */ "./src/ts/EVT.ts");
-/* harmony import */ var _OptionConfigs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OptionConfigs */ "./src/ts/setting/OptionConfigs.ts");
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
-/* harmony import */ var _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SettingsPanelDownloadSummary */ "./src/ts/setting/SettingsPanelDownloadSummary.ts");
-/* harmony import */ var _SettingsPanelLayout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SettingsPanelLayout */ "./src/ts/setting/SettingsPanelLayout.ts");
-/* harmony import */ var _SettingsPanelNavigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SettingsPanelNavigation */ "./src/ts/setting/SettingsPanelNavigation.ts");
-/* harmony import */ var _SettingsPanelSections__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SettingsPanelSections */ "./src/ts/setting/SettingsPanelSections.ts");
-/* harmony import */ var _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SettingsPanelShell */ "./src/ts/setting/SettingsPanelShell.ts");
-/* harmony import */ var _SettingsPanelSearch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SettingsPanelSearch */ "./src/ts/setting/SettingsPanelSearch.ts");
-/* harmony import */ var _OpenSettingsPanel__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../OpenSettingsPanel */ "./src/ts/OpenSettingsPanel.ts");
-
+/* harmony import */ var _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SettingsPanelDownloadSummary */ "./src/ts/setting/SettingsPanelDownloadSummary.ts");
+/* harmony import */ var _SettingsPanelLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SettingsPanelLayout */ "./src/ts/setting/SettingsPanelLayout.ts");
+/* harmony import */ var _SettingsPanelNavigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SettingsPanelNavigation */ "./src/ts/setting/SettingsPanelNavigation.ts");
+/* harmony import */ var _SettingsPanelPlacement__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SettingsPanelPlacement */ "./src/ts/setting/SettingsPanelPlacement.ts");
+/* harmony import */ var _SettingsPanelSections__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SettingsPanelSections */ "./src/ts/setting/SettingsPanelSections.ts");
+/* harmony import */ var _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SettingsPanelShell */ "./src/ts/setting/SettingsPanelShell.ts");
+/* harmony import */ var _SettingsPanelSearch__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SettingsPanelSearch */ "./src/ts/setting/SettingsPanelSearch.ts");
+/* harmony import */ var _OpenSettingsPanel__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../OpenSettingsPanel */ "./src/ts/OpenSettingsPanel.ts");
 
 
 
@@ -48072,16 +48070,16 @@ class SettingsPanel {
     downloadSummary;
     searchPanel;
     navigationController;
+    placementController;
     sectionController;
     constructor(form) {
-        _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelShell.init();
         this.form = form;
-        this.centerPanel = _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelShell.get();
+        this.centerPanel = _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_6__.SettingsPanelShell.get();
         this.main = this.centerPanel.querySelector('.settingsPanel_main');
         if (!this.centerPanel || !this.main) {
             throw new Error('SettingsPanel shell not found');
         }
-        this.sectionController = new _SettingsPanelSections__WEBPACK_IMPORTED_MODULE_6__.SettingsPanelSections({
+        this.sectionController = new _SettingsPanelSections__WEBPACK_IMPORTED_MODULE_5__.SettingsPanelSections({
             main: this.main,
             getActivePage: () => this.activePage,
             getSearchExpandStats: () => this.searchPanel?.getExpandStats() ?? { total: 0, expanded: 0 },
@@ -48095,13 +48093,13 @@ class SettingsPanel {
             }
         }
         this.buildLayout();
-        this.downloadSummary = new _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_3__.SettingsPanelDownloadSummary(this.centerPanel.querySelector('#settingsPanelDownloadSummary'), this.form);
+        this.downloadSummary = new _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_1__.SettingsPanelDownloadSummary(this.centerPanel.querySelector('#settingsPanelDownloadSummary'), this.form);
         this.bindEvents();
         this.navigationController.switchPage('home');
         this.navigationController.updateSearchResult();
     }
     buildLayout() {
-        const layout = new _SettingsPanelLayout__WEBPACK_IMPORTED_MODULE_4__.SettingsPanelLayout({
+        const layout = new _SettingsPanelLayout__WEBPACK_IMPORTED_MODULE_2__.SettingsPanelLayout({
             form: this.form,
             centerPanel: this.centerPanel,
             optionElements: this.optionElements,
@@ -48123,7 +48121,7 @@ class SettingsPanel {
             stickyEls: this.stickyEls,
             expandAllBtn: this.expandAllBtn,
         });
-        this.searchPanel = new _SettingsPanelSearch__WEBPACK_IMPORTED_MODULE_8__.SettingsPanelSearch({
+        this.searchPanel = new _SettingsPanelSearch__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelSearch({
             root: layout.searchRoot,
             input: this.centerPanel.querySelector('#settingsPanelSearchInput'),
             clearButton: this.centerPanel.querySelector('#settingsPanelClearSearch'),
@@ -48135,7 +48133,15 @@ class SettingsPanel {
                 this.sectionController.refreshStickyHeader();
             },
         });
-        this.navigationController = new _SettingsPanelNavigation__WEBPACK_IMPORTED_MODULE_5__.SettingsPanelNavigation({
+        this.placementController = new _SettingsPanelPlacement__WEBPACK_IMPORTED_MODULE_4__.SettingsPanelPlacement({
+            optionElements: this.optionElements,
+            canonicalContainers: this.canonicalContainers,
+            homePinnedContent: this.homePinnedContent,
+            foldableSections: this.foldableSections,
+            makeSectionKey: (page, id) => this.sectionController.makeSectionKey(page, id),
+            resetSearchHighlight: () => this.searchPanel.resetOptionHighlight(),
+        });
+        this.navigationController = new _SettingsPanelNavigation__WEBPACK_IMPORTED_MODULE_3__.SettingsPanelNavigation({
             pageEls: this.pageEls,
             navEls: this.navEls,
             searchPanel: this.searchPanel,
@@ -48144,9 +48150,9 @@ class SettingsPanel {
                 this.activePage = page;
             },
             renderSearchPage: () => this.searchPanel.renderPage(),
-            renderDefaultPage: (showPinnedOnHome) => this.placeOptionsToDefaultContainers(showPinnedOnHome),
+            renderDefaultPage: (showPinnedOnHome) => this.placementController.placeOptionsToDefaultContainers(showPinnedOnHome),
             afterRender: () => {
-                this.updatePinnedSectionVisibility();
+                this.placementController.updatePinnedSectionVisibility();
                 this.sectionController.updateExpandAllButton();
                 window.setTimeout(() => this.sectionController.refreshStickyHeader(), 0);
             },
@@ -48184,27 +48190,6 @@ class SettingsPanel {
             }, 0);
         });
     }
-    placeOptionsToDefaultContainers(showPinnedOnHome) {
-        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_1__.optionConfigs.options) {
-            const element = this.optionElements.get(option.no);
-            if (!element) {
-                continue;
-            }
-            const target = showPinnedOnHome && _Settings__WEBPACK_IMPORTED_MODULE_2__.settings.pinnedOptions.includes(option.no)
-                ? this.homePinnedContent
-                : this.getCanonicalContainer(option.categoryLevel1, option.categoryLevel2);
-            target.append(element);
-        }
-        this.searchPanel.resetOptionHighlight();
-    }
-    updatePinnedSectionVisibility() {
-        const pinnedSection = this.foldableSections.get(this.sectionController.makeSectionKey('home', 'pinnedOptions'));
-        if (!pinnedSection) {
-            return;
-        }
-        pinnedSection.root.style.display =
-            _Settings__WEBPACK_IMPORTED_MODULE_2__.settings.pinnedOptions.length > 0 ? 'block' : 'none';
-    }
     playNavRipple(button) {
         this.playRipple(button);
     }
@@ -48219,14 +48204,14 @@ class SettingsPanel {
             button.classList.remove('ripple-active');
         }, 650);
     }
-    getCanonicalContainer(level1, level2) {
-        return this.canonicalContainers.get(this.makeCanonicalKey(level1, level2));
-    }
     makeCanonicalKey(level1, level2) {
         return `${level1}__${level2}`;
     }
+    getCanonicalContainer(level1, level2) {
+        return this.canonicalContainers.get(this.makeCanonicalKey(level1, level2));
+    }
 }
-_SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelShell.init();
+_SettingsPanelShell__WEBPACK_IMPORTED_MODULE_6__.SettingsPanelShell.init();
 
 
 
@@ -48914,6 +48899,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
 
 
+// - 管理导航按钮事件
+// - 管理页面切换
+// - 管理搜索页进入/退出
+// - 管理“当前页渲染”触发
 class SettingsPanelNavigation {
     constructor({ pageEls, navEls, searchPanel, getActivePage, setActivePage, renderSearchPage, renderDefaultPage, afterRender, playNavRipple, }) {
         this.pageEls = pageEls;
@@ -49001,6 +48990,69 @@ class SettingsPanelNavigation {
             return;
         }
         this.switchPage(page);
+    }
+}
+
+
+
+/***/ }),
+
+/***/ "./src/ts/setting/SettingsPanelPlacement.ts":
+/*!**************************************************!*\
+  !*** ./src/ts/setting/SettingsPanelPlacement.ts ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SettingsPanelPlacement: () => (/* binding */ SettingsPanelPlacement)
+/* harmony export */ });
+/* harmony import */ var _OptionConfigs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OptionConfigs */ "./src/ts/setting/OptionConfigs.ts");
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
+
+
+class SettingsPanelPlacement {
+    constructor({ optionElements, canonicalContainers, homePinnedContent, foldableSections, makeSectionKey, resetSearchHighlight, }) {
+        this.optionElements = optionElements;
+        this.canonicalContainers = canonicalContainers;
+        this.homePinnedContent = homePinnedContent;
+        this.foldableSections = foldableSections;
+        this.makeSectionKey = makeSectionKey;
+        this.resetSearchHighlight = resetSearchHighlight;
+    }
+    optionElements;
+    canonicalContainers;
+    homePinnedContent;
+    foldableSections;
+    makeSectionKey;
+    resetSearchHighlight;
+    placeOptionsToDefaultContainers(showPinnedOnHome) {
+        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_0__.optionConfigs.options) {
+            const element = this.optionElements.get(option.no);
+            if (!element) {
+                continue;
+            }
+            const target = showPinnedOnHome && _Settings__WEBPACK_IMPORTED_MODULE_1__.settings.pinnedOptions.includes(option.no)
+                ? this.homePinnedContent
+                : this.getCanonicalContainer(option.categoryLevel1, option.categoryLevel2);
+            target.append(element);
+        }
+        this.resetSearchHighlight();
+    }
+    updatePinnedSectionVisibility() {
+        const pinnedSection = this.foldableSections.get(this.makeSectionKey('home', 'pinnedOptions'));
+        if (!pinnedSection) {
+            return;
+        }
+        pinnedSection.root.style.display =
+            _Settings__WEBPACK_IMPORTED_MODULE_1__.settings.pinnedOptions.length > 0 ? 'block' : 'none';
+    }
+    getCanonicalContainer(level1, level2) {
+        return this.canonicalContainers.get(this.makeCanonicalKey(level1, level2));
+    }
+    makeCanonicalKey(level1, level2) {
+        return `${level1}__${level2}`;
     }
 }
 

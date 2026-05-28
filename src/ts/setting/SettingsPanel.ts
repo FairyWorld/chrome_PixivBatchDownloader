@@ -1,6 +1,5 @@
 import { EVT } from '../EVT'
-import { optionConfigs } from './OptionConfigs'
-import { OptionCategoryLevel1, settings } from './Settings'
+import { OptionCategoryLevel1 } from './Settings'
 import { SettingsForm } from './SettingsForm'
 import { SettingsPanelDownloadSummary } from './SettingsPanelDownloadSummary'
 import {
@@ -8,6 +7,7 @@ import {
   SettingsPanelLayoutResult,
 } from './SettingsPanelLayout'
 import { SettingsPanelNavigation } from './SettingsPanelNavigation'
+import { SettingsPanelPlacement } from './SettingsPanelPlacement'
 import { SettingsPanelSections } from './SettingsPanelSections'
 import { SettingsPanelShell } from './SettingsPanelShell'
 import { SettingsPanelSearch } from './SettingsPanelSearch'
@@ -31,10 +31,10 @@ class SettingsPanel {
   private downloadSummary!: SettingsPanelDownloadSummary
   private searchPanel!: SettingsPanelSearch
   private navigationController!: SettingsPanelNavigation
+  private placementController!: SettingsPanelPlacement
   private sectionController!: SettingsPanelSections
 
   constructor(form: SettingsForm) {
-    SettingsPanelShell.init()
     this.form = form
     this.centerPanel = SettingsPanelShell.get()
     this.main = this.centerPanel.querySelector(
@@ -120,6 +120,14 @@ class SettingsPanel {
         this.sectionController.refreshStickyHeader()
       },
     })
+    this.placementController = new SettingsPanelPlacement({
+      optionElements: this.optionElements,
+      canonicalContainers: this.canonicalContainers,
+      homePinnedContent: this.homePinnedContent,
+      foldableSections: this.foldableSections,
+      makeSectionKey: (page, id) => this.sectionController.makeSectionKey(page, id),
+      resetSearchHighlight: () => this.searchPanel.resetOptionHighlight(),
+    })
     this.navigationController = new SettingsPanelNavigation({
       pageEls: this.pageEls,
       navEls: this.navEls,
@@ -130,9 +138,9 @@ class SettingsPanel {
       },
       renderSearchPage: () => this.searchPanel.renderPage(),
       renderDefaultPage: (showPinnedOnHome) =>
-        this.placeOptionsToDefaultContainers(showPinnedOnHome),
+        this.placementController.placeOptionsToDefaultContainers(showPinnedOnHome),
       afterRender: () => {
-        this.updatePinnedSectionVisibility()
+        this.placementController.updatePinnedSectionVisibility()
         this.sectionController.updateExpandAllButton()
         window.setTimeout(() => this.sectionController.refreshStickyHeader(), 0)
       },
@@ -182,37 +190,6 @@ class SettingsPanel {
     })
   }
 
-  private placeOptionsToDefaultContainers(showPinnedOnHome: boolean) {
-    for (const option of optionConfigs.options) {
-      const element = this.optionElements.get(option.no)
-      if (!element) {
-        continue
-      }
-
-      const target =
-        showPinnedOnHome && settings.pinnedOptions.includes(option.no)
-          ? this.homePinnedContent
-          : this.getCanonicalContainer(
-              option.categoryLevel1,
-              option.categoryLevel2
-            )
-      target.append(element)
-    }
-
-    this.searchPanel.resetOptionHighlight()
-  }
-
-  private updatePinnedSectionVisibility() {
-    const pinnedSection = this.foldableSections.get(
-      this.sectionController.makeSectionKey('home', 'pinnedOptions')
-    )
-    if (!pinnedSection) {
-      return
-    }
-    pinnedSection.root.style.display =
-      settings.pinnedOptions.length > 0 ? 'block' : 'none'
-  }
-
   private playNavRipple(button: HTMLButtonElement) {
     this.playRipple(button)
   }
@@ -229,14 +206,14 @@ class SettingsPanel {
     }, 650)
   }
 
+  private makeCanonicalKey(level1: string, level2: string) {
+    return `${level1}__${level2}`
+  }
+
   private getCanonicalContainer(level1: OptionCategoryLevel1, level2: string) {
     return this.canonicalContainers.get(
       this.makeCanonicalKey(level1, level2)
     ) as HTMLDivElement
-  }
-
-  private makeCanonicalKey(level1: OptionCategoryLevel1, level2: string) {
-    return `${level1}__${level2}`
   }
 }
 
