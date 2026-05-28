@@ -48038,11 +48038,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./src/ts/Config.ts");
 /* harmony import */ var _EVT__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../EVT */ "./src/ts/EVT.ts");
-/* harmony import */ var _utils_Utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/Utils */ "./src/ts/utils/Utils.ts");
-/* harmony import */ var _OptionConfigs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./OptionConfigs */ "./src/ts/setting/OptionConfigs.ts");
-/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
-/* harmony import */ var _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SettingsPanelDownloadSummary */ "./src/ts/setting/SettingsPanelDownloadSummary.ts");
-/* harmony import */ var _SettingsPanelLayout__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SettingsPanelLayout */ "./src/ts/setting/SettingsPanelLayout.ts");
+/* harmony import */ var _OptionConfigs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OptionConfigs */ "./src/ts/setting/OptionConfigs.ts");
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
+/* harmony import */ var _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SettingsPanelDownloadSummary */ "./src/ts/setting/SettingsPanelDownloadSummary.ts");
+/* harmony import */ var _SettingsPanelLayout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SettingsPanelLayout */ "./src/ts/setting/SettingsPanelLayout.ts");
+/* harmony import */ var _SettingsPanelSections__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SettingsPanelSections */ "./src/ts/setting/SettingsPanelSections.ts");
 /* harmony import */ var _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SettingsPanelShell */ "./src/ts/setting/SettingsPanelShell.ts");
 /* harmony import */ var _SettingsPanelSearch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SettingsPanelSearch */ "./src/ts/setting/SettingsPanelSearch.ts");
 /* harmony import */ var _OpenSettingsPanel__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../OpenSettingsPanel */ "./src/ts/OpenSettingsPanel.ts");
@@ -48057,26 +48057,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class SettingsPanel {
-    constructor(form) {
-        _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelShell.init();
-        this.form = form;
-        this.centerPanel = _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelShell.get();
-        this.main = this.centerPanel.querySelector('.settingsPanel_main');
-        if (!this.centerPanel || !this.main) {
-            throw new Error('SettingsPanel shell not found');
-        }
-        for (const option of this.form.querySelectorAll('.option')) {
-            const no = Number.parseInt(option.dataset.no || '-1');
-            if (no > -1) {
-                this.optionElements.set(no, option);
-            }
-        }
-        this.buildLayout();
-        this.downloadSummary = new _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_5__.SettingsPanelDownloadSummary(this.centerPanel.querySelector('#settingsPanelDownloadSummary'), this.form);
-        this.bindEvents();
-        this.switchPage('home');
-        this.updateSearchResult();
-    }
     form;
     centerPanel;
     main;
@@ -48091,15 +48071,43 @@ class SettingsPanel {
     homePinnedContent;
     downloadSummary;
     searchPanel;
+    sectionController;
+    constructor(form) {
+        _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelShell.init();
+        this.form = form;
+        this.centerPanel = _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelShell.get();
+        this.main = this.centerPanel.querySelector('.settingsPanel_main');
+        if (!this.centerPanel || !this.main) {
+            throw new Error('SettingsPanel shell not found');
+        }
+        this.sectionController = new _SettingsPanelSections__WEBPACK_IMPORTED_MODULE_6__.SettingsPanelSections({
+            main: this.main,
+            getActivePage: () => this.activePage,
+            getSearchExpandStats: () => this.searchPanel?.getExpandStats() ?? { total: 0, expanded: 0 },
+            setSearchAllExpanded: (shouldExpand) => this.searchPanel?.setAllExpanded(shouldExpand),
+            getSearchStickySections: () => this.searchPanel?.getStickySections() ?? [],
+        });
+        for (const option of this.form.querySelectorAll('.option')) {
+            const no = Number.parseInt(option.dataset.no || '-1');
+            if (no > -1) {
+                this.optionElements.set(no, option);
+            }
+        }
+        this.buildLayout();
+        this.downloadSummary = new _SettingsPanelDownloadSummary__WEBPACK_IMPORTED_MODULE_4__.SettingsPanelDownloadSummary(this.centerPanel.querySelector('#settingsPanelDownloadSummary'), this.form);
+        this.bindEvents();
+        this.switchPage('home');
+        this.updateSearchResult();
+    }
     buildLayout() {
-        const layout = new _SettingsPanelLayout__WEBPACK_IMPORTED_MODULE_6__.SettingsPanelLayout({
+        const layout = new _SettingsPanelLayout__WEBPACK_IMPORTED_MODULE_5__.SettingsPanelLayout({
             form: this.form,
             centerPanel: this.centerPanel,
             optionElements: this.optionElements,
-            getExpandedState: (section) => this.getExpandedState(section),
-            applyExpandedState: (section, expanded) => this.applyExpandedState(section, expanded),
-            toggleSection: (section) => this.toggleSection(section),
-            makeSectionKey: (page, id) => this.makeSectionKey(page, id),
+            getExpandedState: (section) => this.sectionController.getExpandedState(section),
+            applyExpandedState: (section, expanded) => this.sectionController.applyExpandedState(section, expanded),
+            toggleSection: (section) => this.sectionController.toggleSection(section),
+            makeSectionKey: (page, id) => this.sectionController.makeSectionKey(page, id),
             makeCanonicalKey: (level1, level2) => this.makeCanonicalKey(level1, level2),
         }).build();
         this.pageEls = layout.pageEls;
@@ -48109,6 +48117,11 @@ class SettingsPanel {
         this.canonicalContainers = layout.canonicalContainers;
         this.homePinnedContent = layout.homePinnedContent;
         this.expandAllBtn = this.centerPanel.querySelector('#settingsPanelToggleExpand');
+        this.sectionController.connect({
+            foldableSections: this.foldableSections,
+            stickyEls: this.stickyEls,
+            expandAllBtn: this.expandAllBtn,
+        });
         this.searchPanel = new _SettingsPanelSearch__WEBPACK_IMPORTED_MODULE_8__.SettingsPanelSearch({
             root: layout.searchRoot,
             input: this.centerPanel.querySelector('#settingsPanelSearchInput'),
@@ -48117,8 +48130,8 @@ class SettingsPanel {
             optionElements: this.optionElements,
             getCanonicalContainer: (level1, level2) => this.getCanonicalContainer(level1, level2),
             onSectionStateChange: () => {
-                this.updateExpandAllButton();
-                this.refreshStickyHeader();
+                this.sectionController.updateExpandAllButton();
+                this.sectionController.refreshStickyHeader();
             },
         });
     }
@@ -48129,9 +48142,7 @@ class SettingsPanel {
                 if (!key) {
                     return;
                 }
-                const section = this.foldableSections.get(key);
-                if (section) {
-                    this.toggleSection(section);
+                if (this.sectionController.toggleSectionByKey(key)) {
                     return;
                 }
                 this.searchPanel.toggleSectionByKey(key);
@@ -48152,22 +48163,22 @@ class SettingsPanel {
             });
             if (!_Config__WEBPACK_IMPORTED_MODULE_0__.Config.mobile) {
                 button.addEventListener('mouseenter', () => {
-                    if (_Settings__WEBPACK_IMPORTED_MODULE_4__.settings.switchTabBar !== 'click') {
+                    if (_Settings__WEBPACK_IMPORTED_MODULE_3__.settings.switchTabBar !== 'click') {
                         this.handleNavRequest(page);
                     }
                 });
             }
         });
         this.searchPanel.bindEvents(() => this.updateSearchResult());
-        this.expandAllBtn.addEventListener('click', () => this.toggleAllSections());
-        this.main.addEventListener('scroll', () => this.refreshStickyHeader());
+        this.expandAllBtn.addEventListener('click', () => this.sectionController.toggleAllSections());
+        this.main.addEventListener('scroll', () => this.sectionController.refreshStickyHeader());
         window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_1__.EVT.list.settingChange, (ev) => {
             const data = ev.detail.data;
             if (data.name === 'pinnedOptions') {
                 this.renderCurrentPage();
             }
             if (data.name === 'expandedCards') {
-                this.refreshPersistedSectionStates();
+                this.sectionController.refreshPersistedSectionStates();
             }
         });
         window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_1__.EVT.list.langChange, () => {
@@ -48211,8 +48222,8 @@ class SettingsPanel {
             this.placeOptionsToDefaultContainers(this.activePage === 'home');
         }
         this.updatePinnedSectionVisibility();
-        this.updateExpandAllButton();
-        window.setTimeout(() => this.refreshStickyHeader(), 0);
+        this.sectionController.updateExpandAllButton();
+        window.setTimeout(() => this.sectionController.refreshStickyHeader(), 0);
     }
     updateSearchResult() {
         if (!this.searchPanel.updateResult()) {
@@ -48222,148 +48233,25 @@ class SettingsPanel {
         this.switchPage('search');
     }
     placeOptionsToDefaultContainers(showPinnedOnHome) {
-        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_3__.optionConfigs.options) {
+        for (const option of _OptionConfigs__WEBPACK_IMPORTED_MODULE_2__.optionConfigs.options) {
             const element = this.optionElements.get(option.no);
             if (!element) {
                 continue;
             }
-            const target = showPinnedOnHome && _Settings__WEBPACK_IMPORTED_MODULE_4__.settings.pinnedOptions.includes(option.no)
+            const target = showPinnedOnHome && _Settings__WEBPACK_IMPORTED_MODULE_3__.settings.pinnedOptions.includes(option.no)
                 ? this.homePinnedContent
                 : this.getCanonicalContainer(option.categoryLevel1, option.categoryLevel2);
             target.append(element);
         }
         this.searchPanel.resetOptionHighlight();
     }
-    toggleSection(section) {
-        const expanded = !this.getExpandedState(section);
-        this.setExpandedState(section, expanded);
-        this.updateExpandAllButton();
-        this.refreshStickyHeader();
-    }
-    getExpandedState(section) {
-        const pageState = this.getPersistedPageState(section.page);
-        return !!pageState?.[section.id];
-    }
-    setExpandedState(section, expanded) {
-        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_2__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_4__.settings.expandedCards);
-        const pageState = this.getPersistedPageState(section.page, nextExpandedCards);
-        if (pageState) {
-            pageState[section.id] = expanded;
-        }
-        (0,_Settings__WEBPACK_IMPORTED_MODULE_4__.setSetting)('expandedCards', nextExpandedCards);
-        this.applyExpandedState(section, expanded);
-    }
-    applyExpandedState(section, expanded) {
-        section.root.classList.toggle('expanded', expanded);
-        section.root.classList.toggle('collapsed', !expanded);
-        section.header.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-        section.contentWrap.toggleAttribute('inert', !expanded);
-        section.contentWrap.setAttribute('aria-hidden', expanded ? 'false' : 'true');
-    }
-    refreshPersistedSectionStates() {
-        this.foldableSections.forEach((section) => {
-            this.applyExpandedState(section, this.getExpandedState(section));
-        });
-        this.updateExpandAllButton();
-        this.refreshStickyHeader();
-    }
-    toggleAllSections() {
-        const shouldExpand = !this.areAllSectionsExpanded();
-        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_2__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_4__.settings.expandedCards);
-        this.foldableSections.forEach((section) => {
-            const pageState = this.getPersistedPageState(section.page, nextExpandedCards);
-            if (pageState) {
-                pageState[section.id] = shouldExpand;
-            }
-            this.applyExpandedState(section, shouldExpand);
-        });
-        this.searchPanel.setAllExpanded(shouldExpand);
-        (0,_Settings__WEBPACK_IMPORTED_MODULE_4__.setSetting)('expandedCards', nextExpandedCards);
-        this.updateExpandAllButton();
-        this.refreshStickyHeader();
-    }
-    areAllSectionsExpanded() {
-        return this.getExpandAllState() === 'expanded';
-    }
-    updateExpandAllButton() {
-        const state = this.getExpandAllState();
-        this.expandAllBtn.classList.toggle('expanded', state === 'expanded');
-        this.expandAllBtn.classList.toggle('partial', state === 'partial');
-    }
-    getExpandAllState() {
-        let total = 0;
-        let expanded = 0;
-        for (const section of this.foldableSections.values()) {
-            total++;
-            if (this.getExpandedState(section)) {
-                expanded++;
-            }
-        }
-        const searchStats = this.searchPanel.getExpandStats();
-        total += searchStats.total;
-        expanded += searchStats.expanded;
-        if (total === 0 || expanded === 0) {
-            return 'collapsed';
-        }
-        if (expanded === total) {
-            return 'expanded';
-        }
-        return 'partial';
-    }
-    refreshStickyHeader() {
-        const sticky = this.stickyEls.get(this.activePage);
-        if (!sticky) {
-            return;
-        }
-        const sections = this.getStickySectionsForActivePage();
-        if (sections.length === 0) {
-            sticky.hidden = true;
-            return;
-        }
-        const mainRect = this.main.getBoundingClientRect();
-        let current;
-        for (const section of sections) {
-            const headerRect = section.header.getBoundingClientRect();
-            const rootRect = section.root.getBoundingClientRect();
-            if (headerRect.top <= mainRect.top &&
-                rootRect.bottom > mainRect.top + headerRect.height) {
-                current = section;
-            }
-        }
-        if (!current) {
-            sticky.hidden = true;
-            return;
-        }
-        sticky.hidden = false;
-        sticky.dataset.sectionKey = this.makeSectionKey(current.page, current.id);
-        const stickyTitle = sticky.querySelector('.settingsPanel_sectionTitle');
-        stickyTitle.textContent = current.title.textContent || '';
-        const stickyIconWrap = sticky.querySelector('.settingsPanel_sectionIconWrap');
-        const stickyIconUse = sticky.querySelector('.settingsPanel_sectionIconWrap use');
-        if (current.iconUse) {
-            stickyIconWrap.classList.remove('hidden');
-            stickyIconUse.setAttribute('xlink:href', current.iconUse.getAttribute('xlink:href') || '');
-        }
-        else {
-            stickyIconWrap.classList.add('hidden');
-            stickyIconUse.setAttribute('xlink:href', '');
-        }
-    }
-    getStickySectionsForActivePage() {
-        if (this.activePage === 'search') {
-            return this.searchPanel.getStickySections();
-        }
-        return [...this.foldableSections.values()].filter((section) => section.page === this.activePage &&
-            section.stickyEligible &&
-            this.getExpandedState(section));
-    }
     updatePinnedSectionVisibility() {
-        const pinnedSection = this.foldableSections.get(this.makeSectionKey('home', 'pinnedOptions'));
+        const pinnedSection = this.foldableSections.get(this.sectionController.makeSectionKey('home', 'pinnedOptions'));
         if (!pinnedSection) {
             return;
         }
         pinnedSection.root.style.display =
-            _Settings__WEBPACK_IMPORTED_MODULE_4__.settings.pinnedOptions.length > 0 ? 'block' : 'none';
+            _Settings__WEBPACK_IMPORTED_MODULE_3__.settings.pinnedOptions.length > 0 ? 'block' : 'none';
     }
     playNavRipple(button) {
         this.playRipple(button);
@@ -48384,12 +48272,6 @@ class SettingsPanel {
     }
     makeCanonicalKey(level1, level2) {
         return `${level1}__${level2}`;
-    }
-    makeSectionKey(page, id) {
-        return `${page}__${id}`;
-    }
-    getPersistedPageState(page, expandedCards = _Settings__WEBPACK_IMPORTED_MODULE_4__.settings.expandedCards) {
-        return expandedCards[page];
     }
 }
 _SettingsPanelShell__WEBPACK_IMPORTED_MODULE_7__.SettingsPanelShell.init();
@@ -48774,6 +48656,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/** 设置面板的布局构建器 */
+// - 负责页面容器创建
+// - 首页 / 分类页 / 帮助页的 DOM 构建
+// - 持久化 section 的 DOM 创建与注册
+// - 首页“附加功能”区域显隐观察
 class SettingsPanelLayout {
     constructor({ form, centerPanel, optionElements, getExpandedState, applyExpandedState, toggleSection, makeSectionKey, makeCanonicalKey, }) {
         this.form = form;
@@ -49406,6 +49293,188 @@ class SettingsPanelSearch {
     }
     makeSectionKey(id) {
         return `search__${id}`;
+    }
+}
+
+
+
+/***/ }),
+
+/***/ "./src/ts/setting/SettingsPanelSections.ts":
+/*!*************************************************!*\
+  !*** ./src/ts/setting/SettingsPanelSections.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SettingsPanelSections: () => (/* binding */ SettingsPanelSections)
+/* harmony export */ });
+/* harmony import */ var _Settings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Settings */ "./src/ts/setting/Settings.ts");
+/* harmony import */ var _utils_Utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/Utils */ "./src/ts/utils/Utils.ts");
+
+
+class SettingsPanelSections {
+    constructor({ main, getActivePage, getSearchExpandStats, setSearchAllExpanded, getSearchStickySections, }) {
+        this.main = main;
+        this.getActivePage = getActivePage;
+        this.getSearchExpandStats = getSearchExpandStats;
+        this.setSearchAllExpanded = setSearchAllExpanded;
+        this.getSearchStickySections = getSearchStickySections;
+    }
+    main;
+    getActivePage;
+    getSearchExpandStats;
+    setSearchAllExpanded;
+    getSearchStickySections;
+    foldableSections = new Map();
+    stickyEls = new Map();
+    expandAllBtn;
+    connect({ foldableSections, stickyEls, expandAllBtn, }) {
+        this.foldableSections = foldableSections;
+        this.stickyEls = stickyEls;
+        this.expandAllBtn = expandAllBtn;
+    }
+    makeSectionKey(page, id) {
+        return `${page}__${id}`;
+    }
+    toggleSectionByKey(key) {
+        const section = this.foldableSections.get(key);
+        if (!section) {
+            return false;
+        }
+        this.toggleSection(section);
+        return true;
+    }
+    getExpandedState(section) {
+        const pageState = this.getPersistedPageState(section.page);
+        return !!pageState?.[section.id];
+    }
+    applyExpandedState(section, expanded) {
+        section.root.classList.toggle('expanded', expanded);
+        section.root.classList.toggle('collapsed', !expanded);
+        section.header.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        section.contentWrap.toggleAttribute('inert', !expanded);
+        section.contentWrap.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+    }
+    toggleSection(section) {
+        const expanded = !this.getExpandedState(section);
+        this.setExpandedState(section, expanded);
+        this.updateExpandAllButton();
+        this.refreshStickyHeader();
+    }
+    refreshPersistedSectionStates() {
+        this.foldableSections.forEach((section) => {
+            this.applyExpandedState(section, this.getExpandedState(section));
+        });
+        this.updateExpandAllButton();
+        this.refreshStickyHeader();
+    }
+    toggleAllSections() {
+        const shouldExpand = !this.areAllSectionsExpanded();
+        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_0__.settings.expandedCards);
+        this.foldableSections.forEach((section) => {
+            const pageState = this.getPersistedPageState(section.page, nextExpandedCards);
+            if (pageState) {
+                pageState[section.id] = shouldExpand;
+            }
+            this.applyExpandedState(section, shouldExpand);
+        });
+        this.setSearchAllExpanded(shouldExpand);
+        (0,_Settings__WEBPACK_IMPORTED_MODULE_0__.setSetting)('expandedCards', nextExpandedCards);
+        this.updateExpandAllButton();
+        this.refreshStickyHeader();
+    }
+    updateExpandAllButton() {
+        if (!this.expandAllBtn) {
+            return;
+        }
+        const state = this.getExpandAllState();
+        this.expandAllBtn.classList.toggle('expanded', state === 'expanded');
+        this.expandAllBtn.classList.toggle('partial', state === 'partial');
+    }
+    refreshStickyHeader() {
+        const sticky = this.stickyEls.get(this.getActivePage());
+        if (!sticky) {
+            return;
+        }
+        const sections = this.getStickySectionsForActivePage();
+        if (sections.length === 0) {
+            sticky.hidden = true;
+            return;
+        }
+        const mainRect = this.main.getBoundingClientRect();
+        let current;
+        for (const section of sections) {
+            const headerRect = section.header.getBoundingClientRect();
+            const rootRect = section.root.getBoundingClientRect();
+            if (headerRect.top <= mainRect.top &&
+                rootRect.bottom > mainRect.top + headerRect.height) {
+                current = section;
+            }
+        }
+        if (!current) {
+            sticky.hidden = true;
+            return;
+        }
+        sticky.hidden = false;
+        sticky.dataset.sectionKey = this.makeSectionKey(current.page, current.id);
+        const stickyTitle = sticky.querySelector('.settingsPanel_sectionTitle');
+        stickyTitle.textContent = current.title.textContent || '';
+        const stickyIconWrap = sticky.querySelector('.settingsPanel_sectionIconWrap');
+        const stickyIconUse = sticky.querySelector('.settingsPanel_sectionIconWrap use');
+        if (current.iconUse) {
+            stickyIconWrap.classList.remove('hidden');
+            stickyIconUse.setAttribute('xlink:href', current.iconUse.getAttribute('xlink:href') || '');
+        }
+        else {
+            stickyIconWrap.classList.add('hidden');
+            stickyIconUse.setAttribute('xlink:href', '');
+        }
+    }
+    setExpandedState(section, expanded) {
+        const nextExpandedCards = _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.deepCopy(_Settings__WEBPACK_IMPORTED_MODULE_0__.settings.expandedCards);
+        const pageState = this.getPersistedPageState(section.page, nextExpandedCards);
+        if (pageState) {
+            pageState[section.id] = expanded;
+        }
+        (0,_Settings__WEBPACK_IMPORTED_MODULE_0__.setSetting)('expandedCards', nextExpandedCards);
+        this.applyExpandedState(section, expanded);
+    }
+    areAllSectionsExpanded() {
+        return this.getExpandAllState() === 'expanded';
+    }
+    getExpandAllState() {
+        let total = 0;
+        let expanded = 0;
+        for (const section of this.foldableSections.values()) {
+            total++;
+            if (this.getExpandedState(section)) {
+                expanded++;
+            }
+        }
+        const searchStats = this.getSearchExpandStats();
+        total += searchStats.total;
+        expanded += searchStats.expanded;
+        if (total === 0 || expanded === 0) {
+            return 'collapsed';
+        }
+        if (expanded === total) {
+            return 'expanded';
+        }
+        return 'partial';
+    }
+    getStickySectionsForActivePage() {
+        if (this.getActivePage() === 'search') {
+            return this.getSearchStickySections();
+        }
+        return [...this.foldableSections.values()].filter((section) => section.page === this.getActivePage() &&
+            section.stickyEligible &&
+            this.getExpandedState(section));
+    }
+    getPersistedPageState(page, expandedCards = _Settings__WEBPACK_IMPORTED_MODULE_0__.settings.expandedCards) {
+        return expandedCards[page];
     }
 }
 
