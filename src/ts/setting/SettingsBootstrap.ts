@@ -6,7 +6,7 @@ import { toast } from '../Toast'
 import { DateFormat } from '../utils/DateFormat'
 import { Utils } from '../utils/Utils'
 import { options } from './Options'
-import { formHtml } from './FormHTML'
+import { optionsHtml } from './OptionsHtml'
 import { FormBeautify } from './FormBeautify'
 import { FormHelpManager } from './FormHelpManager'
 import { FormSettings } from './FormSettings'
@@ -18,7 +18,10 @@ import { SettingsPanel } from './SettingsPanel'
 /** 设置系统入口：创建 form，并装配所有依赖 form 的模块 */
 class SettingsBootstrap {
   constructor() {
-    this.form = Tools.useSlot('form', formHtml) as SettingsForm
+    this.form = Tools.useSlot(
+      'form',
+      `<form class="settingForm">${optionsHtml}</form>`
+    ) as SettingsForm
 
     this.initModules()
     this.bindFormEvents()
