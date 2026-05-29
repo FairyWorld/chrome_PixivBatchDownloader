@@ -16,6 +16,8 @@
   --settings-panel-bg-white: #fff;
   --settings-panel-bg-dark: #1f2530;
   --settings-panel-bg-xzbg: #0a121c;
+  --mask-on-xzbg: rgba(10, 18, 28, 0.3);
+  --white-30: rgba(255, 255, 255, 0.3);
 }
 #deleteWorkEl {
   box-sizing: border-box;
@@ -546,10 +548,6 @@ body.mobile #quickCrawlBtn {
   --settings-panel-search-summary: #444;
   --settings-panel-search-mark-bg: #ffe74b;
 }
-.centerWrap.theme-white .option > .settingNameStyle,
-.centerWrap.theme-white .optionName {
-  color: #333;
-}
 .centerWrap.theme-dark {
   --settings-panel-text: #dfe7ef;
   --settings-panel-border: rgba(94, 172, 230, 0.45);
@@ -603,9 +601,9 @@ body.mobile #quickCrawlBtn {
 }
 .centerWrap.xzBG {
   --settings-panel-text: #fff;
-  --settings-panel-head-bg: rgba(10, 18, 28, 0.3);
+  --settings-panel-head-bg: rgba(10, 18, 28, 0.2);
+  --settings-panel-con-bg: rgba(10, 18, 28, 0.3);
   --settings-panel-head-border: rgba(255, 255, 255, 0.08);
-  --settings-panel-con-bg: rgba(10, 18, 28, 0.4);
   --settings-panel-brand-color: #fff;
   --settings-panel-top-btn-color: #fff;
   --settings-panel-top-btn-hover-color: #fff;
@@ -648,7 +646,7 @@ body.mobile #quickCrawlBtn {
   --settings-panel-help-action-hover-bg: rgba(255, 255, 255, 0.3);
   --settings-panel-help-action-hover-text: #fff;
   --settings-panel-search-summary: #fff;
-  --settings-panel-search-mark-bg: #918800;
+  --settings-panel-search-mark-bg: #aba000;
 }
 .centerWrap.mobile {
   width: calc(100vw - 32px);
@@ -2212,6 +2210,10 @@ body.mobile #quickCrawlBtn {
   letter-spacing: 6px;
   text-indent: 6px;
 }
+.centerWrap.theme-white .option > .settingNameStyle,
+.centerWrap.theme-white .optionName {
+  color: #333;
+}
 .centerWrap.theme-dark {
   background: var(--settings-panel-bg-dark);
   border-color: rgba(94, 172, 230, 0.45);
@@ -2425,6 +2427,7 @@ body.mobile #quickCrawlBtn {
   top: 15%;
   left: 50%;
   transform: translateX(-50%);
+  overflow: hidden;
 }
 .outputWrap::selection {
   background: var(--theme-blue);
@@ -2467,15 +2470,19 @@ body.mobile #quickCrawlBtn {
 .outputWrap .outputClose {
   cursor: pointer;
   position: absolute;
-  font-size: 24px;
-  top: 16px;
+  top: 20px;
+  height: 22px;
   right: 30px;
   z-index: 9999;
   text-align: center;
   color: #666;
+  border-radius: 6px;
 }
 .outputWrap .outputClose:hover {
-  color: var(--blue-buttons-bg);
+  color: var(--theme-blue);
+}
+.outputWrap .outputClose svg {
+  font-size: 22px;
 }
 .outputWrap .outputFooter {
   display: flex;
@@ -2507,9 +2514,34 @@ body.mobile #quickCrawlBtn {
 .theme-dark.outputWrap .outputContent * {
   color: #fff !important;
 }
-.xzBG .outputWrap {
+.xzBG.outputWrap {
   background: var(--settings-panel-bg-dark);
   box-shadow: var(--dark-box-shadow);
+}
+.xzBG.outputWrap .outputClose {
+  color: #eee;
+}
+.xzBG.outputWrap .outputClose:hover {
+  color: var(--theme-blue);
+  background: var(--white-30);
+}
+.xzBG.outputWrap .outputTitle {
+  color: #fff;
+}
+.xzBG.outputWrap .outputContent {
+  color: #fff;
+}
+.xzBG.outputWrap .outputContent p {
+  color: #fff;
+}
+.xzBG.outputWrap .outputContent .color999 {
+  color: #eee;
+}
+.xzBG.outputWrap .outputContent .colorFolder {
+  color: #d7efff;
+}
+.xzBG.outputWrap .outputContent .color000 {
+  color: #fff;
 }
 .outputWrap.mobile {
   padding: 20px 30px;
@@ -2638,6 +2670,7 @@ body.mobile #quickCrawlBtn {
   transform: translate(-50%);
   text-align: center;
   font-family: var(--pixiv-font-family);
+  overflow: hidden;
 }
 .xz_msg_box::selection {
   background: var(--theme-blue);
@@ -3852,6 +3885,17 @@ html[data-xzpagetheme='dark'] #quickBookmarkEl {
   background-position-x: center;
   background-position-y: center;
   opacity: 0.4;
+}
+.xzBG .xzbgMask {
+  background-color: var(--mask-on-xzbg);
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
 }
 .id_range_tip {
   display: none;

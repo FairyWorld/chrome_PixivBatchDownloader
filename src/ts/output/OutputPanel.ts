@@ -6,6 +6,7 @@ import { Config } from '../Config'
 import { theme } from '../Theme'
 import { msgBox } from '../MsgBox'
 import { toast } from '../Toast'
+import { bg } from '../BG'
 
 export type OutputData = {
   content: string
@@ -19,6 +20,7 @@ class OutputPanel {
 
     theme.register(this.outputPanel)
     lang.register(this.outputPanel)
+    bg.useBG(this.outputPanel)
 
     this.bindEvents()
   }
@@ -74,6 +76,7 @@ class OutputPanel {
   private addOutPutPanel() {
     const html = `
     <div class="outputWrap">
+    <div class="xzbgMask"></div>
     <div class="outputClose" data-xztitle="_关闭">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#close"></use>
@@ -90,7 +93,6 @@ class OutputPanel {
     </div>
     `
     document.body.insertAdjacentHTML('beforebegin', html)
-
     this.outputPanel = document.querySelector('.outputWrap')! as HTMLDivElement
 
     if (Config.mobile) {

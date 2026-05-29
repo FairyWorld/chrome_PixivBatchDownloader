@@ -6723,6 +6723,7 @@ class MsgBox {
             colorStyle = `style="color:${data.color}"`;
         }
         wrap.innerHTML = `
+        <div class="xzbgMask"></div>
         <div class="title">${data.title || _Config__WEBPACK_IMPORTED_MODULE_5__.Config.appName}</div>
         <div class="content beautify_scrollbar" ${colorStyle}>${data.msg}</div>
         ${data.hiddenBtn
@@ -6731,6 +6732,7 @@ class MsgBox {
               <span>${data.btn || _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_确定')}</span>
               <span class="ripple"></span>
               </button>`}
+      
       `;
         _Theme__WEBPACK_IMPORTED_MODULE_2__.theme.register(wrap);
         _Language__WEBPACK_IMPORTED_MODULE_3__.lang.register(wrap);
@@ -38981,6 +38983,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Theme__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Theme */ "./src/ts/Theme.ts");
 /* harmony import */ var _MsgBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../MsgBox */ "./src/ts/MsgBox.ts");
 /* harmony import */ var _Toast__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Toast */ "./src/ts/Toast.ts");
+/* harmony import */ var _BG__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../BG */ "./src/ts/BG.ts");
+
 
 
 
@@ -38995,6 +38999,7 @@ class OutputPanel {
         this.addOutPutPanel();
         _Theme__WEBPACK_IMPORTED_MODULE_5__.theme.register(this.outputPanel);
         _Language__WEBPACK_IMPORTED_MODULE_1__.lang.register(this.outputPanel);
+        _BG__WEBPACK_IMPORTED_MODULE_8__.bg.useBG(this.outputPanel);
         this.bindEvents();
     }
     outputPanel; // 输出面板
@@ -39038,6 +39043,7 @@ class OutputPanel {
     addOutPutPanel() {
         const html = `
     <div class="outputWrap">
+    <div class="xzbgMask"></div>
     <div class="outputClose" data-xztitle="_关闭">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#close"></use>
@@ -45670,7 +45676,7 @@ class Settings {
         magnifierSize: 'original',
         magnifierPosition: 'right',
         bgDisplay: false,
-        bgOpacity: 60,
+        bgOpacity: 62,
         bgPositionY: 'top',
         createFolderByTag: false,
         createFolderTagList: [],

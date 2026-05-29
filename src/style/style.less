@@ -25,7 +25,12 @@
   --settings-panel-bg: #fff;
   --settings-panel-bg-white: #fff;
   --settings-panel-bg-dark: #1f2530;
+  // 启用背景图片之后，面板的背景颜色
   --settings-panel-bg-xzbg: rgb(10, 18, 28);
+  // 启用背景图片之后，背景图片层会显示在面板和内容区域中间
+  // 启用背景图片之后，把整个内容区域的背景颜色设置为半透明的黑色遮罩，降低背景图片的亮度，使得文字更清晰易读。
+  --mask-on-xzbg: rgba(10, 18, 28, 0.3);
+  --white-30: rgba(255, 255, 255, 0.3);
 }
 
 @import './deleteWorks.less';
@@ -405,6 +410,18 @@ html[data-xzpagetheme='dark'] #quickBookmarkEl {
   background-position-x: center;
   background-position-y: center;
   opacity: 0.4;
+}
+
+.xzBG .xzbgMask {
+  background-color: var(--mask-on-xzbg);
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .id_range_tip {
