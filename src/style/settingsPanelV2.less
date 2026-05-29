@@ -191,11 +191,6 @@
     gap: 0px;
     border-bottom: 1px solid var(--settings-panel-head-border);
 
-    img {
-      width: 16px;
-      vertical-align: inherit;
-    }
-
     .centerWrap_title {
       line-height: 30px;
       text-align: center;
@@ -216,7 +211,6 @@
         text-align: center;
         cursor: pointer;
         color: #666;
-        fill: #666;
         user-select: none;
         display: inline-block;
         vertical-align: baseline;
@@ -406,8 +400,6 @@
       height: var(--line-height);
     }
 
-    .centerWrap_top_btn:hover,
-    .centerWrap_top_btn:focus,
     .showFileNameTip:hover,
     .showFileNameTip:focus,
     .textButton:hover,
@@ -415,7 +407,6 @@
     .help_bar > *:hover,
     .updateActiveClass {
       color: var(--beautify-blue) !important;
-      fill: var(--beautify-blue) !important;
     }
 
     .grayButton:hover,
@@ -523,40 +514,6 @@
         .setUserNameWrap,
         .DoNotDownloadLastFewImagesWarp {
           flex-basis: 100%;
-        }
-
-        &.settingCategoryName {
-          justify-content: center;
-          margin: 14px 0;
-          position: relative;
-          text-align: center;
-
-          span {
-            display: inline-block;
-            height: var(--line-height);
-            padding: 0px 20px;
-            line-height: var(--line-height) !important;
-            font-size: 1.1em;
-            color: #666;
-            font-weight: bold;
-            background-color: #fff;
-            border-radius: 4px;
-          }
-
-          &:hover {
-            background-color: transparent;
-          }
-
-          &::after {
-            display: block;
-            content: '';
-            position: absolute;
-            top: 14px;
-            width: 100%;
-            height: 1px;
-            background-color: #eee;
-            z-index: -1;
-          }
         }
 
         .grow {
@@ -1183,6 +1140,7 @@
       flex: none;
       padding: 15px 10px;
       background: var(--settings-panel-sidebar-bg);
+      box-shadow: var(--settings-panel-sidebar-box-shadow);
       overflow-y: auto;
       position: relative;
       display: flex;
@@ -1280,7 +1238,10 @@
     }
 
     .settingsPanel_downloadSummary {
+      // 它是 flex 布局，默认隐藏
+      // display: flex;
       display: none;
+      flex-wrap: wrap;
       margin-top: auto;
       padding: 14px 0 0px 2px;
       border-top: 1px solid var(--settings-panel-download-summary-border);
@@ -1289,6 +1250,8 @@
     .settingsPanel_downloadSummaryStatus,
     .settingsPanel_downloadSummaryActions {
       display: flex;
+      // 在 PC 端使这两个区域分为上下两行显示
+      flex-basis: 100%;
       align-items: center;
       flex-wrap: wrap;
     }
@@ -1662,13 +1625,13 @@
       padding: 12px 14px;
       border: none;
       border-radius: 12px;
-      background: var(--settings-panel-help-action-bg);
-      box-shadow: var(--settings-panel-help-action-shadow);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       color: var(--settings-panel-help-action-text);
+      background: var(--settings-panel-help-action-bg);
+      box-shadow: var(--settings-panel-help-action-shadow);
       cursor: pointer;
       position: relative;
 
@@ -1764,10 +1727,13 @@
 }
 
 .centerWrap.theme-dark {
-  background: #1f2530;
+  background: var(--settings-panel-bg-dark);
   border-color: rgba(94, 172, 230, 0.45);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
-  color: #dfe7ef;
+  color: #fff;
+
+  .settingsPanel_sidebar {
+    box-shadow: none !important;
+  }
 
   .option > .settingNameStyle,
   .optionName {
@@ -1803,18 +1769,17 @@
   .help_bar > *:hover,
   .updateActiveClass {
     color: var(--beautify-blue) !important;
-    fill: var(--beautify-blue) !important;
   }
 
+  // 重新设置右上角按钮的 hover 样式，覆盖在默认样式里为赞助按钮、关闭按钮设置的特殊颜色
   .centerWrap_top_btn:hover,
   .centerWrap_top_btn:focus {
-    color: var(--beautify-blue) !important;
-    fill: var(--beautify-blue) !important;
-    background: rgba(25, 157, 245, 0.24);
+    color: var(--settings-panel-top-btn-hover-color) !important;
+    background: var(--settings-panel-top-btn-hover-bg) !important;
   }
 
   .grayButton {
-    background-color: #aaa;
+    background-color: var(--settings-panel-section-icon-bg);
   }
 
   .grayButton:hover,
@@ -1831,8 +1796,8 @@
     }
 
     .namingRuleList {
-      background: #222;
-      box-shadow: var(--dark-box-shadow) 0px 0px 10px;
+          background: var(--settings-panel-bg-dark);
+      box-shadow: var(--dark-box-shadow);
 
       li {
         color: #fff;
@@ -1849,22 +1814,15 @@
       box-shadow: none !important;
     }
   }
-
-  .settingCategoryName {
-    span {
-      color: var(--beautify-blue) !important;
-      text-shadow: none !important;
-    }
-  }
 }
 
-// 当设置了背景图片时，不管是什么主题，都把中间面板的样式修改为 Dark 主题的样式，并且添加文字阴影，使文字更容易阅读
 .centerWrap.xzBG {
-  text-shadow: #003247 0px 0px 2px;
-
-  box-shadow: var(--dark-box-shadow) 0px 0px 15px;
-  background: rgba(10, 18, 28, 0.42);
+  background: var(--settings-panel-bg-xzbg);
   color: #fff;
+
+  .settingsPanel_sidebar {
+    box-shadow: none !important;
+  }
 
   .option > .settingNameStyle,
   .optionName {
@@ -1883,7 +1841,6 @@
   .gray1,
   .centerWrap_top_btn {
     color: #eee !important;
-    text-shadow: #003247 0px 0px 2px;
   }
 
   .blue,
@@ -1906,30 +1863,31 @@
   .help_bar > *:hover,
   .updateActiveClass {
     color: #fff !important;
-    fill: #fff !important;
   }
 
+  // 重新设置右上角按钮的 hover 样式，覆盖在默认样式里为赞助按钮、关闭按钮设置的特殊颜色
   .centerWrap_top_btn:hover,
   .centerWrap_top_btn:focus {
-    color: #fff !important;
-    fill: #fff !important;
-  }
-
-  .grayButton {
-    background-color: #666;
-  }
-
-  .grayButton:hover,
-  .grayButton:focus {
-    background: var(--beautify-blue);
-    color: #fff !important;
+    color: var(--settings-panel-top-btn-hover-color) !important;
+    background: var(--settings-panel-top-btn-hover-bg) !important;
   }
 
   .centerWrap_con {
-    background: rgba(10, 18, 28, 0.5);
+    .settingForm {
+      .grayButton {
+        opacity: 0.8;
+        background-color: #666;
+      }
 
-    .settingForm select {
-      background: transparent;
+      .grayButton:hover,
+      .grayButton:focus {
+        background: var(--beautify-blue);
+        color: #fff !important;
+      }
+
+      select {
+        background: transparent;
+      }
     }
   }
 
@@ -1952,23 +1910,10 @@
   }
 
   .centerWrap_btns {
+    // 在有背景图片时，把首页的按钮改成半透明的
     & button {
+      background: rgba(255, 255, 255, 0.3) !important;
       box-shadow: none !important;
-    }
-  }
-
-  .settingCategoryName {
-    span {
-      color: var(--beautify-blue) !important;
-      text-shadow: none !important;
-      // 如果用户设置了背景图片，则使分类名称的背景色变为半透明白色，并添加模糊效果，使其更加美观
-      // 如果不使用半透明白色，而是使用纯白色，则会遮挡住背景图片，影响美观
-      background-color: rgba(255, 255, 255, 0.8) !important;
-      backdrop-filter: blur(3px) !important;
-    }
-
-    &::after {
-      background-color: rgba(255, 255, 255, 0.8) !important;
     }
   }
 }

@@ -26,12 +26,13 @@ class SettingsPanelShell {
       return this.shell
     }
 
+    const LogoURL = browser.runtime.getURL('icons/logo128.png')
     const centerPanelHTML = `
       <div class="centerWrap ${'lang_' + lang.type}">
         <div class="centerWrap_head">
           <div class="settingsPanel_headerMain">
             <div class="settingsPanel_brand">
-              <svg class="icon settingsPanel_logo" aria-hidden="true"><use xlink:href="#logo128"></use></svg>
+              <img class="settingsPanel_logo" src="${LogoURL}" alt="${Config.appName}">
               <span class="settingsPanel_brandName">${Config.appName}</span>
             </div>
 

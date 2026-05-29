@@ -210,19 +210,6 @@ class SettingsPanelLayout {
     crawlBlock.content.append(crawlBtnsBlock)
     home.append(crawlBlock.root)
 
-    const otherBlock = this.createSection({
-      page: 'home',
-      id: 'otherBtns',
-      titleKey: '_附加功能',
-      iconId: 'features',
-      persisted: true,
-      stickyEligible: false,
-      type: 'panel',
-    })
-    otherBlock.content.append(otherBtnsBlock)
-    home.append(otherBlock.root)
-    this.bindHomeOtherBtnsVisibility(otherBlock, otherBtnsBlock)
-
     const downloadBlock = this.createSection({
       page: 'home',
       id: 'downloadArea',
@@ -237,6 +224,19 @@ class SettingsPanelLayout {
     downloadContentWrap.append(downloadBtnsBlock, downloadArea, progressBar)
     downloadBlock.content.append(downloadContentWrap)
     home.append(downloadBlock.root)
+
+    const otherBlock = this.createSection({
+      page: 'home',
+      id: 'otherBtns',
+      titleKey: '_附加功能',
+      iconId: 'features',
+      persisted: true,
+      stickyEligible: false,
+      type: 'panel',
+    })
+    otherBlock.content.append(otherBtnsBlock)
+    home.append(otherBlock.root)
+    this.bindHomeOtherBtnsVisibility(otherBlock, otherBtnsBlock)
   }
 
   private bindHomeOtherBtnsVisibility(

@@ -1,5 +1,5 @@
 .xz_msg_box {
-  background: #fff;
+  background: var(--settings-panel-bg);
   box-shadow: 0 0 15px var(--box-shadow-blue);
   position: fixed;
   z-index: 9999;
@@ -61,24 +61,24 @@
 
 .theme-dark {
   &.xz_msg_box {
-    background: #222;
-    box-shadow: var(--dark-box-shadow) 0px 0px 15px;
+    background: var(--settings-panel-bg-dark);
+    box-shadow: var(--dark-box-shadow);
 
     .title {
       color: #fff;
     }
 
     .content {
-      color: #eee;
-      text-shadow: 1px 1px black;
+      color: #fff;
+      text-shadow: 1px 1px #222;
     }
   }
 }
 
 .xzBG {
   &.xz_msg_box {
-    background: #222;
-    box-shadow: var(--dark-box-shadow) 0px 0px 15px;
+    background: var(--settings-panel-bg-xzbg);
+    box-shadow: var(--dark-box-shadow);
     color: #fff;
     transition: none;
 
@@ -95,11 +95,11 @@
     }
 
     .content {
-      text-shadow: #003247 1px 1px 1px;
+      color: #fff;
+      text-shadow: #222 1px 1px 1px;
     }
 
     .xzBGLayer {
-      filter: blur(1px);
       border-radius: 12px;
     }
   }
@@ -116,6 +116,7 @@
   font-family: var(--mobile-font-family);
   padding: 4vh 2vw;
   margin: 3vh 0;
+
   .content {
     max-height: 60vh;
   }

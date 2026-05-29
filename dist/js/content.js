@@ -10371,7 +10371,6 @@ __webpack_require__.r(__webpack_exports__);
 
 class ShowNotification {
     constructor() {
-        this.iconURL = webextension_polyfill__WEBPACK_IMPORTED_MODULE_0___default().runtime.getURL('icons/logo128.png');
         this.bindEvents();
     }
     iconURL = '';
@@ -10399,6 +10398,9 @@ class ShowNotification {
     }
     async show(title, text) {
         await this.requstPremission();
+        if (!this.iconURL) {
+            this.iconURL = webextension_polyfill__WEBPACK_IMPORTED_MODULE_0___default().runtime.getURL('icons/logo128.png');
+        }
         new Notification(title, {
             body: text,
             // 不设置 tag。如果设置了相同的 tag，那么新的通知会覆盖旧的通知，导致如果有多个页面下载完毕，用户只能看到最后一个页面的通知
@@ -44603,7 +44605,7 @@ class SaveNamingRule {
         // 这在移动端尤其有用，因为在移动端没有鼠标可以触发上面的 mouseleave 事件
         const form = document.querySelector('.centerWrap form');
         if (form) {
-            _utils_Utils__WEBPACK_IMPORTED_MODULE_7__.Utils.click(form, ev => {
+            _utils_Utils__WEBPACK_IMPORTED_MODULE_7__.Utils.click(form, (ev) => {
                 if (!this.show || !(ev.target instanceof HTMLElement)) {
                     return;
                 }
@@ -46783,7 +46785,7 @@ class SettingsPanelDownloadSummary {
         const total = _store_Store__WEBPACK_IMPORTED_MODULE_2__.store.result.length;
         const downloaded = total > 0 ? _download_DownloadStates__WEBPACK_IMPORTED_MODULE_4__.downloadStates.downloadedCount() : 0;
         this.progress.textContent = `${downloaded} / ${total}`;
-        this.wrap.style.display = total > 0 ? 'block' : 'none';
+        this.wrap.style.display = total > 0 ? 'flex' : 'none';
         if (total === 0) {
             this.setState('start');
             return;
@@ -47186,18 +47188,6 @@ class SettingsPanelLayout {
         });
         crawlBlock.content.append(crawlBtnsBlock);
         home.append(crawlBlock.root);
-        const otherBlock = this.createSection({
-            page: 'home',
-            id: 'otherBtns',
-            titleKey: '_附加功能',
-            iconId: 'features',
-            persisted: true,
-            stickyEligible: false,
-            type: 'panel',
-        });
-        otherBlock.content.append(otherBtnsBlock);
-        home.append(otherBlock.root);
-        this.bindHomeOtherBtnsVisibility(otherBlock, otherBtnsBlock);
         const downloadBlock = this.createSection({
             page: 'home',
             id: 'downloadArea',
@@ -47212,6 +47202,18 @@ class SettingsPanelLayout {
         downloadContentWrap.append(downloadBtnsBlock, downloadArea, progressBar);
         downloadBlock.content.append(downloadContentWrap);
         home.append(downloadBlock.root);
+        const otherBlock = this.createSection({
+            page: 'home',
+            id: 'otherBtns',
+            titleKey: '_附加功能',
+            iconId: 'features',
+            persisted: true,
+            stickyEligible: false,
+            type: 'panel',
+        });
+        otherBlock.content.append(otherBtnsBlock);
+        home.append(otherBlock.root);
+        this.bindHomeOtherBtnsVisibility(otherBlock, otherBtnsBlock);
     }
     bindHomeOtherBtnsVisibility(otherBlock, otherBtnsBlock) {
         const toggleOtherBlock = () => {
@@ -48106,12 +48108,13 @@ class SettingsPanelShell {
         if (this.shell) {
             return this.shell;
         }
+        const LogoURL = webextension_polyfill__WEBPACK_IMPORTED_MODULE_0___default().runtime.getURL('icons/logo128.png');
         const centerPanelHTML = `
       <div class="centerWrap ${'lang_' + _Language__WEBPACK_IMPORTED_MODULE_5__.lang.type}">
         <div class="centerWrap_head">
           <div class="settingsPanel_headerMain">
             <div class="settingsPanel_brand">
-              <svg class="icon settingsPanel_logo" aria-hidden="true"><use xlink:href="#logo128"></use></svg>
+              <img class="settingsPanel_logo" src="${LogoURL}" alt="${_Config__WEBPACK_IMPORTED_MODULE_3__.Config.appName}">
               <span class="settingsPanel_brandName">${_Config__WEBPACK_IMPORTED_MODULE_3__.Config.appName}</span>
             </div>
 

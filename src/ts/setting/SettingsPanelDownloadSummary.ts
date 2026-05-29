@@ -117,7 +117,7 @@ class SettingsPanelDownloadSummary {
     const total = store.result.length
     const downloaded = total > 0 ? downloadStates.downloadedCount() : 0
     this.progress.textContent = `${downloaded} / ${total}`
-    this.wrap.style.display = total > 0 ? 'block' : 'none'
+    this.wrap.style.display = total > 0 ? 'flex' : 'none'
 
     if (total === 0) {
       this.setState('start')
