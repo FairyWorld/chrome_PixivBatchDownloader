@@ -525,6 +525,7 @@ body.mobile #quickCrawlBtn {
   --settings-panel-download-summary-btn-hover-color: var(--theme-blue);
   --settings-panel-download-summary-btn-hover-bg: transparent;
   --settings-panel-surface-bg: #fff;
+  --settings-panel-sticky-bg: #fff;
   --settings-panel-surface-shadow: 0 0 15px #ddd;
   --settings-panel-surface-text: #444;
   --settings-panel-surface-border: #ececec;
@@ -579,6 +580,7 @@ body.mobile #quickCrawlBtn {
   --settings-panel-download-summary-btn-hover-color: #42c3ff;
   --settings-panel-download-summary-btn-hover-bg: transparent;
   --settings-panel-surface-bg: rgba(255, 255, 255, 0.08);
+  --settings-panel-sticky-bg: #252b32;
   --settings-panel-surface-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
   --settings-panel-surface-text: #f1f5f8;
   --settings-panel-surface-border: rgba(255, 255, 255, 0.08);
@@ -628,6 +630,7 @@ body.mobile #quickCrawlBtn {
   --settings-panel-download-summary-btn-hover-color: #fff;
   --settings-panel-download-summary-btn-hover-bg: rgba(255, 255, 255, 0.3);
   --settings-panel-surface-bg: rgba(255, 255, 255, 0.1);
+  --settings-panel-sticky-bg: #fff;
   --settings-panel-surface-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
   --settings-panel-surface-text: #fff;
   --settings-panel-surface-border: rgba(255, 255, 255, 0.08);
@@ -847,6 +850,7 @@ body.mobile #quickCrawlBtn {
   --settings-panel-download-summary-btn-hover-color: var(--theme-blue);
   --settings-panel-download-summary-btn-hover-bg: transparent;
   --settings-panel-surface-bg: #fff;
+  --settings-panel-sticky-bg: #fff;
   --settings-panel-surface-shadow: 0 0 15px #ddd;
   --settings-panel-surface-text: #444;
   --settings-panel-surface-border: #ececec;
@@ -1908,7 +1912,7 @@ body.mobile #quickCrawlBtn {
   padding: 8px 15px;
   border: none;
   border-radius: 8px;
-  background: var(--settings-panel-surface-bg);
+  background: var(--settings-panel-sticky-bg);
   color: var(--settings-panel-surface-text);
   box-shadow: var(--settings-panel-surface-shadow);
   position: sticky;

@@ -52,7 +52,7 @@ class SettingsPanelHelp {
       textKey: LangTextKey
       iconId: string
     }[] = [
-      { id: 'wiki', textKey: '_使用手册', iconId: 'wiki' },
+      { id: 'wiki', textKey: '_使用手册', iconId: 'book' },
       { id: 'faq', textKey: '_常见问题', iconId: 'help' },
       { id: 'recentUpdates', textKey: '_最近更新', iconId: 'new-2' },
       { id: 'sponsorship', textKey: '_赞助我', iconId: 'heart-line' },
