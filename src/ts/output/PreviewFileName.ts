@@ -5,7 +5,6 @@ import { lang } from '../Language'
 import { Config } from '../Config'
 import { toast } from '../Toast'
 import { Tools } from '../Tools'
-import { Colors } from '../Colors'
 
 // 预览文件名
 class PreviewFileName {

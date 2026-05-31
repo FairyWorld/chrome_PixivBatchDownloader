@@ -11,7 +11,6 @@ import {
 import { store } from '../store/Store'
 import { log } from '../Log'
 import { lang } from '../Language'
-import { Colors } from '../Colors'
 import { setSetting, settings } from '../setting/Settings'
 import { Download } from '../download/Download'
 import { progressBar } from './ProgressBar'

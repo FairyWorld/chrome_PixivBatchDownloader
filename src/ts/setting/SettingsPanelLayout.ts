@@ -79,6 +79,10 @@ class SettingsPanelLayout {
     const crawlBtnsBlock = this.findSlotBlock('stopCrawl')
     const otherBtnsBlock = this.findSlotBlock('otherBtns')
     const downloadBtnsBlock = this.findSlotBlock('exportResult')
+    const downloadEmptyHint = this.form.querySelector(
+      '.settingsPanel_downloadEmptyHint'
+    ) as HTMLDivElement
+    console.log(downloadEmptyHint)
     const downloadArea = this.findSlot('downloadArea')
     const progressBar = this.findSlot('progressBar')
 
@@ -128,6 +132,7 @@ class SettingsPanelLayout {
       crawlBtnsBlock,
       otherBtnsBlock,
       downloadBtnsBlock,
+      downloadEmptyHint,
       downloadArea,
       progressBar
     )
@@ -164,6 +169,7 @@ class SettingsPanelLayout {
     crawlBtnsBlock: HTMLDivElement,
     otherBtnsBlock: HTMLDivElement,
     downloadBtnsBlock: HTMLDivElement,
+    downloadEmptyHint: HTMLDivElement,
     downloadArea: HTMLElement,
     progressBar: HTMLElement
   ) {
@@ -221,7 +227,12 @@ class SettingsPanelLayout {
     })
     const downloadContentWrap = document.createElement('div')
     downloadContentWrap.className = 'settingsPanel_downloadContentWrap'
-    downloadContentWrap.append(downloadBtnsBlock, downloadArea, progressBar)
+    downloadContentWrap.append(
+      downloadBtnsBlock,
+      downloadEmptyHint,
+      downloadArea,
+      progressBar
+    )
     downloadBlock.content.append(downloadContentWrap)
     home.append(downloadBlock.root)
 

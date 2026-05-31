@@ -4,11 +4,11 @@
 
 一个设置项里可能有一个或多个表单控件，例如使用 checkbox 作为开关；使用 input、checkbox、radio、textarea 等表单元素来让用户设置它的值，并显示当前状态。
 
-## 1 添加该设置的默认值
+## 1 添加该设置的配置数据
 
 首先需要为使用到的控件起一个名字（name）。如果该设置里需要使用多个表单控件，就需要添加多个名字。
 
-在 `src\ts\setting\Settings.ts` 里：
+编辑 `src\ts\setting\Settings.ts`：
 
 - 在 `interface XzSetting` 里设置新添加的所有 name 的值的类型声明。可能是 `boolean`、`string`、`number`、`string[]` 等。
 - 在 `defaultSettings` 变量里添加这些 name 的默认值。
@@ -23,6 +23,7 @@
 
 1. 在 `src\ts\setting\OptionsHtml.html` 添加这个设置项的 html 元素（`div.option`），并为其分配一个未被使用的编号 `no`。具体的 html 元素可以参考其他设置项的（`div.option`）的代码。
 2. 在 `src\ts\setting\FormType.d.ts` 里添加新增的表单控件的类型声明（通常就是 `HTMLInputElement`）。
+3. 编辑 `src\ts\setting\OptionConfigs.ts`，在 `options` 里添加该设置卡片的配置信息，使用编号 `no` 作为标志。不管这个设置里是否包含多个子选项，都只需要为该设置添加一个配置项。
 
 ## 4 添加 i18n 文本
 

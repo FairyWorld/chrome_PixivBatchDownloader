@@ -1001,6 +1001,26 @@
         }
       }
 
+      .settingsPanel_downloadEmptyHint {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-top: 15px;
+        padding: 9px 12px;
+        border: 1px solid var(--settings-panel-tip-card-border);
+        border-radius: var(--settings-panel-control-radius);
+        background: var(--settings-panel-tip-card-bg);
+        color: var(--settings-panel-tip-card-text);
+        box-shadow: none;
+        font-size: 14px;
+        line-height: 1.6;
+
+        &.is-hidden {
+          display: none;
+        }
+      }
+
       .centerWrap_btns {
         padding: 0;
         display: grid;
@@ -1864,13 +1884,11 @@
     .settingsPanel_helpTips {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 12px;
     }
 
     .settingsPanel_tipCard {
       width: 100%;
-      margin-top: 0;
+      margin-top: 15px;
       min-height: 42px;
       padding: 9px 12px;
       border-radius: var(--settings-panel-card-radius);

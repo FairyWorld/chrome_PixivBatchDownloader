@@ -1,11 +1,9 @@
 // 初始化关注页面、好 P 友页面、粉丝页面
 import { InitPageBase } from '../crawl/InitPageBase'
-import { Colors } from '../Colors'
 import { lang } from '../Language'
 import { API } from '../API'
 import { store } from '../store/Store'
 import { log } from '../Log'
-import { Tools } from '../Tools'
 import { Utils } from '../utils/Utils'
 import { states } from '../store/States'
 import { settings } from '../setting/Settings'

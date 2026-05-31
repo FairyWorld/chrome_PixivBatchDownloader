@@ -5,18 +5,25 @@ import { FormType } from './FormType'
 import { setSetting, SettingKeys } from '../setting/Settings'
 import { Utils } from '../utils/Utils'
 import { msgBox } from '../MsgBox'
+import { store } from '../store/Store'
 
 /** 管理表单里的帮助信息 */
 class FormHelpManager {
   constructor(form: FormType) {
     this.form = form
+    this.downloadEmptyHint = this.form.querySelector(
+      '.settingsPanel_downloadEmptyHint'
+    ) as HTMLDivElement | null
 
     this.displayTipArea()
     this.toggleHelpArea()
     this.showMsgWhenClickBtn()
+    this.bindDownloadEmptyHint()
   }
 
   private form: FormType
+
+  private downloadEmptyHint: HTMLDivElement | null = null
 
   /** 有些提示区域是默认显示的，用户点击“我知道了”按钮之后改为隐藏 */
   private readonly tipAreaConfig: { key: SettingKeys; selector: string }[] = [
@@ -91,6 +98,34 @@ class FormHelpManager {
         })
       })
     })
+  }
+
+  private bindDownloadEmptyHint() {
+    if (!this.downloadEmptyHint) {
+      return
+    }
+
+    if (store.result.length > 0) {
+      this.hideDownloadEmptyHint()
+    }
+
+    window.addEventListener(EVT.list.crawlStart, () => {
+      this.hideDownloadEmptyHint()
+    })
+
+    for (const ev of [
+      EVT.list.crawlComplete,
+      EVT.list.resultChange,
+      EVT.list.resume,
+    ]) {
+      window.addEventListener(ev, () => {
+        this.hideDownloadEmptyHint()
+      })
+    }
+  }
+
+  private hideDownloadEmptyHint() {
+    this.downloadEmptyHint?.classList.add('is-hidden')
   }
 }
 
