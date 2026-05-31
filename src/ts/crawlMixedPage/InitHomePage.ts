@@ -245,7 +245,6 @@ class InitHomePage extends InitPageBase {
       // 添加一个按钮并等待点击
       const btn = document.createElement('button')
       btn.textContent = lang.transl('_选择文件')
-      btn.setAttribute('style', `border: revert; background-color: revert;`)
       content.append(btn)
 
       btn.addEventListener('click', () => {

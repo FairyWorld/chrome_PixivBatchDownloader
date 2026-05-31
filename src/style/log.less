@@ -70,6 +70,7 @@
   .logWrap {
     z-index: 1000;
   }
+
   .logBtn {
     z-index: 1001;
   }
@@ -86,7 +87,7 @@
   &.logWrap {
     background: #222;
     color: #fff;
-    text-shadow: #003247 0px 0px 2px;
+    text-shadow: var(--text-shadow-on-xzbg);
 
     .logContent * {
       color: #fff !important;
@@ -98,4 +99,9 @@
   font-size: 16px;
   font-family: var(--mobile-font-family);
   padding: 10px 10px;
+
+  .logContent {
+    max-width: 100%;
+    padding: 0;
+  }
 }

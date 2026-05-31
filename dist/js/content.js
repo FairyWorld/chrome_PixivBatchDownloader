@@ -6241,6 +6241,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ExportLog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ExportLog */ "./src/ts/ExportLog.ts");
 /* harmony import */ var _LogButton__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./LogButton */ "./src/ts/LogButton.ts");
 /* harmony import */ var _PPDTask__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PPDTask */ "./src/ts/PPDTask.ts");
+/* harmony import */ var _BG__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./BG */ "./src/ts/BG.ts");
+
 
 
 
@@ -6411,6 +6413,9 @@ class Log {
             const logWrap = document.createElement('div');
             logWrap.id = this.activeLogWrapID;
             logWrap.classList.add(this.logWrapClassName, this.logWrapFlag);
+            const xzbgMask = document.createElement('div');
+            xzbgMask.classList.add('xzbgMask');
+            logWrap.append(xzbgMask);
             const logContent = document.createElement('div');
             logContent.classList.add(this.logContentClassName, 'beautify_scrollbar');
             if (_Config__WEBPACK_IMPORTED_MODULE_5__.Config.mobile) {
@@ -6419,6 +6424,7 @@ class Log {
             logWrap.append(logContent);
             this.logWrap = logWrap;
             this.logContent = logContent;
+            _BG__WEBPACK_IMPORTED_MODULE_9__.bg.useBG(this.logWrap);
             // 点击日志区域两侧的空白处，可以隐藏日志区域
             logWrap.addEventListener('click', (ev) => {
                 if (ev.target === logWrap) {
@@ -19116,7 +19122,6 @@ class InitHomePage extends _crawl_InitPageBase__WEBPACK_IMPORTED_MODULE_0__.Init
             // 添加一个按钮并等待点击
             const btn = document.createElement('button');
             btn.textContent = _Language__WEBPACK_IMPORTED_MODULE_2__.lang.transl('_选择文件');
-            btn.setAttribute('style', `border: revert; background-color: revert;`);
             content.append(btn);
             btn.addEventListener('click', () => {
                 resolve();
@@ -39044,12 +39049,14 @@ class OutputPanel {
         const html = `
     <div class="outputWrap">
     <div class="xzbgMask"></div>
-    <div class="outputClose" data-xztitle="_关闭">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#close"></use>
-      </svg>
+    <div class="outputHeader">
+      <div class="outputTitle" data-xztext="_输出信息"></div>
+      <div class="outputClose" data-xztitle="_关闭">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#close"></use>
+        </svg>
+      </div>
     </div>
-    <div class="outputTitle" data-xztext="_输出信息"></div>
     <div class="outputContent beautify_scrollbar"></div>
     <div class="outputFooter">
     <button class="outputCopy hasRippleAnimation">

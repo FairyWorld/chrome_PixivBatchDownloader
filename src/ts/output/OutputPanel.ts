@@ -77,12 +77,14 @@ class OutputPanel {
     const html = `
     <div class="outputWrap">
     <div class="xzbgMask"></div>
-    <div class="outputClose" data-xztitle="_关闭">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#close"></use>
-      </svg>
+    <div class="outputHeader">
+      <div class="outputTitle" data-xztext="_输出信息"></div>
+      <div class="outputClose" data-xztitle="_关闭">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#close"></use>
+        </svg>
+      </div>
     </div>
-    <div class="outputTitle" data-xztext="_输出信息"></div>
     <div class="outputContent beautify_scrollbar"></div>
     <div class="outputFooter">
     <button class="outputCopy hasRippleAnimation">
