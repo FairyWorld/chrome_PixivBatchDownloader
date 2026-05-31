@@ -19,7 +19,8 @@ class StopCrawl {
       Colors.bgRed,
       '_停止抓取',
       '',
-      'stopCrawling'
+      'stopCrawling',
+      { emphasis: 'secondary' }
     )
     this.hide()
 

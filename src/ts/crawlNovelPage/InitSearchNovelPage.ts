@@ -104,7 +104,7 @@ class InitSearchNovelPage extends InitPageBase {
   ]
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_开始抓取',
@@ -132,7 +132,7 @@ class InitSearchNovelPage extends InitPageBase {
 
   protected addAnyElement() {
     // 添加收藏本页所有作品的功能
-    const bookmarkAllBtn = Tools.addBtn(
+    const bookmarkAllBtn = this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_收藏本页面的所有作品',

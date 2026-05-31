@@ -99,7 +99,8 @@ class DeleteWorks {
       Colors.bgRed,
       '_清除多图作品',
       '',
-      'clearMultiImageWork'
+      'clearMultiImageWork',
+      { emphasis: 'secondary' }
     ).addEventListener(
       'click',
       () => {
@@ -129,7 +130,8 @@ class DeleteWorks {
       Colors.bgRed,
       '_清除动图作品',
       '',
-      'clearUgoiraWork'
+      'clearUgoiraWork',
+      { emphasis: 'secondary' }
     ).addEventListener(
       'click',
       () => {
@@ -158,7 +160,8 @@ class DeleteWorks {
       Colors.bgRed,
       '_手动删除作品',
       '_手动删除作品Title',
-      'manuallyDeleteWork'
+      'manuallyDeleteWork',
+      { emphasis: 'secondary' }
     )
 
     this.delBtn.addEventListener('click', () => {

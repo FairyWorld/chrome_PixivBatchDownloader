@@ -27,7 +27,7 @@ class InitNewNovelPage extends InitPageBase {
   private fetchCount = 0 // 已请求的作品数量
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_开始抓取',

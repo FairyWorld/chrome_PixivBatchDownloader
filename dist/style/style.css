@@ -521,6 +521,20 @@ body.mobile #quickCrawlBtn {
   --settings-panel-nav-active-text: var(--theme-blue);
   --settings-panel-nav-active-accent: var(--theme-blue);
   --settings-panel-nav-active-shadow: 0 4px 12px rgba(9, 160, 244, 0.08);
+  --settings-panel-btn-brand: var(--theme-blue);
+  --settings-panel-btn-success: #14ad27;
+  --settings-panel-btn-warning: #e49d00;
+  --settings-panel-btn-danger: #f33939;
+  --settings-panel-btn-primary-text: #fff;
+  --settings-panel-btn-primary-shadow: 0 4px 12px rgba(15, 53, 86, 0.14);
+  --settings-panel-btn-primary-shadow-hover: 0 6px 16px rgba(15, 53, 86, 0.18);
+  --settings-panel-btn-secondary-bg: #fff;
+  --settings-panel-btn-secondary-hover-bg: #f5fbff;
+  --settings-panel-btn-secondary-shadow: 0 1px 6px rgba(15, 53, 86, 0.06);
+  --settings-panel-btn-secondary-brand-text: var(--theme-blue);
+  --settings-panel-btn-secondary-success-text: #0f9f23;
+  --settings-panel-btn-secondary-warning-text: #bd8400;
+  --settings-panel-btn-secondary-danger-text: #f33939;
   --settings-panel-download-summary-border: #eee;
   --settings-panel-download-summary-status: #666;
   --settings-panel-download-summary-btn-color: #666;
@@ -580,6 +594,20 @@ body.mobile #quickCrawlBtn {
   --settings-panel-nav-active-text: #f1f5f8;
   --settings-panel-nav-active-accent: #42c3ff;
   --settings-panel-nav-active-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  --settings-panel-btn-brand: #42c3ff;
+  --settings-panel-btn-success: #14ad27;
+  --settings-panel-btn-warning: #e49d00;
+  --settings-panel-btn-danger: #f33939;
+  --settings-panel-btn-primary-text: #fff;
+  --settings-panel-btn-primary-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --settings-panel-btn-primary-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.28);
+  --settings-panel-btn-secondary-bg: rgba(255, 255, 255, 0.06);
+  --settings-panel-btn-secondary-hover-bg: rgba(255, 255, 255, 0.12);
+  --settings-panel-btn-secondary-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+  --settings-panel-btn-secondary-brand-text: #42c3ff;
+  --settings-panel-btn-secondary-success-text: #57d66a;
+  --settings-panel-btn-secondary-warning-text: #ffc042;
+  --settings-panel-btn-secondary-danger-text: #ff7b7b;
   --settings-panel-download-summary-border: rgba(255, 255, 255, 0.1);
   --settings-panel-download-summary-status: #dfe7ef;
   --settings-panel-download-summary-btn-color: #dfe7ef;
@@ -634,6 +662,20 @@ body.mobile #quickCrawlBtn {
   --settings-panel-nav-active-text: #fff;
   --settings-panel-nav-active-accent: #fff;
   --settings-panel-nav-active-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --settings-panel-btn-brand: rgba(255, 255, 255, 0.3);
+  --settings-panel-btn-success: #2eb24a;
+  --settings-panel-btn-warning: #dca32c;
+  --settings-panel-btn-danger: #f35f5f;
+  --settings-panel-btn-primary-text: #fff;
+  --settings-panel-btn-primary-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --settings-panel-btn-primary-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.18);
+  --settings-panel-btn-secondary-bg: rgba(255, 255, 255, 0.12);
+  --settings-panel-btn-secondary-hover-bg: rgba(255, 255, 255, 0.18);
+  --settings-panel-btn-secondary-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  --settings-panel-btn-secondary-brand-text: #fff;
+  --settings-panel-btn-secondary-success-text: #dcffe3;
+  --settings-panel-btn-secondary-warning-text: #ffe7a5;
+  --settings-panel-btn-secondary-danger-text: #ffd0d0;
   --settings-panel-download-summary-border: rgba(255, 255, 255, 0.1);
   --settings-panel-download-summary-status: #fff;
   --settings-panel-download-summary-btn-color: #fff;
@@ -714,6 +756,7 @@ body.mobile #quickCrawlBtn {
   padding: 0 1vw;
 }
 .centerWrap.mobile .centerWrap_con .settingsPanel_sidebar .settingsPanel_nav {
+  margin: 6px 0;
   gap: 6px;
   flex-direction: row;
   flex-wrap: wrap;
@@ -856,6 +899,20 @@ body.mobile #quickCrawlBtn {
   --settings-panel-nav-active-text: var(--theme-blue);
   --settings-panel-nav-active-accent: var(--theme-blue);
   --settings-panel-nav-active-shadow: 0 4px 12px rgba(9, 160, 244, 0.08);
+  --settings-panel-btn-brand: var(--theme-blue);
+  --settings-panel-btn-success: #14ad27;
+  --settings-panel-btn-warning: #e49d00;
+  --settings-panel-btn-danger: #f33939;
+  --settings-panel-btn-primary-text: #fff;
+  --settings-panel-btn-primary-shadow: 0 4px 12px rgba(15, 53, 86, 0.14);
+  --settings-panel-btn-primary-shadow-hover: 0 6px 16px rgba(15, 53, 86, 0.18);
+  --settings-panel-btn-secondary-bg: #fff;
+  --settings-panel-btn-secondary-hover-bg: #f5fbff;
+  --settings-panel-btn-secondary-shadow: 0 1px 6px rgba(15, 53, 86, 0.06);
+  --settings-panel-btn-secondary-brand-text: var(--theme-blue);
+  --settings-panel-btn-secondary-success-text: #0f9f23;
+  --settings-panel-btn-secondary-warning-text: #bd8400;
+  --settings-panel-btn-secondary-danger-text: #f33939;
   --settings-panel-download-summary-border: #ccc;
   --settings-panel-download-summary-status: #666;
   --settings-panel-download-summary-btn-color: #666;
@@ -1555,9 +1612,8 @@ body.mobile #quickCrawlBtn {
   gap: 14px;
 }
 .centerWrap .centerWrap_con .settingForm .centerWrap_btns button {
-  background-color: var(--blue-buttons-bg);
   box-sizing: border-box;
-  border: none;
+  border: 1px solid currentColor;
   width: 100%;
   min-width: 0;
   padding: 8px 10px;
@@ -1569,11 +1625,48 @@ body.mobile #quickCrawlBtn {
   border-radius: 6px;
   cursor: pointer;
   vertical-align: top;
-  box-shadow: 0 1px 6px #eee;
+  background: var(--settings-panel-btn-secondary-bg);
+  color: var(--settings-panel-btn-secondary-brand-text);
+  box-shadow: var(--settings-panel-btn-secondary-shadow);
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
-.centerWrap .centerWrap_con .settingForm .centerWrap_btns button,
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-intent='success'] {
+  color: var(--settings-panel-btn-secondary-success-text);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-intent='warning'] {
+  color: var(--settings-panel-btn-secondary-warning-text);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-intent='danger'] {
+  color: var(--settings-panel-btn-secondary-danger-text);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='secondary']:hover,
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='secondary']:focus {
+  background: var(--settings-panel-btn-secondary-hover-bg);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='primary'] {
+  color: var(--settings-panel-btn-primary-text);
+  border-color: transparent;
+  box-shadow: var(--settings-panel-btn-primary-shadow);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='primary']:hover,
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='primary']:focus {
+  transform: translateY(-1px);
+  box-shadow: var(--settings-panel-btn-primary-shadow-hover);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='primary'][data-btn-intent='brand'] {
+  background: var(--settings-panel-btn-brand);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='primary'][data-btn-intent='success'] {
+  background: var(--settings-panel-btn-success);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='primary'][data-btn-intent='warning'] {
+  background: var(--settings-panel-btn-warning);
+}
+.centerWrap .centerWrap_con .settingForm .centerWrap_btns button[data-btn-emphasis='primary'][data-btn-intent='danger'] {
+  background: var(--settings-panel-btn-danger);
+}
 .centerWrap .centerWrap_con .settingForm .progressTip {
-  color: #fff;
   font-size: 15px;
 }
 .centerWrap .centerWrap_con .settingForm .progressBarWrap {
@@ -2307,9 +2400,6 @@ body.mobile #quickCrawlBtn {
 .centerWrap.theme-dark .saveNamingRuleWrap .namingRuleList li:hover {
   background: #333;
 }
-.centerWrap.theme-dark .centerWrap_btns button {
-  box-shadow: none !important;
-}
 .centerWrap.xzBG {
   background: var(--settings-panel-bg-xzbg);
   color: #fff;
@@ -2381,10 +2471,6 @@ body.mobile #quickCrawlBtn {
 .centerWrap.xzBG .saveNamingRuleWrap .namingRuleList {
   text-shadow: none;
   opacity: 0.9 !important;
-}
-.centerWrap.xzBG .centerWrap_btns button {
-  background: rgba(255, 255, 255, 0.3) !important;
-  box-shadow: none !important;
 }
 .showBlobKeywords .option > a .key,
 .showBlobKeywords .optionName .key {

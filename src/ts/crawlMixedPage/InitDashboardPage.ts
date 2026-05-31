@@ -73,7 +73,7 @@ class InitDashboardPage extends InitPageBase {
   }
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgGreen,
       '_导出作品数据CSV',

@@ -41,7 +41,7 @@ class InitContestPage extends InitPageBase {
   private readonly matchNovelId = /id="novel:(\d+)"/g
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_抓取应募作品',
@@ -52,7 +52,7 @@ class InitContestPage extends InitPageBase {
       this.readyCrawl()
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_抓取获奖作品',

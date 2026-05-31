@@ -42,7 +42,7 @@ class InitUserPage extends InitPageBase {
 
   // 添加中间按钮
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_开始抓取',
@@ -57,7 +57,7 @@ class InitUserPage extends InitPageBase {
   }
 
   protected addAnyElement() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_保存用户头像',
@@ -67,7 +67,7 @@ class InitUserPage extends InitPageBase {
       EVT.fire('saveAvatarImage')
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_保存用户头像为图标',
@@ -77,7 +77,7 @@ class InitUserPage extends InitPageBase {
       EVT.fire('saveAvatarIcon')
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_保存用户封面',
@@ -88,7 +88,7 @@ class InitUserPage extends InitPageBase {
     })
 
     // 添加收藏本页所有作品的功能
-    const bookmarkAllBtn = Tools.addBtn(
+    const bookmarkAllBtn = this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_收藏本页面的所有作品',

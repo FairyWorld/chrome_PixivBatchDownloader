@@ -24,7 +24,7 @@ class InitRankingArtworkPage extends InitPageBase {
   }
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_抓取本排行榜作品',
@@ -34,7 +34,7 @@ class InitRankingArtworkPage extends InitPageBase {
       this.readyCrawl()
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_抓取首次登场的作品',

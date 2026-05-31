@@ -19,7 +19,7 @@ class InitPixivisionPage extends InitPageBase {
 
     if (type === 'illustration' || type === 'manga' || type === 'cosplay') {
       // 在插画、漫画、cosplay类型的页面上创建下载功能
-      Tools.addBtn(
+      this.addInitPageBtn(
         'crawlBtns',
         Colors.bgBlue,
         '_抓取该页面的图片',

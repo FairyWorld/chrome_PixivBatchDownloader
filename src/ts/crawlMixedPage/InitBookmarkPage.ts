@@ -57,7 +57,7 @@ class InitBookmarkPage extends InitPageBase {
     'normal'
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_开始抓取',
@@ -101,7 +101,7 @@ class InitBookmarkPage extends InitPageBase {
     const URLUserID = Utils.getURLPathField(window.location.pathname, 'users')
     const ownPage = URLUserID && URLUserID === store.loggedUserID
     if (ownPage) {
-      const btn = Tools.addBtn(
+      const btn = this.addInitPageBtn(
         'otherBtns',
         Colors.bgGreen,
         '_给未分类作品添加添加tag',
@@ -110,7 +110,7 @@ class InitBookmarkPage extends InitPageBase {
       )
       new BookmarksAddTag(btn)
 
-      Tools.addBtn(
+      this.addInitPageBtn(
         'otherBtns',
         Colors.bgYellow,
         '_移除本页面中所有作品的标签',
@@ -120,7 +120,7 @@ class InitBookmarkPage extends InitPageBase {
         this.removeWorksTagsOnThisPage()
       })
 
-      Tools.addBtn(
+      this.addInitPageBtn(
         'otherBtns',
         Colors.bgRed,
         '_取消收藏本页面的所有作品',
@@ -130,7 +130,7 @@ class InitBookmarkPage extends InitPageBase {
         this.unBookmarkAllWorksOnThisPage()
       })
 
-      Tools.addBtn(
+      this.addInitPageBtn(
         'otherBtns',
         Colors.bgRed,
         '_取消收藏所有已被删除的作品',
@@ -142,7 +142,7 @@ class InitBookmarkPage extends InitPageBase {
     }
 
     // 下面的功能按钮在所有人的收藏页面里都可以使用
-    const btnExport = Tools.addBtn(
+    const btnExport = this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_导出收藏列表',
@@ -153,7 +153,7 @@ class InitBookmarkPage extends InitPageBase {
       this.exportBookmarkList()
     })
 
-    const btnImport = Tools.addBtn(
+    const btnImport = this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_导入收藏列表',

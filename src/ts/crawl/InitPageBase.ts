@@ -59,6 +59,8 @@ abstract class InitPageBase {
   /** 调试用，如果为 true，则在 getIdListFinished 之后就停止抓取，便于重复测试抓取 idList 的流程 */
   // 切换到不同页面类型后，会恢复成默认值 false
   protected onlyCrawlIdList = false
+  /** 当前页面里通过 addInitPageBtn 添加了多少个按钮。第一个按钮作为主按钮，其余默认作为次要按钮。 */
+  private initPageBtnCount = 0
 
   // 该类的实现必须调用 init 方法，并且不可以修改 init 方法
   protected readonly init = () => {
@@ -128,7 +130,7 @@ abstract class InitPageBase {
 
   // 添加抓取区域的默认按钮，可以被子类覆写
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_开始抓取',
@@ -137,6 +139,23 @@ abstract class InitPageBase {
     ).addEventListener('click', () => {
       this.readyCrawl()
     })
+  }
+
+  protected addInitPageBtn(
+    slot: string,
+    bg: string,
+    text: string,
+    title: string,
+    id: string
+  ) {
+    // 在每个 Init.*Page.ts 中，当该按钮是第一个按钮时，并且背景颜色是蓝色时，把它设为主按钮 primary，其余情况（不是第一个按钮或背景颜色不是蓝色）是次要按钮。
+    let emphasis: 'primary' | 'secondary' = 'secondary'
+    if(this.initPageBtnCount === 0 && bg === Colors.bgBlue) {
+      emphasis = 'primary'
+    }
+
+    this.initPageBtnCount++
+    return Tools.addBtn(slot, bg, text, title, id, { emphasis })
   }
 
   // 添加其他任意元素（如果有）
@@ -727,7 +746,7 @@ abstract class InitPageBase {
 
   /**定时抓取的按钮 */
   protected addStartTimedCrawlBtn(cb: Function) {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_定时抓取',
@@ -741,7 +760,7 @@ abstract class InitPageBase {
   /**取消定时抓取的按钮 */
   protected addCancelTimedCrawlBtn() {
     const id = 'cancelScheduledCrawling'
-    const btn = Tools.addBtn(
+    const btn = this.addInitPageBtn(
       'crawlBtns',
       Colors.bgWarning,
       '_取消定时抓取',

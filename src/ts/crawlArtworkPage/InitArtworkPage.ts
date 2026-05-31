@@ -62,7 +62,7 @@ class InitArtworkPage extends InitPageBase {
   }
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_从本页开始抓取new',
@@ -73,7 +73,7 @@ class InitArtworkPage extends InitPageBase {
       this.readyCrawl()
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_从本页开始抓取old',
@@ -84,7 +84,7 @@ class InitArtworkPage extends InitPageBase {
       this.readyCrawl()
     })
 
-    const downRelatedBtn = Tools.addBtn(
+    const downRelatedBtn = this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_抓取相关作品',

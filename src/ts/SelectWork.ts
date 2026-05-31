@@ -237,7 +237,8 @@ class SelectWork {
       Colors.bgRed,
       '_清空选择的作品',
       '',
-      'clearSelectedWork'
+      'clearSelectedWork',
+      { emphasis: 'secondary' }
     )
     this.clearBtn.style.display = 'none'
     this.clearBtn.addEventListener('click', () => {

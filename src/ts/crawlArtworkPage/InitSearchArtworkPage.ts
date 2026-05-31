@@ -164,7 +164,7 @@ class InitSearchArtworkPage extends InitPageBase {
   private workPreviewBuffer = document.createDocumentFragment()
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_开始抓取',
@@ -183,7 +183,7 @@ class InitSearchArtworkPage extends InitPageBase {
 
     crawlTagList.init()
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgGreen,
       '_在结果中筛选',
@@ -210,7 +210,7 @@ class InitSearchArtworkPage extends InitPageBase {
     })
 
     // 添加收藏本页所有作品的功能
-    const bookmarkAllBtn = Tools.addBtn(
+    const bookmarkAllBtn = this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_收藏本页面的所有作品',

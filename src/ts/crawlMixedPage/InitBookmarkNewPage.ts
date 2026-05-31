@@ -40,7 +40,7 @@ class InitBookmarkNewPage extends InitPageBase {
   protected firstWorkId = ''
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_开始抓取',

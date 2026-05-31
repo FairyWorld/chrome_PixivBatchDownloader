@@ -18,7 +18,7 @@ class InitNovelSeriesPage extends InitPageBase {
   private last = 0
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_抓取系列小说',
@@ -30,7 +30,7 @@ class InitNovelSeriesPage extends InitPageBase {
   }
 
   protected addAnyElement() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_合并系列小说',

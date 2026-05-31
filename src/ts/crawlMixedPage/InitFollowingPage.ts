@@ -54,7 +54,7 @@ class InitFollowingPage extends InitPageBase {
   }
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_开始抓取',
@@ -64,7 +64,7 @@ class InitFollowingPage extends InitPageBase {
       this.readyCrawl()
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgGreen,
       '_导出关注列表CSV',
@@ -74,7 +74,7 @@ class InitFollowingPage extends InitPageBase {
       exportFollowingList.start('csv')
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgGreen,
       '_导出关注列表JSON',
@@ -84,7 +84,7 @@ class InitFollowingPage extends InitPageBase {
       exportFollowingList.start('json')
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgGreen,
       '_批量关注用户',
@@ -105,7 +105,7 @@ class InitFollowingPage extends InitPageBase {
     //   filterInactiveUsers.start()
     // })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgGreen,
       '_查找已注销的用户',

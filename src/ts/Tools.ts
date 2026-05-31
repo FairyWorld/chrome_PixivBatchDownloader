@@ -3,6 +3,7 @@ import { ArtworkData, NovelData } from './crawl/CrawlResult'
 import { lang } from './Language'
 import { pageType } from './PageType'
 import { wiki } from './setting/Wiki'
+import { Colors } from './Colors'
 import {
   WorkTypeString,
   Result,
@@ -33,6 +34,14 @@ type novelDataTagsItem = {
   deletable: boolean
   userId: string
   userName: string
+}
+
+type BtnEmphasis = 'primary' | 'secondary'
+type BtnIntent = 'brand' | 'success' | 'warning' | 'danger'
+
+type AddBtnOptions = {
+  emphasis?: BtnEmphasis
+  intent?: BtnIntent
 }
 
 class Tools {
@@ -402,18 +411,55 @@ class Tools {
   // 创建下载面板上的通用按钮
   // 注意：如果希望按钮的文本和 title 能根据下载器的语言切换，那么对应的参数需要使用 LangText 里存在的属性
   // 也就是以下划线 _ 开头
+  private static getBtnIntent(bg: string): BtnIntent {
+    switch (bg) {
+      case Colors.bgGreen:
+      case Colors.bgSuccess:
+        return 'success'
+      case Colors.bgYellow:
+      case Colors.bgWarning:
+        return 'warning'
+      case Colors.bgRed:
+      case Colors.bgError:
+      case Colors.red:
+        return 'danger'
+      case Colors.bgBlue:
+      case Colors.bgBrightBlue:
+      case Colors.theme:
+      default:
+        return 'brand'
+    }
+  }
+
+  private static resolveBtnOptions(
+    bg: string,
+    options: AddBtnOptions = {}
+  ): Required<AddBtnOptions> {
+    const intent = options.intent ?? this.getBtnIntent(bg)
+    const emphasis =
+      options.emphasis ?? (intent === 'danger' ? 'primary' : 'secondary')
+
+    return {
+      emphasis,
+      intent,
+    }
+  }
+
   static addBtn(
     slot: string,
     bg: string,
     text: string,
     title: string,
-    id: string
+    id: string,
+    options: AddBtnOptions = {}
   ) {
+    const btnOptions = this.resolveBtnOptions(bg, options)
     const btn = document.createElement('button')
     id && btn.setAttribute('id', id)
     btn.type = 'button'
-    btn.style.backgroundColor = bg
-    btn.classList.add('hasRippleAnimation')
+    btn.classList.add('hasRippleAnimation', 'settingsPanelActionBtn')
+    btn.dataset.btnEmphasis = btnOptions.emphasis
+    btn.dataset.btnIntent = btnOptions.intent
 
     // 把文本添加到内部的 span 里
     if (text) {
@@ -443,7 +489,7 @@ class Tools {
     btn.append(ripple)
 
     // 生成的 btn 代码例如：
-    // <button id="${id}" type="button" class="hasRippleAnimation" data-xztitle="${title}" style="background-color: ${bg};"><span data-xztext="${text}">text</span><span class="ripple"></span></button>
+    // <button id="${id}" type="button" class="hasRippleAnimation settingsPanelActionBtn" data-btn-emphasis="${btnOptions.emphasis}" data-btn-intent="${btnOptions.intent}" data-xztitle="${title}"><span data-xztext="${text}">text</span><span class="ripple"></span></button>
 
     // 添加这个按钮并注册事件
     this.useSlot(slot, btn)

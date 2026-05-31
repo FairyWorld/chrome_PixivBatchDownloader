@@ -290,10 +290,11 @@ class DownloadControl {
     // 添加按钮
     Tools.addBtn(
       'downloadControlBtns',
-      Colors.bgBlue,
+      Colors.bgGreen,
       '_开始下载',
       '',
-      'startDownload'
+      'startDownload',
+      { emphasis: 'primary', intent: 'success' }
     ).addEventListener('click', () => {
       this.startDownload()
     })
@@ -303,7 +304,8 @@ class DownloadControl {
       Colors.bgYellow,
       '_暂停下载',
       '',
-      'pauseDownload'
+      'pauseDownload',
+      { emphasis: 'primary', intent: 'warning' }
     ).addEventListener('click', () => {
       this.pauseDownload()
     })
@@ -313,7 +315,8 @@ class DownloadControl {
       Colors.bgRed,
       '_停止下载',
       '',
-      'stopDownload'
+      'stopDownload',
+      { emphasis: 'primary', intent: 'danger' }
     ).addEventListener('click', () => {
       this.stopDownload()
     })
@@ -323,7 +326,8 @@ class DownloadControl {
       Colors.bgGreen,
       '_复制url',
       '',
-      'copyURLs'
+      'copyURLs',
+      { emphasis: 'secondary' }
     ).addEventListener('click', () => {
       EVT.fire('showURLs')
     })
@@ -335,7 +339,7 @@ class DownloadControl {
       // 导入抓取结果
       this.resultBtns.importJSON = Tools.addBtn(
         'exportResult',
-        Colors.bgBlue,
+        Colors.bgGreen,
         '_导入抓取结果',
         '',
         'importCrawlResults'

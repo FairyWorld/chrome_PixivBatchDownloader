@@ -16,7 +16,7 @@ class InitBookmarkDetailPage extends InitPageBase {
   }
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_抓取相似图片',

@@ -37,7 +37,7 @@ class InitHomePage extends InitPageBase {
   }
 
   protected addCrawlBtns() {
-    this.downIdButton = Tools.addBtn(
+    this.downIdButton = this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_输入id进行抓取',
@@ -48,7 +48,7 @@ class InitHomePage extends InitPageBase {
       this.inputIDList()
     })
 
-    const crawlIdRange = Tools.addBtn(
+    const crawlIdRange = this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_抓取id区间',
@@ -59,7 +59,7 @@ class InitHomePage extends InitPageBase {
       this.crawlIdRange()
     })
 
-    this.importIDListButton = Tools.addBtn(
+    this.importIDListButton = this.addInitPageBtn(
       'crawlBtns',
       Colors.bgGreen,
       '_导入ID列表',
@@ -72,7 +72,7 @@ class InitHomePage extends InitPageBase {
   }
 
   protected addAnyElement() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'otherBtns',
       Colors.bgGreen,
       '_清空已保存的抓取结果',

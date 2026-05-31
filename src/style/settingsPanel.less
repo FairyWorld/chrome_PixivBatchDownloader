@@ -34,6 +34,20 @@
   --settings-panel-nav-active-text: var(--theme-blue);
   --settings-panel-nav-active-accent: var(--theme-blue);
   --settings-panel-nav-active-shadow: 0 4px 12px rgba(9, 160, 244, 0.08);
+  --settings-panel-btn-brand: var(--theme-blue);
+  --settings-panel-btn-success: #14ad27;
+  --settings-panel-btn-warning: #e49d00;
+  --settings-panel-btn-danger: #f33939;
+  --settings-panel-btn-primary-text: #fff;
+  --settings-panel-btn-primary-shadow: 0 4px 12px rgba(15, 53, 86, 0.14);
+  --settings-panel-btn-primary-shadow-hover: 0 6px 16px rgba(15, 53, 86, 0.18);
+  --settings-panel-btn-secondary-bg: #fff;
+  --settings-panel-btn-secondary-hover-bg: #f5fbff;
+  --settings-panel-btn-secondary-shadow: 0 1px 6px rgba(15, 53, 86, 0.06);
+  --settings-panel-btn-secondary-brand-text: var(--theme-blue);
+  --settings-panel-btn-secondary-success-text: #0f9f23;
+  --settings-panel-btn-secondary-warning-text: #bd8400;
+  --settings-panel-btn-secondary-danger-text: #f33939;
   --settings-panel-download-summary-border: #ccc;
   --settings-panel-download-summary-status: #666;
   --settings-panel-download-summary-btn-color: #666;
@@ -894,9 +908,8 @@
         gap: 14px;
 
         & button {
-          background-color: var(--blue-buttons-bg);
           box-sizing: border-box;
-          border: none;
+          border: 1px solid currentColor;
           width: 100%;
           min-width: 0;
           padding: 8px 10px;
@@ -908,13 +921,65 @@
           border-radius: 6px;
           cursor: pointer;
           vertical-align: top;
-          box-shadow: 0 1px 6px #eee;
+          background: var(--settings-panel-btn-secondary-bg);
+          color: var(--settings-panel-btn-secondary-brand-text);
+          box-shadow: var(--settings-panel-btn-secondary-shadow);
+          font-weight: 600;
+          transition:
+            background-color 0.2s,
+            color 0.2s,
+            border-color 0.2s,
+            box-shadow 0.2s,
+            transform 0.2s;
+        }
+
+        & button[data-btn-intent='success'] {
+          color: var(--settings-panel-btn-secondary-success-text);
+        }
+
+        & button[data-btn-intent='warning'] {
+          color: var(--settings-panel-btn-secondary-warning-text);
+        }
+
+        & button[data-btn-intent='danger'] {
+          color: var(--settings-panel-btn-secondary-danger-text);
+        }
+
+        & button[data-btn-emphasis='secondary']:hover,
+        & button[data-btn-emphasis='secondary']:focus {
+          background: var(--settings-panel-btn-secondary-hover-bg);
+        }
+
+        & button[data-btn-emphasis='primary'] {
+          color: var(--settings-panel-btn-primary-text);
+          border-color: transparent;
+          box-shadow: var(--settings-panel-btn-primary-shadow);
+        }
+
+        & button[data-btn-emphasis='primary']:hover,
+        & button[data-btn-emphasis='primary']:focus {
+          transform: translateY(-1px);
+          box-shadow: var(--settings-panel-btn-primary-shadow-hover);
+        }
+
+        & button[data-btn-emphasis='primary'][data-btn-intent='brand'] {
+          background: var(--settings-panel-btn-brand);
+        }
+
+        & button[data-btn-emphasis='primary'][data-btn-intent='success'] {
+          background: var(--settings-panel-btn-success);
+        }
+
+        & button[data-btn-emphasis='primary'][data-btn-intent='warning'] {
+          background: var(--settings-panel-btn-warning);
+        }
+
+        & button[data-btn-emphasis='primary'][data-btn-intent='danger'] {
+          background: var(--settings-panel-btn-danger);
         }
       }
 
-      .centerWrap_btns button,
       .progressTip {
-        color: #fff;
         font-size: 15px;
       }
 
@@ -1827,11 +1892,6 @@
     }
   }
 
-  .centerWrap_btns {
-    & button {
-      box-shadow: none !important;
-    }
-  }
 }
 
 .centerWrap.xzBG {
@@ -1927,13 +1987,6 @@
     }
   }
 
-  .centerWrap_btns {
-    // 在有背景图片时，把首页的按钮改成半透明的
-    & button {
-      background: rgba(255, 255, 255, 0.3) !important;
-      box-shadow: none !important;
-    }
-  }
 }
 
 .showBlobKeywords {

@@ -27,7 +27,7 @@ class InitNovelPage extends InitPageBase {
   protected initAny() {}
 
   protected addCrawlBtns() {
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_从本页开始抓取new',
@@ -38,7 +38,7 @@ class InitNovelPage extends InitPageBase {
       this.readyCrawl()
     })
 
-    Tools.addBtn(
+    this.addInitPageBtn(
       'crawlBtns',
       Colors.bgBlue,
       '_从本页开始抓取old',

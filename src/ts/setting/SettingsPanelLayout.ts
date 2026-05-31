@@ -186,21 +186,6 @@ class SettingsPanelLayout {
     `
     home.append(homeTipsWrap)
 
-    const downloadBlock = this.createSection({
-      page: 'home',
-      id: 'downloadArea',
-      titleKey: '_下载区域',
-      iconId: 'download',
-      persisted: true,
-      stickyEligible: false,
-      type: 'panel',
-    })
-    const downloadContentWrap = document.createElement('div')
-    downloadContentWrap.className = 'settingsPanel_downloadContentWrap'
-    downloadContentWrap.append(downloadBtnsBlock, downloadArea, progressBar)
-    downloadBlock.content.append(downloadContentWrap)
-    home.append(downloadBlock.root)
-
     const pinnedSection = this.createSection({
       page: 'home',
       id: 'pinnedOptions',
@@ -224,6 +209,21 @@ class SettingsPanelLayout {
     })
     crawlBlock.content.append(crawlBtnsBlock)
     home.append(crawlBlock.root)
+
+    const downloadBlock = this.createSection({
+      page: 'home',
+      id: 'downloadArea',
+      titleKey: '_下载区域',
+      iconId: 'download',
+      persisted: true,
+      stickyEligible: false,
+      type: 'panel',
+    })
+    const downloadContentWrap = document.createElement('div')
+    downloadContentWrap.className = 'settingsPanel_downloadContentWrap'
+    downloadContentWrap.append(downloadBtnsBlock, downloadArea, progressBar)
+    downloadBlock.content.append(downloadContentWrap)
+    home.append(downloadBlock.root)
 
     const otherBlock = this.createSection({
       page: 'home',
