@@ -46314,29 +46314,7 @@ __webpack_require__.r(__webpack_exports__);
 /** 设置系统入口：创建 form，并装配所有依赖 form 的模块 */
 class SettingsBootstrap {
     constructor() {
-        const formHtml = `<form class="settingForm">
-    <div class="centerWrap_btns">
-  <slot data-name="stopCrawl"></slot>
-  <slot data-name="crawlBtns"></slot>
-  <slot data-name="selectWorkBtns"></slot>
-</div>
-
-<div class="centerWrap_btns">
-  <slot data-name="exportResult"></slot>
-  <slot data-name="namingBtns"></slot>
-</div>
-<div class="settingsPanel_downloadEmptyHint">
-  <span data-xztext="_目前没有可用的抓取结果提示"></span>
-</div>
-<slot data-name="downloadArea"></slot>
-<slot data-name="progressBar"></slot>
-
-<div class="centerWrap_btns">
-  <slot data-name="otherBtns"></slot>
-</div>
-
-${_OptionsHtml__WEBPACK_IMPORTED_MODULE_7__.optionsHtml}
-</form>`;
+        const formHtml = `<form class="settingForm">${_OptionsHtml__WEBPACK_IMPORTED_MODULE_7__.optionsHtml}</form>`;
         this.form = _Tools__WEBPACK_IMPORTED_MODULE_3__.Tools.useSlot('form', formHtml);
         this.initModules();
         this.bindFormEvents();
@@ -47083,13 +47061,19 @@ class SettingsPanelLayout {
     homePinnedContent;
     otherBtnsVisibilityObserver;
     build() {
-        const crawlBtnsBlock = this.findSlotBlock('stopCrawl');
-        const otherBtnsBlock = this.findSlotBlock('otherBtns');
-        const downloadBtnsBlock = this.findSlotBlock('exportResult');
-        const downloadEmptyHint = this.form.querySelector('.settingsPanel_downloadEmptyHint');
-        console.log(downloadEmptyHint);
-        const downloadArea = this.findSlot('downloadArea');
-        const progressBar = this.findSlot('progressBar');
+        const crawlBtnsBlock = this.createSlotBlock([
+            'stopCrawl',
+            'crawlBtns',
+            'selectWorkBtns',
+        ]);
+        const otherBtnsBlock = this.createSlotBlock(['otherBtns']);
+        const downloadBtnsBlock = this.createSlotBlock([
+            'exportResult',
+            'namingBtns',
+        ]);
+        const downloadEmptyHint = this.createDownloadEmptyHint();
+        const downloadArea = this.createSlot('downloadArea');
+        const progressBar = this.createSlot('progressBar');
         const pagesWrap = document.createElement('div');
         pagesWrap.className = 'settingsPanel_pages';
         this.form.classList.add('settingsPanel_form');
@@ -47331,11 +47315,26 @@ class SettingsPanelLayout {
         });
         return section;
     }
-    findSlot(name) {
-        return this.form.querySelector(`slot[data-name="${name}"]`);
+    createSlot(name) {
+        const slot = document.createElement('slot');
+        slot.dataset.name = name;
+        return slot;
     }
-    findSlotBlock(name) {
-        return this.findSlot(name).parentElement;
+    createSlotBlock(slotNames) {
+        const block = document.createElement('div');
+        block.className = 'centerWrap_btns';
+        slotNames.forEach((name) => {
+            block.append(this.createSlot(name));
+        });
+        return block;
+    }
+    createDownloadEmptyHint() {
+        const hint = document.createElement('div');
+        hint.className = 'settingsPanel_downloadEmptyHint';
+        const text = document.createElement('span');
+        text.dataset.xztext = '_目前没有可用的抓取结果提示';
+        hint.append(text);
+        return hint;
     }
 }
 

@@ -21,29 +21,7 @@ import { SettingsPanel } from './SettingsPanel'
 /** 设置系统入口：创建 form，并装配所有依赖 form 的模块 */
 class SettingsBootstrap {
   constructor() {
-    const formHtml = `<form class="settingForm">
-    <div class="centerWrap_btns">
-  <slot data-name="stopCrawl"></slot>
-  <slot data-name="crawlBtns"></slot>
-  <slot data-name="selectWorkBtns"></slot>
-</div>
-
-<div class="centerWrap_btns">
-  <slot data-name="exportResult"></slot>
-  <slot data-name="namingBtns"></slot>
-</div>
-<div class="settingsPanel_downloadEmptyHint">
-  <span data-xztext="_目前没有可用的抓取结果提示"></span>
-</div>
-<slot data-name="downloadArea"></slot>
-<slot data-name="progressBar"></slot>
-
-<div class="centerWrap_btns">
-  <slot data-name="otherBtns"></slot>
-</div>
-
-${optionsHtml}
-</form>`
+    const formHtml = `<form class="settingForm">${optionsHtml}</form>`
     this.form = Tools.useSlot('form', formHtml) as FormType
 
     this.initModules()
