@@ -133,6 +133,7 @@
   --settings-panel-search-summary: #444;
   --settings-panel-search-mark-bg: #ffe74b;
 
+  display: none;
   box-sizing: border-box;
   width: 925px;
   max-width: calc(100vw - 24px);
@@ -237,7 +238,7 @@
     // 会触发事件的按钮，不同于显示帮助的按钮，需要为它们添加轻量级的按钮样式，方便用户识别
     &.fireEvent {
       border: 1px solid var(--settings-panel-btn-secondary-border);
-      border-radius: 4px;
+      border-radius: 6px;
       margin-right: 3px;
     }
   }
@@ -550,28 +551,16 @@
           flex-shrink: 0;
         }
 
-        // 用于组织一行里的多个元素，使其共同占据一行的宽度
-        .rowWrap {
-          display: flex;
-          flex-basis: 100%;
-          flex-wrap: nowrap;
-          align-items: flex-start;
-          justify-content: center;
-
-          button,
-          .textButton {
-            flex-shrink: 0;
-          }
-        }
-
         // 对于美化的复选框，其原本高度是 14px，使用 margin 将其占据的高度撑到 var(--line-height)
         .beautify_switch,
         .beautify_checkbox {
           margin: 6px 0;
+          flex-shrink: 0;
         }
 
         .beautify_radio {
           margin: 7px 0;
+          flex-shrink: 0;
         }
 
         .subOptionWrap {
@@ -602,7 +591,7 @@
           flex-wrap: wrap;
           flex-shrink: 0;
           align-items: flex-start;
-          column-gap: 4px;
+          gap: 4px;
           line-height: var(--line-height);
 
           * {

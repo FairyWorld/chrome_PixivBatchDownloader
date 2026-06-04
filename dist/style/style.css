@@ -703,6 +703,7 @@ body.mobile #quickCrawlBtn {
   --settings-panel-section-icon-color: #3eb5ec;
   --settings-panel-section-arrow-color: #dfe7ef;
   --settings-panel-option-card-shadow: var(--settings-panel-card-shadow);
+  --settings-panel-option-card-pinned-border: #7a9cb8;
   --settings-panel-tip-card-bg: rgba(66, 195, 255, 0.08);
   --settings-panel-tip-card-border: rgba(66, 195, 255, 0.16);
   --settings-panel-tip-card-shadow: var(--settings-panel-card-shadow);
@@ -734,7 +735,7 @@ body.mobile #quickCrawlBtn {
 .centerWrap.xzBG {
   --settings-panel-text: #fff;
   --settings-panel-head-bg: rgba(10, 18, 28, 0.2);
-  --settings-panel-con-bg: rgba(10, 18, 28, 0.3);
+  --settings-panel-con-bg: rgba(10, 18, 28, 0.1);
   --settings-panel-head-border: rgba(255, 255, 255, 0.08);
   --settings-panel-brand-color: #fff;
   --settings-panel-top-btn-color: #fff;
@@ -818,6 +819,7 @@ body.mobile #quickCrawlBtn {
   --settings-panel-section-icon-color: #fff;
   --settings-panel-section-arrow-color: #fff;
   --settings-panel-option-card-shadow: var(--settings-panel-card-shadow);
+  --settings-panel-option-card-pinned-border: rgba(255, 255, 255, 0.4);
   --settings-panel-tip-card-bg: rgba(255, 255, 255, 0.12);
   --settings-panel-tip-card-border: rgba(255, 255, 255, 0.16);
   --settings-panel-tip-card-shadow: var(--settings-panel-card-shadow);
@@ -917,6 +919,7 @@ body.mobile #quickCrawlBtn {
   flex: none;
   min-width: 0;
   font-size: 17px;
+  min-height: 26px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -949,9 +952,6 @@ body.mobile #quickCrawlBtn {
 }
 .centerWrap.mobile .centerWrap_con .settingForm .fileNameRuleLine1,
 .centerWrap.mobile .centerWrap_con .settingForm .fileNameRuleBtnsArea {
-  flex-wrap: wrap !important;
-}
-.centerWrap.mobile .centerWrap_con .settingForm .option[data-no='91'] .rowWrap {
   flex-wrap: wrap !important;
 }
 .centerWrap.mobile .centerWrap_con .settingForm .namingRuleList {
@@ -1140,6 +1140,7 @@ body.mobile #quickCrawlBtn {
   --settings-panel-naming-list-empty: #93a1ac;
   --settings-panel-search-summary: #444;
   --settings-panel-search-mark-bg: #ffe74b;
+  display: none;
   box-sizing: border-box;
   width: 925px;
   max-width: calc(100vw - 24px);
@@ -1231,7 +1232,7 @@ body.mobile #quickCrawlBtn {
 }
 .centerWrap .textButton.fireEvent {
   border: 1px solid var(--settings-panel-btn-secondary-border);
-  border-radius: 4px;
+  border-radius: 6px;
   margin-right: 3px;
 }
 .centerWrap .grayButton {
@@ -1488,23 +1489,14 @@ body.mobile #quickCrawlBtn {
   line-height: var(--line-height);
   flex-shrink: 0;
 }
-.centerWrap .centerWrap_con .settingForm .option .rowWrap {
-  display: flex;
-  flex-basis: 100%;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: center;
-}
-.centerWrap .centerWrap_con .settingForm .option .rowWrap button,
-.centerWrap .centerWrap_con .settingForm .option .rowWrap .textButton {
-  flex-shrink: 0;
-}
 .centerWrap .centerWrap_con .settingForm .option .beautify_switch,
 .centerWrap .centerWrap_con .settingForm .option .beautify_checkbox {
   margin: 6px 0;
+  flex-shrink: 0;
 }
 .centerWrap .centerWrap_con .settingForm .option .beautify_radio {
   margin: 7px 0;
+  flex-shrink: 0;
 }
 .centerWrap .centerWrap_con .settingForm .option .subOptionWrap {
   max-width: 100%;
@@ -1529,7 +1521,7 @@ body.mobile #quickCrawlBtn {
   flex-wrap: wrap;
   flex-shrink: 0;
   align-items: flex-start;
-  column-gap: 4px;
+  gap: 4px;
   line-height: var(--line-height);
 }
 .centerWrap .centerWrap_con .settingForm .option .optionLine * {

@@ -1457,13 +1457,14 @@ __DEFAULT_NAME_RULE_FOR_NOVEL__</textarea
     data-for-no="36"
     data-xztext="_提示"
   ></button>
-  <span class="rowWrap">
+
+  <div class="optionLine">
     <textarea
       class="centerPanelTextArea beautify_scrollbar"
       name="seriesNovelNameRule"
       rows="1"
     ></textarea>
-  </span>
+  </div>
 
   <p class="tip fileNameTip namingTipArea" id="seriesNovelNameTip">
     <span data-xztext="_系列小说的命名标记提醒"></span>
@@ -1756,6 +1757,7 @@ __DEFAULT_NAME_RULE_FOR_NOVEL__</textarea
         name="folderForMultiImageWorksRule"
         id="folderForMultiImageWorksRule"
         value="{pid}"
+        style="min-width: 100px"
       />
     </div>
   </div>
@@ -1793,6 +1795,7 @@ __DEFAULT_NAME_RULE_FOR_NOVEL__</textarea
       id="r18FolderName"
       class="setinput_style blue grow"
       value="[R-18&R-18G]"
+      style="min-width: 100px"
     />
   </div>
 </div>
@@ -2394,46 +2397,49 @@ __DEFAULT_NAME_RULE_FOR_NOVEL__</textarea
     class="settingNameStyle"
     data-xztext="_下载图片时的尺寸"
   ></a>
-  <input
-    type="radio"
-    name="imageSize"
-    id="imageSize1"
-    class="need_beautify radio"
-    value="original"
-    checked
-  />
-  <span class="beautify_radio" tabindex="0"></span>
-  <label for="imageSize1" data-xztext="_原图"></label>
-  <input
-    type="radio"
-    name="imageSize"
-    id="imageSize2"
-    class="need_beautify radio"
-    value="regular"
-  />
-  <span class="beautify_radio" tabindex="0"></span>
-  <label for="imageSize2" data-xztext="_普通"></label>
-  <label for="imageSize2" class="gray1">(1200px)</label>
-  <input
-    type="radio"
-    name="imageSize"
-    id="imageSize3"
-    class="need_beautify radio"
-    value="small"
-  />
-  <span class="beautify_radio" tabindex="0"></span>
-  <label for="imageSize3" data-xztext="_小图"></label>
-  <label for="imageSize3" class="gray1">(540px)</label>
-  <input
-    type="radio"
-    name="imageSize"
-    id="imageSize4"
-    class="need_beautify radio"
-    value="thumb"
-  />
-  <span class="beautify_radio" tabindex="0"></span>
-  <label for="imageSize4" data-xztext="_方形缩略图"></label>
-  <label for="imageSize4" class="gray1">(250px)</label>
+
+  <div class="optionLine">
+    <input
+      type="radio"
+      name="imageSize"
+      id="imageSize1"
+      class="need_beautify radio"
+      value="original"
+      checked
+    />
+    <span class="beautify_radio" tabindex="0"></span>
+    <label for="imageSize1" data-xztext="_原图"></label>
+    <input
+      type="radio"
+      name="imageSize"
+      id="imageSize2"
+      class="need_beautify radio"
+      value="regular"
+    />
+    <span class="beautify_radio" tabindex="0"></span>
+    <label for="imageSize2" data-xztext="_普通"></label>
+    <label for="imageSize2" class="gray1">(1200px)</label>
+    <input
+      type="radio"
+      name="imageSize"
+      id="imageSize3"
+      class="need_beautify radio"
+      value="small"
+    />
+    <span class="beautify_radio" tabindex="0"></span>
+    <label for="imageSize3" data-xztext="_小图"></label>
+    <label for="imageSize3" class="gray1">(540px)</label>
+    <input
+      type="radio"
+      name="imageSize"
+      id="imageSize4"
+      class="need_beautify radio"
+      value="thumb"
+    />
+    <span class="beautify_radio" tabindex="0"></span>
+    <label for="imageSize4" data-xztext="_方形缩略图"></label>
+    <label for="imageSize4" class="gray1">(250px)</label>
+  </div>
 </div>
 
 <div class="option" data-no="65">

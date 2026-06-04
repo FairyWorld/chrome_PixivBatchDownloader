@@ -743,7 +743,7 @@ class Settings {
     magnifierSize: 'original',
     magnifierPosition: 'right',
     bgDisplay: false,
-    bgOpacity: 62,
+    bgOpacity: 75,
     bgPositionY: 'top',
     createFolderByTag: false,
     createFolderTagList: [],
