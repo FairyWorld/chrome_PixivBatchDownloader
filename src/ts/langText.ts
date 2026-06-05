@@ -10280,6 +10280,14 @@ If you're worried about misoperation, you can turn off this feature.`,
     `설정 이름을 클릭할 때 Wiki 링크 열기`,
     `Открывать ссылку на Wiki при клике на имя настройки`,
   ],
+  _下载器目前不支持抓取珍藏册: [
+    `⚠️下载器目前不支持抓取珍藏册。`,
+    `⚠️下載器目前不支援抓取珍藏冊。`,
+    `⚠️The downloader currently does not support fetching collections.`,
+    `⚠️ダウンローダーは現在、コレクションの取得をサポートしていません。`,
+    `⚠️다운로더는 현재 컬렉션 가져오기를 지원하지 않습니다.`,
+    `⚠️Загрузчик в настоящее время не поддерживает получение коллекций.`,
+  ],
 }
 
 export type LangTextKey = keyof typeof langText

@@ -39,17 +39,28 @@ class InitBookmarkPage extends InitPageBase {
 
   private exportList: BookmarkResult[] = []
 
-  private type: 'illusts' | 'novels' = 'illusts' // 页面是图片还是小说
+  /** 当前页面显示的是图片还是小说 */
+  private type: 'illusts' | 'novels' = 'illusts'
+  // tag 由 store.tag 提供，表示当前查询的收藏标签，可能为空
+  /** 每次请求的偏移量 */
+  private offset: number = 0
+  /** 当前页面是否显示的是非公开收藏 */
+  private isHide = false
+  /** 最新或最旧排序。desc 是按最新排序，asc 是按最早排序 */
+  private order: 'desc' | 'asc' = 'desc'
+  /** 年龄限制模式。可能是 all、safe、r18（含 R-18G） */
+  private mode: 'all' | 'safe' | 'r18' = 'all'
+  /** 当前查询的作品标签，可能为空 */
+  private work_tag = ''
+  /** 当前查询的收藏时间，可能为空 */
+  private bm = ''
 
-  private isHide = false // 当前页面是否显示的是非公开收藏
-
-  private requsetNumber: number = 0 // 根据页数，计算要抓取的作品个数
-
-  private filteredNumber = 0 // 记录检查了多少作品（不论结果是否通过都计入）
-
-  private readonly onceRequest: number = 100 // 每次请求多少个数量
-
-  private offset: number = 0 // 每次请求的偏移量
+  /** 根据页数，计算要抓取的作品个数 */
+  private requsetNumber: number = 0
+  /** 每次请求多少个数量，是 100 个。同时 API 里也是每次请求 100 个 */
+  private readonly onceRequest: number = 100
+  /** 记录检查了多少作品（不论结果是否通过都计入） */
+  private filteredNumber = 0
 
   // 点击不同的功能按钮时，设定抓取模式
   private crawlMode: 'normal' | 'removeTags' | 'unBookmark' | 'unBookmark404' =
@@ -382,11 +393,18 @@ class InitBookmarkPage extends InitPageBase {
   }
 
   protected readyGetIdList() {
+    if (window.location.pathname.includes('/collections')) {
+      const msg = lang.transl('_下载器目前不支持抓取珍藏册')
+      msgBox.warning(msg)
+      log.warning(msg)
+      EVT.fire('stopCrawl')
+      return
+    }
+
+    // 初始化查询参数
     if (window.location.pathname.includes('/novel')) {
       this.type = 'novels'
     }
-
-    store.tag = Tools.getTagFromURL()
 
     // 每页个作品数，插画 48 个，小说 30 个
     const onceNumber = window.location.pathname.includes('/novels') ? 30 : 48
@@ -407,9 +425,16 @@ class InitBookmarkPage extends InitPageBase {
       this.requsetNumber = onceNumber * this.crawlNumber
     }
 
-    // 判断是公开收藏还是非公开收藏
-    // 在新旧版 url 里，rest 都是在查询字符串里的
+    store.tag = Tools.getTagFromURL()
     this.isHide = Utils.getURLSearchField(location.href, 'rest') === 'hide'
+    this.order = (Utils.getURLSearchField(location.href, 'order') ||
+      'desc') as 'desc'
+    this.mode = (Utils.getURLSearchField(location.href, 'mode') ||
+      'all') as 'all'
+    this.work_tag = Utils.getURLSearchField(location.href, 'work_tag') || ''
+    // URL 里的 bm 参数是带有横线的，如 bm=2022-05，需要去掉横线
+    this.bm =
+      Utils.getURLSearchField(location.href, 'bm').replaceAll('-', '') || ''
 
     log.log(lang.transl('_正在抓取'))
 
@@ -431,7 +456,11 @@ class InitBookmarkPage extends InitPageBase {
         this.type,
         store.tag,
         this.offset,
-        this.isHide
+        this.isHide,
+        this.order,
+        this.mode,
+        this.work_tag,
+        this.bm
       )
     } catch (error) {
       // 一种特殊的错误情况：

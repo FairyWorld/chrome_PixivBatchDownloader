@@ -62,7 +62,7 @@ class Tools {
     )
   }
 
-  // 在不同的页面类型里，尝试从 url 中获取 tag
+  /** 在不同的页面类型里，尝试从 url 中获取 tag。如果没有找到 tag，则返回空字符串 */
   static getTagFromURL(url: string = location.href) {
     const nowURL = new URL(url)
 
