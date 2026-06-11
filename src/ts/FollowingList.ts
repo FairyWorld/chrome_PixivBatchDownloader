@@ -8,6 +8,7 @@ import { toast } from './Toast'
 import { Utils } from './utils/Utils'
 import { BackgroundMsg, UserInfo, AllUserFollowingData } from './FollowingData'
 import { log } from './Log'
+import { pageType } from './PageType'
 
 // 更新关注列表
 class FollowingList {
@@ -246,6 +247,11 @@ class FollowingList {
       !settings.highlightFollowingUsers &&
       !settings.removeWorksOfFollowedUsersOnSearchPage
     ) {
+      return
+    }
+
+    // 不在比赛页面里启用，因为该页面里无法获取 token，会导致获取关注列表失败
+    if (pageType.type === pageType.list.Contest) {
       return
     }
 
