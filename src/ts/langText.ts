@@ -9598,19 +9598,97 @@ Additionally, if you have enabled "Create folder using the first matching tag", 
     `파일 이름에 적용되는 {tags} 계열 토큰`,
     `Токены серии {tags}, применяемые в имени файла`,
   ],
-  _版本更新说明18_9_3: [
-    `<strong>✨适配搜索页面的“显示可能妨碍搜索的作品”选项</strong><br><br>
-  <strong>🐞修复问题：标签别名功能在特定情况下可能表现异常</strong><br>`,
-    `<strong>✨適配搜尋頁面的 "顯示可能妨礙搜尋的作品" 選項</strong><br><br>
-  <strong>🐞修復問題：標籤別名功能在特定情況下可能表現異常</strong><br>`,
-    `<strong>✨Adapted to the "Show works that may interfere with search results" option on the search page</strong><br><br>
-  <strong>🐞Fix: The tag alias feature could behave unexpectedly in certain cases</strong><br>`,
-    `<strong>✨検索ページの "検索を妨げる可能性のある作品を表示する" オプションに対応</strong><br><br>
-  <strong>🐞修正：特定の状況でタグ別名機能の動作が不安定になることがある問題を修正</strong><br>`,
-    `<strong>✨검색 페이지의 "검색을 방해할 수 있는 작품 표시" 옵션에 대응했습니다</strong><br><br>
-  <strong>🐞문제 수정: 태그 별칭 기능이 특정 상황에서 비정상적으로 동작할 수 있던 문제를 수정했습니다</strong><br>`,
-    `<strong>✨Добавлена поддержка опции "Показывать работы, которые могут мешать поиску" на странице поиска</strong><br><br>
-  <strong>🐞Исправление: в некоторых случаях функция псевдонимов тегов могла работать некорректно</strong><br>`,
+  _版本更新说明19_0_0: [
+    `<strong>🎨重新设计了设置面板</strong><br>
+新的设置面板有更详细的分类，设置项更容易区分，外观更优美，新增了搜索功能。<br>
+<strong>⚠️破坏性变更</strong><br>
+- 在本次更新之后，“置顶的设置”会被重置，所以你需要重新置顶你需要的设置。<br>
+- 如果你启用了“图片的宽高”设置，在本次更新之后需要重新进行设置。<br>
+<strong>✨新增设置：点击设置卡片时切换它的开关状态</strong><br>
+<strong>✨新增设置：点击设置名字时打开 Wiki 链接</strong><br>
+<strong>✨在收藏页面里添加了“查找所有已被删除的作品”的按钮</strong><br>
+<strong>✨适配了收藏页面里的新的筛选条件</strong><br>
+<strong>✨新增设置：优先下载动图</strong><br>
+启用这个设置之后，如果抓取结果里有动图，那么下载器会优先下载动图。<br>
+<strong>♻️更换了转换动图为 WebM 视频的库</strong><br>
+当 Chrome、Edge 更新到 149 版本之后，一些用户把动图转换为 WebM 视频时标签页会崩溃。这是浏览器更新导致的问题，现在我把转换 WebM 的库改为了 Whammy，虽然转换速度降低了一些，但不会导致标签页崩溃。<br>
+<strong>🔧在“图片的宽高”设置里，你可以分别设置宽度、高度的比较关系</strong><br>
+<strong>😊其他优化</strong><br>`,
+    `<strong>🎨重新設計了設定面板</strong><br>
+新的設定面板有更詳細的分類，設定項更容易區分，外觀更美觀，也新增了搜尋功能。<br>
+<strong>⚠️破壞性變更</strong><br>
+- 在這次更新之後，「置頂的設定」會被重置，所以你需要重新置頂你需要的設定。<br>
+- 如果你啟用了「圖片的寬高」設定，在這次更新之後需要重新設定。<br>
+<strong>✨新增設定：點擊設定卡片時切換它的開關狀態</strong><br>
+<strong>✨新增設定：點擊設定名稱時開啟 Wiki 連結</strong><br>
+<strong>✨在收藏頁面裡新增了「查找所有已被刪除的作品」按鈕</strong><br>
+<strong>✨適配了收藏頁面裡新的篩選條件</strong><br>
+<strong>✨新增設定：優先下載動圖</strong><br>
+啟用這個設定之後，如果抓取結果裡有動圖，那麼下載器會優先下載動圖。<br>
+<strong>♻️更換了轉換動圖為 WebM 影片的函式庫</strong><br>
+當 Chrome、Edge 更新到 149 版本之後，一些使用者在把動圖轉換為 WebM 影片時會讓分頁崩潰。這是瀏覽器更新造成的問題，現在我把轉換 WebM 的函式庫改為 Whammy，雖然轉換速度降低了一些，但不會導致分頁崩潰。<br>
+<strong>🔧在「圖片的寬高」設定裡，你可以分別設定寬度、高度的比較關係</strong><br>
+<strong>😊其他最佳化</strong><br>`,
+    `<strong>🎨 Redesigned the settings panel</strong><br>
+The new settings panel has more detailed categories, makes settings easier to distinguish, looks better, and adds search. <br>
+<strong>⚠️ Breaking changes</strong><br>
+- After this update, the pinned settings will be reset, so you need to pin the settings you want again.<br>
+- If you enabled the “image width/height” setting, you need to configure it again after this update.<br>
+<strong>✨ New setting: toggle a setting card when clicked</strong><br>
+<strong>✨ New setting: open the Wiki link when clicking a setting name</strong><br>
+<strong>✨ Added a button to “find all deleted works” on the favorites page</strong><br>
+<strong>✨ Adapted to the new filter conditions on the favorites page</strong><br>
+<strong>✨ New setting: prioritize downloading ugoira</strong><br>
+After enabling this, if the crawl result includes ugoira, the downloader will download ugoira first.<br>
+<strong>♻️ Replaced the library used to convert ugoira to WebM</strong><br>
+After Chrome and Edge updated to version 149, some users experienced tab crashes when converting ugoira to WebM. This was caused by the browser update. I switched the WebM conversion library to Whammy; conversion is a bit slower, but it no longer crashes the tab.<br>
+<strong>🔧 In the “image width/height” setting, you can configure the width and height comparison rules separately</strong><br>
+<strong>😊 Other improvements</strong><br>`,
+    `<strong>🎨設定パネルを再設計しました</strong><br>
+新しい設定パネルは分類がより細かくなり、設定項目を区別しやすく、見た目もよくなり、検索機能も追加しました。<br>
+<strong>⚠️破壊的変更</strong><br>
+- 今回の更新後、「固定した設定」はリセットされるため、必要な設定をもう一度固定し直してください。<br>
+- 「画像の幅と高さ」設定を有効にしている場合は、更新後に再設定が必要です。<br>
+<strong>✨新しい設定：設定カードをクリックするとオン/オフを切り替える</strong><br>
+<strong>✨新しい設定：設定名をクリックすると Wiki リンクを開く</strong><br>
+<strong>✨お気に入りページに「削除済みの作品をすべて探す」ボタンを追加しました</strong><br>
+<strong>✨お気に入りページの新しい絞り込み条件に対応しました</strong><br>
+<strong>✨新しい設定：動画像を優先的にダウンロードする</strong><br>
+この設定を有効にすると、取得結果に動画像が含まれている場合、ダウンローダーは動画像を優先してダウンロードします。<br>
+<strong>♻️動画像を WebM 動画に変換するライブラリを変更しました</strong><br>
+Chrome と Edge が 149 版に更新された後、一部のユーザーで動画像を WebM 動画に変換するとタブがクラッシュする問題がありました。これはブラウザ更新による問題なので、WebM 変換ライブラリを Whammy に変更しました。変換速度は少し遅くなりますが、タブがクラッシュしなくなります。<br>
+<strong>🔧「画像の幅と高さ」設定で、幅と高さの比較関係をそれぞれ設定できるようになりました</strong><br>
+<strong>😊その他の改善</strong><br>`,
+    `<strong>🎨설정 패널을 다시 디자인했습니다</strong><br>
+새 설정 패널은 분류가 더 세분화되어 설정 항목을 구분하기 쉬워졌고, 외형도 더 보기 좋아졌으며 검색 기능도 추가했습니다.<br>
+<strong>⚠️파괴적인 변경</strong><br>
+- 이번 업데이트 이후 “고정한 설정”이 초기화되므로 필요한 설정을 다시 고정해야 합니다.<br>
+- “이미지의 너비와 높이” 설정을 사용 중이라면 이번 업데이트 이후 다시 설정해야 합니다.<br>
+<strong>✨새 설정: 설정 카드를 클릭하면 켜기/끄기를 전환</strong><br>
+<strong>✨새 설정: 설정 이름을 클릭하면 Wiki 링크 열기</strong><br>
+<strong>✨즐겨찾기 페이지에 “삭제된 모든 작품 찾기” 버튼 추가</strong><br>
+<strong>✨즐겨찾기 페이지의 새로운 필터 조건에 대응</strong><br>
+<strong>✨새 설정: 동영상을 우선 다운로드</strong><br>
+이 설정을 켜면 가져온 결과에 동영상이 있을 경우 다운로드기가 동영상을 우선해서 다운로드합니다.<br>
+<strong>♻️동영상을 WebM 비디오로 변환하는 라이브러리를 변경</strong><br>
+Chrome과 Edge가 149 버전으로 업데이트된 이후 일부 사용자는 동영상을 WebM 비디오로 변환할 때 탭이 충돌했습니다. 이는 브라우저 업데이트로 인한 문제라서, WebM 변환 라이브러리를 Whammy로 바꿨습니다. 변환 속도는 조금 느려졌지만 탭이 충돌하지 않습니다.<br>
+<strong>🔧 “이미지의 너비와 높이” 설정에서 너비와 높이의 비교 관계를 각각 설정할 수 있습니다</strong><br>
+<strong>😊기타 개선</strong><br>`,
+    `<strong>🎨 Переработана панель настроек</strong><br>
+Новая панель настроек получила более подробные категории, благодаря чему параметры легче различать; внешний вид стал лучше, а также появилась функция поиска.<br>
+<strong>⚠️ Ломающие изменения</strong><br>
+- После этого обновления «закреплённые настройки» будут сброшены, поэтому нужные параметры придётся закрепить заново.<br>
+- Если у вас включена настройка «ширина и высота изображения», после обновления её нужно будет настроить заново.<br>
+<strong>✨ Новая настройка: переключать состояние карточки настройки по клику</strong><br>
+<strong>✨ Новая настройка: открывать ссылку Wiki по клику на название настройки</strong><br>
+<strong>✨ На странице избранного добавлена кнопка «найти все удалённые работы»</strong><br>
+<strong>✨ Поддержаны новые фильтры на странице избранного</strong><br>
+<strong>✨ Новая настройка: сначала скачивать анимированные изображения</strong><br>
+Если включить эту настройку, то при наличии анимированных изображений в результате поиска загрузчик будет скачивать их в первую очередь.<br>
+<strong>♻️ Заменена библиотека для преобразования анимации в WebM</strong><br>
+После обновления Chrome и Edge до версии 149 у некоторых пользователей при конвертации анимации в WebM вкладка могла аварийно закрываться. Это проблема, вызванная обновлением браузера, поэтому я заменил библиотеку WebM на Whammy. Скорость конвертации стала немного ниже, но вкладка больше не падает.<br>
+<strong>🔧 В настройке «ширина и высота изображения» теперь можно отдельно задавать правила сравнения для ширины и высоты</strong><br>
+<strong>😊 Прочие улучшения</strong><br>`,
   ],
   _从插画漫画里下载1张图片时: [
     `从插画、漫画里下载 1 张图片时`,
