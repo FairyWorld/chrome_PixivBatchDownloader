@@ -3,6 +3,12 @@
 在 Pixiv 的 console 里隐藏这些脚本的消息：
 -doubleclick.net -admanmedia.com -frame -popin -bpoadfkcbjbfhfodiogcnhhhpibjhbnh -_script.js -_app- -_app. -reach -ufs -pubads -google -tabool -openx -sync
 
+## next
+
+### 🐞修复了下拉框在暗色模式下，文字无法辨别的问题
+
+之前在暗色模式下，命名规则的下拉框是亮色背景 + 亮色文字，导致文字无法阅读，现在会始终保持白底黑字，使其可以正常阅读。
+
 ## 19.0.0 2026-06-11
 
 ### 🎨重新设计了设置面板

@@ -1572,6 +1572,7 @@ body.mobile #quickCrawlBtn {
   background: var(--settings-panel-input-bg);
   padding: 0 8px;
   transition: border-color 0.2s, box-shadow 0.2s;
+  color-scheme: light;
 }
 .centerWrap .centerWrap_con .settingForm select:hover,
 .centerWrap .centerWrap_con .settingForm select:focus {

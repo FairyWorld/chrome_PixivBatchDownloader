@@ -654,6 +654,10 @@
         transition:
           border-color 0.2s,
           box-shadow 0.2s;
+        // 让下拉框始终保持白底黑字的样式
+        // 由于 select 控件是原生控件，在暗色模式下，无法使用 css 来修改其背景颜色来实现暗色主题的效果，所以直接保持白底黑字比较好。
+        color-scheme: light;
+        // 不要在暗色模式里使用 color-scheme: dark; 因为其效果就是白底 + 白色文字，会导致无法阅读
       }
 
       select:hover,
