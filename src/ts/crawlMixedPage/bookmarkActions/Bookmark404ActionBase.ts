@@ -5,7 +5,7 @@ import { WorkBookmarkData } from '../../Bookmark'
 import { BookmarkPageBatchActionBase } from './BookmarkPageBatchActionBase'
 
 /** 继承了在收藏页面里的通用抓取流程，并添加了导出 404 作品列表的功能 */
-abstract class Bookmark404ActionBase extends BookmarkPageBatchActionBase {
+abstract class Bookmark404ActionBase extends BookmarkPageBatchActionBase<WorkBookmarkData> {
   protected exportBookmark404Ids(bookmarkDataList: WorkBookmarkData[]) {
     if (bookmarkDataList.length === 0) {
       return

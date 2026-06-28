@@ -17,21 +17,23 @@ import { WorkBookmarkData } from '../../Bookmark'
 type BookmarkWork = BookmarkData['body']['works'][number]
 
 // 调用方只需要传入“抓取多少页、如何收集每条作品、收集完怎么处理”。
-type BookmarkActionOptions = {
-  // -1 表示抓取全部收藏；其他值表示抓取指定页数。
+type BookmarkActionOptions<T> = {
+  /** -1 表示抓取全部收藏；其他值表示抓取指定页数。 */
   crawlNumber: number
-  // 有些动作要从第一页开始，有些则要沿用当前页偏移量。
+  /** 有些动作要从第一页开始，有些则要沿用当前页偏移量。 */
   resetOffset?: boolean
-  // 是否启用慢速抓取，避免请求过快。
+  /** 是否启用慢速抓取，避免请求过快。 */
   slowCrawl?: boolean
-  // 把接口返回的单条作品转换成后续动作需要的数据。
-  collectWork: (workData: BookmarkWork) => WorkBookmarkData | null
-  // 抓取结束后执行具体动作。
-  onCollected: (bookmarkDataList: WorkBookmarkData[]) => Promise<void> | void
+  /** 对 API 获取到的收藏数据进行处理，通常会进行过滤，并提取成子类需要使用的数据格式 */
+  collectWork: (
+    workData: BookmarkWork
+  ) => Promise<T | null> | T | null
+  /** 当抓取任务完成后，执行的回调函数，通常会对收集到的数据进行处理。 */
+  onCollected: (bookmarkDataList: T[]) => Promise<void> | void
 }
 
 /** 在收藏页面里的通用抓取流程 */
-abstract class BookmarkPageBatchActionBase {
+abstract class BookmarkPageBatchActionBase<T> {
   // 防止同一个按钮重复启动抓取。
   private running = false
   // 当前收藏页内容类型，插画或小说。
@@ -42,8 +44,8 @@ abstract class BookmarkPageBatchActionBase {
     return this.running
   }
 
-  // 统一处理收藏页抓取的准备、分页、过滤和收尾。
-  protected async run(options: BookmarkActionOptions) {
+  /** 配置如何抓取收藏作品、如何提取需要的数据、抓取完成后怎么处理 */
+  protected async run(options: BookmarkActionOptions<T>) {
     if (this.running || states.busy) {
       toast.error(lang.transl('_当前任务尚未完成'))
       return
@@ -154,7 +156,7 @@ abstract class BookmarkPageBatchActionBase {
     offset,
     requestNumber,
   }: {
-    collectWork: (workData: BookmarkWork) => WorkBookmarkData | null
+    collectWork: (workData: BookmarkWork) => Promise<T | null> | T | null
     isHide: boolean
     order: 'desc' | 'asc'
     mode: 'all' | 'safe' | 'r18'
@@ -162,8 +164,8 @@ abstract class BookmarkPageBatchActionBase {
     bm: string
     offset: number
     requestNumber: number
-  }) {
-    const bookmarkDataList: WorkBookmarkData[] = []
+  }): Promise<T[]> {
+    const bookmarkDataList: T[] = []
     // 当前收藏页所属用户。
     const userID = Tools.getCurrentPageUserID()
 
@@ -192,7 +194,7 @@ abstract class BookmarkPageBatchActionBase {
 
       for (const workData of works) {
         // 由子类决定是否保留当前作品。
-        const item = collectWork(workData)
+        const item = await collectWork(workData)
         if (item) {
           bookmarkDataList.push(item)
         }

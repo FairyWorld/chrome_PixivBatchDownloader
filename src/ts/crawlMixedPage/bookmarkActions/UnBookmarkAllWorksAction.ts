@@ -3,9 +3,10 @@ import { lang } from '../../Language'
 import { log } from '../../Log'
 import { toast } from '../../Toast'
 import { unBookmarkWorks } from '../../UnBookmarkWorks'
+import { WorkBookmarkData } from '../../Bookmark'
 import { BookmarkPageBatchActionBase } from './BookmarkPageBatchActionBase'
 
-class UnBookmarkAllWorksAction extends BookmarkPageBatchActionBase {
+class UnBookmarkAllWorksAction extends BookmarkPageBatchActionBase<WorkBookmarkData> {
   constructor(btn: HTMLButtonElement) {
     super()
 

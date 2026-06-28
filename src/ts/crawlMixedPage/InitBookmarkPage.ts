@@ -3,11 +3,8 @@ import { InitPageBase } from '../crawl/InitPageBase'
 import { API } from '../API'
 import { lang } from '../Language'
 import { IDData } from '../store/StoreType'
-import {
-  ArtworkCommonData,
-  BookmarkData,
-  BookmarkResult,
-} from '../crawl/CrawlResult'
+import { ArtworkCommonData, BookmarkData } from '../crawl/CrawlResult'
+import { Config } from '../Config'
 import { store } from '../store/Store'
 import { log } from '../Log'
 import { Tools } from '../Tools'
@@ -15,15 +12,13 @@ import { token } from '../Token'
 import { BookmarksAddTag } from '../pageFunciton/BookmarksAddTag'
 import { filter, FilterOption } from '../filter/Filter'
 import { Utils } from '../utils/Utils'
-import { Config } from '../Config'
-import { states } from '../store/States'
-import { toast } from '../Toast'
-import { EVT } from '../EVT'
-import { bookmark } from '../Bookmark'
 import { showOneTimeMsg } from '../ShowOneTimeMsg'
 import { msgBox } from '../MsgBox'
 import { settings } from '../setting/Settings'
 import { pageType } from '../PageType'
+import { states } from '../store/States'
+import { toast } from '../Toast'
+import { EVT } from '../EVT'
 import { RemoveWorksTagsAction } from './bookmarkActions/RemoveWorksTagsAction'
 import { UnBookmarkAllWorksAction } from './bookmarkActions/UnBookmarkAllWorksAction'
 import { FindBookmark404Action } from './bookmarkActions/FindBookmark404Action'
@@ -39,8 +34,6 @@ class InitBookmarkPage extends InitPageBase {
 
   /** 储存从列表页获取到的作品 id */
   private idList: IDData[] = []
-
-  private exportList: BookmarkResult[] = []
 
   /** 当前页面显示的是图片还是小说 */
   private type: 'illusts' | 'novels' = 'illusts'
@@ -109,14 +102,13 @@ class InitBookmarkPage extends InitPageBase {
     const URLUserID = Utils.getURLPathField(window.location.pathname, 'users')
     const ownPage = URLUserID && URLUserID === store.loggedUserID
     if (ownPage) {
-      const btn = this.addInitPageBtn(
+      new BookmarksAddTag(this.addInitPageBtn(
         'otherBtns',
         '_给未分类作品添加添加tag',
         '',
         'addTagToUnmarkedWork',
         'brand'
-      )
-      new BookmarksAddTag(btn)
+      ))
 
       new RemoveWorksTagsAction(
         this.addInitPageBtn(
@@ -166,10 +158,7 @@ class InitBookmarkPage extends InitPageBase {
         '',
         'exportBookmarkList',
         'brand'
-      ),
-      () => {
-        this.exportBookmarkList()
-      }
+      )
     )
 
     new ImportBookmarkListAction(
@@ -179,145 +168,8 @@ class InitBookmarkPage extends InitPageBase {
         '',
         'importBookmarkList',
         'brand'
-      ),
-      () => {
-        this.importBookmarkIDList()
-      }
+      )
     )
-  }
-
-  private bindExportEvent = false
-
-  private exportBookmarkList() {
-    if (states.busy) {
-      toast.error(lang.transl('_当前任务尚未完成'))
-      return
-    }
-
-    states.exportIDList = true
-    this.exportList = []
-    EVT.fire('closeCenterPanel')
-
-    this.readyCrawl()
-    log.log(lang.transl('_导出收藏列表'))
-    log.log('')
-
-    if (this.bindExportEvent === false) {
-      window.addEventListener(EVT.list.getIdListFinished, async () => {
-        if (!states.exportIDList) {
-          return
-        }
-
-        window.setTimeout(() => {
-          states.exportIDList = false
-        }, 500)
-
-        if (this.exportList.length === 0) {
-          return
-        }
-
-        const resultList = await Utils.json2BlobSafe(this.exportList)
-        for (const result of resultList) {
-          Utils.downloadFile(
-            result.url,
-            `Bookmark list-total ${
-              result.total
-            }-from ${Tools.getPageTitle()}-${Utils.replaceUnsafeStr(
-              new Date().toLocaleString()
-            )}.json`
-          )
-        }
-
-        const msg = lang.transl('_导出收藏列表')
-        log.success('✅' + msg)
-        toast.success(msg)
-      })
-
-      this.bindExportEvent = true
-    }
-  }
-
-  private async importBookmarkIDList() {
-    const loadedJSON = (await Utils.loadJSONFile().catch((err) => {
-      return msgBox.error(err)
-    })) as BookmarkResult[]
-    if (!loadedJSON) {
-      return
-    }
-
-    if (!Array.isArray(loadedJSON) || !loadedJSON.length || !loadedJSON[0]) {
-      return toast.error(lang.transl('_格式错误'))
-    }
-
-    const keys = Object.keys(loadedJSON[0])
-    const need = ['id', 'type', 'tags']
-    for (const field of need) {
-      if (!keys.includes(field)) {
-        return toast.error(lang.transl('_格式错误'))
-      }
-    }
-
-    const tip = lang.transl('_导入收藏列表')
-    toast.success(tip)
-    log.success('🚀' + tip)
-    log.log(lang.transl('_作品数量') + ` ${loadedJSON.length}`)
-    log.warning(lang.transl('_提示会跳过已收藏的作品'))
-
-    EVT.fire('closeCenterPanel')
-
-    let oldList: BookmarkResult[] = []
-    if (loadedJSON.length > 200) {
-      log.log(lang.transl('_加载收藏列表'))
-      const userID = store.loggedUserID
-      const loadIllust = loadedJSON.some((item) => item.type === 'illusts')
-      const loadNovel = loadedJSON.some((item) => item.type === 'novels')
-      if (loadIllust) {
-        log.log(lang.transl('_插画') + ', ' + lang.transl('_公开'))
-        const illustsPublic = await bookmark.getAllBookmarkList(
-          userID,
-          'illusts',
-          '',
-          0,
-          false
-        )
-
-        log.log(lang.transl('_插画') + ', ' + lang.transl('_不公开'))
-        const illustsPrivate = await bookmark.getAllBookmarkList(
-          userID,
-          'illusts',
-          '',
-          0,
-          true
-        )
-
-        oldList = oldList.concat(illustsPublic, illustsPrivate)
-      }
-      if (loadNovel) {
-        log.log(lang.transl('_小说') + ', ' + lang.transl('_公开'))
-        const novelsPublic = await bookmark.getAllBookmarkList(
-          userID,
-          'novels',
-          '',
-          0,
-          false
-        )
-
-        log.log(lang.transl('_小说') + ', ' + lang.transl('_不公开'))
-        const novelsPrivate = await bookmark.getAllBookmarkList(
-          userID,
-          'novels',
-          '',
-          0,
-          true
-        )
-
-        oldList = oldList.concat(novelsPublic, novelsPrivate)
-      }
-
-      log.log(lang.transl('_一共有x个', oldList.length.toString()))
-    }
-
-    bookmark.addBookmarksInBatchs(loadedJSON, oldList)
   }
 
   protected nextStep() {
@@ -415,9 +267,6 @@ One possible reason: You have been banned from Pixiv.`)
       if (this.idList.length > this.requsetNumber) {
         this.idList.splice(this.requsetNumber, this.idList.length)
       }
-      if (this.exportList.length > this.requsetNumber) {
-        this.exportList.splice(this.requsetNumber, this.exportList.length)
-      }
       store.idList = store.idList.concat(this.idList)
       return this.getIdListFinished()
     }
@@ -452,17 +301,6 @@ One possible reason: You have been banned from Pixiv.`)
           id: workData.id,
         })
 
-        if (states.exportIDList) {
-          this.exportList.push({
-            id: workData.id,
-            type:
-              (workData as ArtworkCommonData).illustType === undefined
-                ? 'novels'
-                : 'illusts',
-            tags: workData.tags,
-            restrict: workData.bookmarkData?.private || false,
-          })
-        }
       }
     }
 
