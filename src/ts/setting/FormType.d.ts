@@ -143,6 +143,7 @@ export interface FormType extends HTMLFormElement {
   doNotCrawlLastImagesCount: HTMLInputElement
   downloadNovelCoverImage: HTMLInputElement
   downloadNovelEmbeddedImage: HTMLInputElement
+  novelEmbeddedImageSize: HTMLInputElement
   previewUgoira: HTMLInputElement
   previewSingleImageWork: HTMLInputElement
   previewMultiImageWork: HTMLInputElement

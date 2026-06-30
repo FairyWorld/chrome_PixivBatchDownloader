@@ -797,6 +797,19 @@ class Utils {
   static createLinkHTML(url: string) {
     return `<a href="${url}" target="_blank">${url}</a>`
   }
+
+  /** 从 URL 里获取文件名（不包含扩展名） */
+  static getFileNameFromUrl(url: string) {
+    const array = url.split('/')
+    const lastPart = array.at(-1) || ''
+    const nameArray = lastPart.split('.')
+    if (nameArray.length === 1) {
+      return lastPart
+    }
+    // 移除最后一个 . 后面的部分，即扩展名，也可能包括查询字符串
+    nameArray.pop()
+    return nameArray.join('.')
+  }
 }
 
 export { Utils }

@@ -239,15 +239,13 @@ class MergeNovel {
   private async mergeTXT() {
     // 保存为 txt 格式时，在这里下载小说内嵌的图片
     for (const data of this.allNovelData) {
-      // 虽然 downloadNovelEmbeddedImage 里会使用“下载间隔”设置，但是在自动合并系列小说时，抓取结果的数量可能比较少，没有达到生效条件，所以实际上不会等待
-      // 因此这里需要单独添加等待时间。考虑到 Pixiv 对下载文件的限制没有调用 API 那么严格，所以间隔时间设置为 1 秒应该没问题
       await downloadNovelEmbeddedImage.TXT(
         data.id,
         data.title,
         data.content,
         data.embeddedImages,
         this.novelName,
-        this.downloadInterval
+        'merge novel'
       )
     }
 
@@ -517,7 +515,7 @@ class MergeNovel {
           content,
           data.embeddedImages,
           jepub,
-          this.downloadInterval
+          'merge novel'
         )
         content = value.content
 

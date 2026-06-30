@@ -141,9 +141,7 @@ class Wiki {
         FollowingPage: {
           id: 'FollowingPage',
           nameKey: '_关注页面',
-          ids: [
-            'startCrawlingInFollowingPage',
-          ],
+          ids: ['startCrawlingInFollowingPage'],
         },
         ContestPage: {
           id: 'ContestPage',

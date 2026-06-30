@@ -38,3 +38,5 @@
 ----------
 
 PS：如果添加的设置是内部设置，不需要显示在设置面板上供用户查看、修改，那么可以跳过步骤 2、3、4。只使用步骤 1、5 就可以添加设置和使用设置。另外，使用 `Settings.ts` 里的 `setSetting` 方法可以修改它的值。
+
+PS：如果添加的设置不是一个独立的设置，而是在一个已有的设置添加了子选项（这意味着 `src\ts\setting\OptionConfigs.ts` 里已经存在这个设置的 `options` 配置项），那么就不需要修改 `src\ts\setting\OptionConfigs.ts`。

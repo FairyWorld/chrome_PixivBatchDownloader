@@ -1458,11 +1458,14 @@ export interface NovelInsertIllusts {
         // 这个 API 会根据序号返回对应图片的 URL，而非总是返回第一张图片的 URL
         // 如果指定了序号，那么 Pixiv 会返回对应序号的图片 URL
         images: {
-          /**小尺寸的图片网址 square1200 */
+          /**小尺寸的图片网址，最大尺寸 48px */
+          // https://i.pximg.net/img-master/img/2018/09/05/10/30/00/70551567_p0_master1200.jpg
           small: string
-          /**中等尺寸的图片网址 master1200 */
+          /**中等尺寸的图片网址，最大尺寸 1200px*/
+          // https://i.pximg.net/img-master/img/2018/09/05/10/30/00/70551567_p0_master1200.jpg
           medium: string
           /**原图网址 */
+          // https://i.pximg.net/img-original/img/2018/09/05/10/30/00/70551567_p0.jpg
           original: string
         }
       } | null

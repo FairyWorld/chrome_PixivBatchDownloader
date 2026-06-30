@@ -3107,6 +3107,14 @@ Note: Even if you disable this setting, some quick download methods will always 
     'Сохраните название романа, автора, теги и другую информацию в начале романа.',
   ],
   _作者: [`作者`, `作者`, `Author`, `作者`, `작가`, `Автор`],
+  _由于下载已暂停或停止所以不再下载小说里剩余的图片: [
+    '由于下载已暂停或停止，所以下载器不会再下载小说里剩余的图片',
+    '由於下載已暫停或停止，所以下載器不會再下載小說裡剩餘的圖片',
+    `Since the download has been paused or stopped, the downloader will no longer download the remaining images in the novel`,
+    'ダウンロードが一時停止または停止されているため、ダウンローダーは小説内の残りの画像をダウンロードしません',
+    '다운로드가 일시 중지되거나 중지되었으므로 다운로더는 소설의 나머지 이미지를 더 이상 다운로드하지 않습니다.',
+    'Поскольку загрузка была приостановлена или остановлена, загрузчик больше не будет загружать оставшиеся изображения в романе',
+  ],
   _正在下载小说x中的插画x: [
     `下载小说 {} 中的插画 {}`,
     `下載小說 {} 中的插畫 {}`,
@@ -3483,14 +3491,14 @@ Note: This clears the downloader's download record, not the browser's download h
     'Импорт успешен',
   ],
   _下载图片时的尺寸: [
-    '下载图片时的<span class="key">尺寸</span>',
-    '下載圖片時的<span class="key">尺寸</span>',
-    'Image <span class="key">dimensions</span> when downloading',
-    '画像をダウンロードする際の<span class="key">サイズ</span>',
-    '이미지를 다운로드할 때의 <span class="key">크기</span>',
-    'Размер <span class="key">изображения</span> при загрузке',
+    '下载插画、漫画、动图时的<span class="key">尺寸</span>',
+    '下載插畫、漫畫、動圖時的<span class="key">尺寸</span>',
+    'Image <span class="key">dimensions</span> when downloading illustrations, manga, and Ugoira',
+    'イラスト、漫画、アニメーションをダウンロードする際の<span class="key">サイズ</span>',
+    '일러스트, 만화, 애니메이션을 다운로드할 때의 <span class="key">크기</span>',
+    'Размер <span class="key">изображения</span> при загрузке иллюстраций, манги и анимаций',
   ],
-  _图片尺寸2: [
+  _图片尺寸: [
     '图片尺寸',
     '圖片尺寸',
     'Image size',

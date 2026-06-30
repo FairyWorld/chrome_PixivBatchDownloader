@@ -1301,6 +1301,57 @@ class Tools {
       .replace(/\/c\/\d+x\d+_\d+_\w+\/img-master\//, '/img-original/')
       .replace(/_square1200\.jpg$/, '_ugoira0.jpg')
   }
+
+  /** 把小说里的插画的 original URL 转换为指定尺寸的 URL */
+  // 输入例如：
+  // "https://i.pximg.net/novel-cover-original/img/2024/05/02/23/31/06/tei728907501054_9405d2878eadd47484458a55b471b809.jpg"
+  // 输出：
+  // "https://i.pximg.net/c/1200x1200/novel-cover-master/img/2024/05/02/23/31/06/tei728907501054_9405d2878eadd47484458a55b471b809_master1200.jpg"
+  static converNovelEmbeddedImagetUrl(
+    originalUrl: string,
+    size: '128' | '240' | '480' | '1200' | 'original'
+  ) {
+    if (size === 'original') {
+      return originalUrl
+    }
+
+    // 定义每种尺寸的路径前缀
+    const sizeMap = {
+      '128': 'c/128x128/novel-cover-master/',
+      '240': 'c/240x480_80/novel-cover-master/',
+      '480': 'c/480x960/novel-cover-master/',
+      '1200': 'c/1200x1200/novel-cover-master/',
+    }
+
+    // 定义裁剪标记
+    const cropMap = {
+      '128': '_square1200',
+      '240': '_master1200',
+      '480': '_master1200',
+      '1200': '_master1200',
+    }
+
+    // 检查传入的尺寸是否有效
+    if (!sizeMap[size]) {
+      throw new Error(`Invalid size: ${size}`)
+    }
+
+    // 替换路径
+    let result = originalUrl.replace('novel-cover-original/', sizeMap[size])
+    // 提取文件名，在其后添加对应的裁剪标记
+    const fileName = Utils.getFileNameFromUrl(result)
+    result = result.replace(fileName, fileName + cropMap[size])
+    // 把原图的扩展名（通常是 .jpg、.png) 替换为 .jpg，因为非原图的尺寸都是 jpg 格式
+    const array = result.split('.')
+    if (array.length > 1) {
+      array[array.length - 1] = 'jpg'
+      result = array.join('.')
+    } else {
+      result = result.replace('.png', '.jpg')
+    }
+
+    return result
+  }
 }
 
 export { Tools }

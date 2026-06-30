@@ -12,8 +12,8 @@ import { downloadNovelEmbeddedImage } from './DownloadNovelEmbeddedImage'
 
 declare const jEpub: any
 
-/** 保存单篇小说为 EPUB 文件 */
-class MakeNovelFile {
+/** 为单篇小说生成文件 */
+class MakeSingleNovelFile {
   /** 下载小说的封面图片 */
   private async downloadCover(
     id: string,
@@ -60,7 +60,8 @@ class MakeNovelFile {
       data.title,
       data.content,
       data.embeddedImages,
-      filename
+      filename,
+      'single novel'
     )
 
     this.busy = false
@@ -154,7 +155,8 @@ class MakeNovelFile {
       data.title,
       content,
       data.embeddedImages,
-      jepub
+      jepub,
+      'single novel'
     )
 
     this.busy = false
@@ -194,5 +196,5 @@ class MakeNovelFile {
   }
 }
 
-const makeNovelFile = new MakeNovelFile()
-export { makeNovelFile }
+const makeSingleNovelFile = new MakeSingleNovelFile()
+export { makeSingleNovelFile }

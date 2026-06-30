@@ -297,6 +297,7 @@ interface XzSetting {
   doNotCrawlLastImagesCount: number
   downloadNovelCoverImage: boolean
   downloadNovelEmbeddedImage: boolean
+  novelEmbeddedImageSize: 'original' | '1200' | '480' | '240' | '128'
   previewSingleImageWork: boolean
   previewMultiImageWork: boolean
   previewUgoira: boolean
@@ -864,6 +865,7 @@ class Settings {
     doNotCrawlLastImagesCount: 1,
     downloadNovelCoverImage: true,
     downloadNovelEmbeddedImage: true,
+    novelEmbeddedImageSize: 'original',
     previewSingleImageWork: true,
     previewMultiImageWork: true,
     previewUgoira: true,
