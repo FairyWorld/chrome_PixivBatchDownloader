@@ -24782,6 +24782,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Config */ "./src/ts/Config.ts");
 /* harmony import */ var _DownloadNovelCover__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./DownloadNovelCover */ "./src/ts/download/DownloadNovelCover.ts");
 /* harmony import */ var _DownloadNovelEmbeddedImage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./DownloadNovelEmbeddedImage */ "./src/ts/download/DownloadNovelEmbeddedImage.ts");
+/* harmony import */ var _ReplaceNovelWords__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ReplaceNovelWords */ "./src/ts/download/ReplaceNovelWords.ts");
+
 
 
 
@@ -24819,10 +24821,10 @@ class MakeSingleNovelFile {
         await this.waitForIdle();
         this.busy = true;
         await this.downloadCover(data.id, data.title, data.coverUrl, filename);
+        let content = await _ReplaceNovelWords__WEBPACK_IMPORTED_MODULE_10__.replaceNovelWords.replace(data.seriesId, data.content);
         // 下载小说里的内嵌图片
-        await _DownloadNovelEmbeddedImage__WEBPACK_IMPORTED_MODULE_9__.downloadNovelEmbeddedImage.TXT(data.id, data.title, data.content, data.embeddedImages, filename, 'single novel');
+        await _DownloadNovelEmbeddedImage__WEBPACK_IMPORTED_MODULE_9__.downloadNovelEmbeddedImage.TXT(data.id, data.title, content, data.embeddedImages, filename, 'single novel');
         this.busy = false;
-        let content = data.content;
         // 添加元数据
         if (_setting_Settings__WEBPACK_IMPORTED_MODULE_0__.settings.saveNovelMeta) {
             content =
@@ -24840,7 +24842,7 @@ class MakeSingleNovelFile {
         await this.waitForIdle();
         this.busy = true;
         await this.downloadCover(data.id, data.title, data.coverUrl, filename);
-        let content = data.content;
+        let content = await _ReplaceNovelWords__WEBPACK_IMPORTED_MODULE_10__.replaceNovelWords.replace(data.seriesId, data.content);
         // 添加元数据
         if (_setting_Settings__WEBPACK_IMPORTED_MODULE_0__.settings.saveNovelMeta) {
             content =
@@ -24938,19 +24940,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _download_DownloadNovelCover__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../download/DownloadNovelCover */ "./src/ts/download/DownloadNovelCover.ts");
 /* harmony import */ var _DownloadNovelEmbeddedImage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./DownloadNovelEmbeddedImage */ "./src/ts/download/DownloadNovelEmbeddedImage.ts");
 /* harmony import */ var _DownloadNovelGlossaryImage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./DownloadNovelGlossaryImage */ "./src/ts/download/DownloadNovelGlossaryImage.ts");
-/* harmony import */ var _Log__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Log */ "./src/ts/Log.ts");
-/* harmony import */ var _API__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../API */ "./src/ts/API.ts");
-/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Config */ "./src/ts/Config.ts");
-/* harmony import */ var _Toast__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Toast */ "./src/ts/Toast.ts");
-/* harmony import */ var _crawlNovelPage_GetNovelGlossarys__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../crawlNovelPage/GetNovelGlossarys */ "./src/ts/crawlNovelPage/GetNovelGlossarys.ts");
-/* harmony import */ var _utils_DateFormat__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/DateFormat */ "./src/ts/utils/DateFormat.ts");
-/* harmony import */ var _PageType__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../PageType */ "./src/ts/PageType.ts");
-/* harmony import */ var _store_CacheWorkData__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../store/CacheWorkData */ "./src/ts/store/CacheWorkData.ts");
-/* harmony import */ var _MergeNovelFileName__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./MergeNovelFileName */ "./src/ts/download/MergeNovelFileName.ts");
-/* harmony import */ var _SendDownload__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./SendDownload */ "./src/ts/download/SendDownload.ts");
-/* harmony import */ var _filter_Filter__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../filter/Filter */ "./src/ts/filter/Filter.ts");
-/* harmony import */ var _store_States__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../store/States */ "./src/ts/store/States.ts");
-/* harmony import */ var _DownloadRecord__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./DownloadRecord */ "./src/ts/download/DownloadRecord.ts");
+/* harmony import */ var _ReplaceNovelWords__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ReplaceNovelWords */ "./src/ts/download/ReplaceNovelWords.ts");
+/* harmony import */ var _Log__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Log */ "./src/ts/Log.ts");
+/* harmony import */ var _API__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../API */ "./src/ts/API.ts");
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Config */ "./src/ts/Config.ts");
+/* harmony import */ var _Toast__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Toast */ "./src/ts/Toast.ts");
+/* harmony import */ var _crawlNovelPage_GetNovelGlossarys__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../crawlNovelPage/GetNovelGlossarys */ "./src/ts/crawlNovelPage/GetNovelGlossarys.ts");
+/* harmony import */ var _utils_DateFormat__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../utils/DateFormat */ "./src/ts/utils/DateFormat.ts");
+/* harmony import */ var _PageType__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../PageType */ "./src/ts/PageType.ts");
+/* harmony import */ var _store_CacheWorkData__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../store/CacheWorkData */ "./src/ts/store/CacheWorkData.ts");
+/* harmony import */ var _MergeNovelFileName__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./MergeNovelFileName */ "./src/ts/download/MergeNovelFileName.ts");
+/* harmony import */ var _SendDownload__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./SendDownload */ "./src/ts/download/SendDownload.ts");
+/* harmony import */ var _filter_Filter__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../filter/Filter */ "./src/ts/filter/Filter.ts");
+/* harmony import */ var _store_States__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../store/States */ "./src/ts/store/States.ts");
+/* harmony import */ var _DownloadRecord__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./DownloadRecord */ "./src/ts/download/DownloadRecord.ts");
+
 
 
 
@@ -25013,7 +25017,7 @@ class MergeNovel {
     /** 合并系列小说。返回值是合并完成后所包含的小说数量（不包含 404 的小说） */
     async merge(seriesId, seriesTitle, slowMode = false) {
         if (!seriesId) {
-            _Toast__WEBPACK_IMPORTED_MODULE_11__.toast.error(`seriesId is undefined`);
+            _Toast__WEBPACK_IMPORTED_MODULE_12__.toast.error(`seriesId is undefined`);
             return 0;
         }
         this.seriesId = seriesId.toString();
@@ -25021,24 +25025,24 @@ class MergeNovel {
         this.slowMode = slowMode;
         const link = `<a href="https://www.pixiv.net/novel/series/${this.seriesId}" target="_blank">${this.seriesTitle || this.seriesId}</a>`;
         if (seriesTitle) {
-            const check = await _filter_Filter__WEBPACK_IMPORTED_MODULE_18__.filter.check({ seriesTitle: seriesTitle });
+            const check = await _filter_Filter__WEBPACK_IMPORTED_MODULE_19__.filter.check({ seriesTitle: seriesTitle });
             if (!check) {
-                _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(`✅${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_跳过合并系列小说')} ${link}`);
+                _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(`✅${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_跳过合并系列小说')} ${link}`);
                 return 0;
             }
         }
-        _Log__WEBPACK_IMPORTED_MODULE_8__.log.log(`📚${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_合并系列小说')} ${link}`);
-        _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_提示合并系列小说时可以跳过已合并的小说'), 'tipMergeNovelSkipMergedNovels');
+        _Log__WEBPACK_IMPORTED_MODULE_9__.log.log(`📚${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_合并系列小说')} ${link}`);
+        _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_提示合并系列小说时可以跳过已合并的小说'), 'tipMergeNovelSkipMergedNovels');
         // 如果用户选择的保存格式是 txt，则提示使用 EPUB 格式。这是因为很多小说阅读器都无法识别 txt 里的章节标记，所以使用 EPUB 格式是更好的选择
         if (_setting_Settings__WEBPACK_IMPORTED_MODULE_2__.settings.novelSaveAs === 'txt') {
-            _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_合并小说时提示用户使用EPUB格式'), 'mergeNovelRecommendEPUB');
+            _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_合并小说时提示用户使用EPUB格式'), 'mergeNovelRecommendEPUB');
         }
         // 在系列小说页面里执行时，关闭设置面板
         // 在其他页面类型里不关闭设置面板，因为在其他页面里可能需要合并多个系列小说，会导致多次关闭设置面板。这可能会影响用户正常使用设置面板
-        if (_PageType__WEBPACK_IMPORTED_MODULE_14__.pageType.type === _PageType__WEBPACK_IMPORTED_MODULE_14__.pageType.list.NovelSeries) {
+        if (_PageType__WEBPACK_IMPORTED_MODULE_15__.pageType.type === _PageType__WEBPACK_IMPORTED_MODULE_15__.pageType.list.NovelSeries) {
             _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.fire('closeCenterPanel');
         }
-        _Log__WEBPACK_IMPORTED_MODULE_8__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_获取小说列表'), 'getNovelList');
+        _Log__WEBPACK_IMPORTED_MODULE_9__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_获取小说列表'), 'getNovelList');
         // 只在第一个发送网络请求的步骤里使用 try catch 即可
         // 因为最常见的错误是 404, 如果遇到 404, 这一步就可以检查出来，不必向下执行了
         try {
@@ -25046,24 +25050,24 @@ class MergeNovel {
             await this.getNovelIds();
         }
         catch (error) {
-            _Log__WEBPACK_IMPORTED_MODULE_8__.log.error(`❌${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_发生错误取消合并这个系列小说')} ${link}`);
+            _Log__WEBPACK_IMPORTED_MODULE_9__.log.error(`❌${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_发生错误取消合并这个系列小说')} ${link}`);
             return 0;
         }
         if (this.novelIdList.length === 0) {
-            _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(`✅${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_跳过合并系列小说')} ${link}`);
+            _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(`✅${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_跳过合并系列小说')} ${link}`);
             return 0;
         }
         // 在获取每篇小说的数据之前，检查是否需要应用抓取间隔时间
         if (!this.slowMode &&
             this.novelIdList.length > _setting_Settings__WEBPACK_IMPORTED_MODULE_2__.settings.slowCrawlOnWorksNumber) {
             this.slowMode = true;
-            _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_慢速抓取'));
+            _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_慢速抓取'));
         }
         await this.getAllNovelData();
         // 获取这个系列的设定资料
-        if (_setting_Settings__WEBPACK_IMPORTED_MODULE_2__.settings.saveNovelMeta && !_store_States__WEBPACK_IMPORTED_MODULE_19__.states.quickMergeNovel) {
-            _Log__WEBPACK_IMPORTED_MODULE_8__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_获取设定资料'), 'getNovelGlossary' + seriesId);
-            const data = await _crawlNovelPage_GetNovelGlossarys__WEBPACK_IMPORTED_MODULE_12__.getNovelGlossarys.getGlossarys(this.seriesId, this.crawlInterval);
+        if (_setting_Settings__WEBPACK_IMPORTED_MODULE_2__.settings.saveNovelMeta && !_store_States__WEBPACK_IMPORTED_MODULE_20__.states.quickMergeNovel) {
+            _Log__WEBPACK_IMPORTED_MODULE_9__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_获取设定资料'), 'getNovelGlossary' + seriesId);
+            const data = await _crawlNovelPage_GetNovelGlossarys__WEBPACK_IMPORTED_MODULE_13__.getNovelGlossarys.getGlossarys(this.seriesId, this.crawlInterval);
             // 获取设定资料里的图片的数据
             for (const categorie of data.result) {
                 for (const item of categorie.items) {
@@ -25076,22 +25080,21 @@ class MergeNovel {
                     }
                 }
             }
-            console.log('glossaryImages', this.glossaryImages);
             // 生成设定资料的文本内容
-            this.seriesGlossaryText = _crawlNovelPage_GetNovelGlossarys__WEBPACK_IMPORTED_MODULE_12__.getNovelGlossarys.storeGlossaryText(data.result);
+            this.seriesGlossaryText = _crawlNovelPage_GetNovelGlossarys__WEBPACK_IMPORTED_MODULE_13__.getNovelGlossarys.storeGlossaryText(data.result);
         }
         // 获取这个系列本身的详细数据
         await this.sleep(this.crawlInterval);
-        _Log__WEBPACK_IMPORTED_MODULE_8__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_获取系列数据'));
-        this.seriesData = await _API__WEBPACK_IMPORTED_MODULE_9__.API.getNovelSeriesData(this.seriesId);
+        _Log__WEBPACK_IMPORTED_MODULE_9__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_获取系列数据'));
+        this.seriesData = await _API__WEBPACK_IMPORTED_MODULE_10__.API.getNovelSeriesData(this.seriesId);
         const body = this.seriesData.body;
         this.userName = _Tools__WEBPACK_IMPORTED_MODULE_4__.Tools.replaceEPUBText(_utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.replaceUnsafeStr(body.userName));
         this.seriesTitle = _Tools__WEBPACK_IMPORTED_MODULE_4__.Tools.replaceEPUBTitle(_utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.replaceUnsafeStr(body.title));
         this.seriesCaption = _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.htmlToText(_utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.htmlDecode(body.caption));
         this.seriesTags = body.tags;
-        this.seriesUpdateDate = _utils_DateFormat__WEBPACK_IMPORTED_MODULE_13__.DateFormat.format(body.updateDate);
+        this.seriesUpdateDate = _utils_DateFormat__WEBPACK_IMPORTED_MODULE_14__.DateFormat.format(body.updateDate);
         // 进入合并流程
-        this.novelName = _MergeNovelFileName__WEBPACK_IMPORTED_MODULE_16__.mergeNovelFileName.getName(this.seriesData);
+        this.novelName = _MergeNovelFileName__WEBPACK_IMPORTED_MODULE_17__.mergeNovelFileName.getName(this.seriesData);
         if (_setting_Settings__WEBPACK_IMPORTED_MODULE_2__.settings.novelSaveAs === 'txt') {
             await this.mergeTXT();
         }
@@ -25110,10 +25113,10 @@ class MergeNovel {
             await _download_DownloadNovelCover__WEBPACK_IMPORTED_MODULE_5__.downloadNovelCover.download(coverUrl, this.novelName);
         }
         // 合并完成
-        _Log__WEBPACK_IMPORTED_MODULE_8__.log.success(`✅${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_已合并系列小说')} ${link}`);
+        _Log__WEBPACK_IMPORTED_MODULE_9__.log.success(`✅${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_已合并系列小说')} ${link}`);
         // 在系列小说页面里执行时，由于只有一个系列，所以合并后显示轻提示
-        if (_PageType__WEBPACK_IMPORTED_MODULE_14__.pageType.type === _PageType__WEBPACK_IMPORTED_MODULE_14__.pageType.list.NovelSeries) {
-            _Toast__WEBPACK_IMPORTED_MODULE_11__.toast.success(`${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_已合并系列小说')}`);
+        if (_PageType__WEBPACK_IMPORTED_MODULE_15__.pageType.type === _PageType__WEBPACK_IMPORTED_MODULE_15__.pageType.list.NovelSeries) {
+            _Toast__WEBPACK_IMPORTED_MODULE_12__.toast.success(`${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_已合并系列小说')}`);
         }
         // 为每一篇小说生成下载记录，这样以后抓取和下载时，如果启用了“不抓取下载过的作品”、“不下载重复文件”，就不会再次抓取和保存这些小说，避免了重复下载
         // PS: 在合并系列小说时，会检查“不抓取下载过的作品”来跳过存在记录的小说。但不会检查“不下载重复文件”
@@ -25127,7 +25130,7 @@ class MergeNovel {
                 d: data.updateDate,
             };
             // console.log('add download record',data.no, record)
-            await _DownloadRecord__WEBPACK_IMPORTED_MODULE_20__.downloadRecord.addRecordFromRecord(record);
+            await _DownloadRecord__WEBPACK_IMPORTED_MODULE_21__.downloadRecord.addRecordFromRecord(record);
         }
         // 清除数据以减少内存占用
         window.setTimeout(() => {
@@ -25232,7 +25235,7 @@ class MergeNovel {
         const blob = new Blob(text, {
             type: 'text/plain',
         });
-        await _SendDownload__WEBPACK_IMPORTED_MODULE_17__.SendDownload.noReply(blob, this.novelName, 'uniquify');
+        await _SendDownload__WEBPACK_IMPORTED_MODULE_18__.SendDownload.noReply(blob, this.novelName, 'uniquify');
     }
     // 生成的 EPUB 文件在这个方法里自行保存
     async mergeEPUB(body) {
@@ -25330,7 +25333,7 @@ class MergeNovel {
                         if (image) {
                             this.addSize(image.byteLength);
                             const imageId = `glossaryImage-${item.novelImageId}`;
-                            jepub.image(_Config__WEBPACK_IMPORTED_MODULE_10__.Config.isFirefox ? _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.copyArrayBuffer(image) : image, imageId);
+                            jepub.image(_Config__WEBPACK_IMPORTED_MODULE_11__.Config.isFirefox ? _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.copyArrayBuffer(image) : image, imageId);
                         }
                     }
                 }
@@ -25343,7 +25346,7 @@ class MergeNovel {
                 const cover = await _download_DownloadNovelCover__WEBPACK_IMPORTED_MODULE_5__.downloadNovelCover.getCover(seriesCoverUrl, 'arrayBuffer');
                 if (cover) {
                     this.addSize(cover.byteLength);
-                    jepub.cover(_Config__WEBPACK_IMPORTED_MODULE_10__.Config.isFirefox ? _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.copyArrayBuffer(cover) : cover);
+                    jepub.cover(_Config__WEBPACK_IMPORTED_MODULE_11__.Config.isFirefox ? _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.copyArrayBuffer(cover) : cover);
                 }
             }
             // 记录每个章节的封面图片的 id 和原始 URL
@@ -25365,7 +25368,7 @@ class MergeNovel {
                 const coverUrl = data.coverUrl;
                 if (_setting_Settings__WEBPACK_IMPORTED_MODULE_2__.settings.downloadNovelCoverImage && coverUrl) {
                     const link = _Tools__WEBPACK_IMPORTED_MODULE_4__.Tools.createWorkLink(novelId, data.title, 'novel');
-                    _Log__WEBPACK_IMPORTED_MODULE_8__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下载小说的封面图片的提示', link));
+                    _Log__WEBPACK_IMPORTED_MODULE_9__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下载小说的封面图片的提示', link));
                     // 先检查是否已经保存过这个章节的封面图
                     const find = episodeCovers.find((item) => item.url === coverUrl);
                     // 如果已经保存过，则直接引用它
@@ -25391,7 +25394,7 @@ class MergeNovel {
                                 // 如果 URL 和字节数都不同，才会把这个封面图片保存到 epub 里
                                 this.addSize(size);
                                 const imageId = 'cover-' + novelId;
-                                jepub.image(_Config__WEBPACK_IMPORTED_MODULE_10__.Config.isFirefox ? _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.copyArrayBuffer(cover) : cover, imageId);
+                                jepub.image(_Config__WEBPACK_IMPORTED_MODULE_11__.Config.isFirefox ? _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.copyArrayBuffer(cover) : cover, imageId);
                                 coverHtml = `<p><img src="assets/${imageId}.jpg" /></p>`;
                                 episodeCovers.push({ id: imageId, url: coverUrl, size: size });
                             }
@@ -25415,7 +25418,8 @@ class MergeNovel {
                             `<br/><br/>----- ${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下面是正文')} -----<br/><br/>`;
                 }
                 // 组合封面图片和简介，使封面图片位于所有文字内容之前
-                let content = _Tools__WEBPACK_IMPORTED_MODULE_4__.Tools.replaceEPUBTextWithP(data.content);
+                let content = await _ReplaceNovelWords__WEBPACK_IMPORTED_MODULE_8__.replaceNovelWords.replace(this.seriesId, data.content);
+                content = _Tools__WEBPACK_IMPORTED_MODULE_4__.Tools.replaceEPUBTextWithP(content);
                 content = coverHtml + metaHtml + content;
                 // 添加小说里的图片
                 const value = await _DownloadNovelEmbeddedImage__WEBPACK_IMPORTED_MODULE_6__.downloadNovelEmbeddedImage.EPUB(novelId, data.title, content, data.embeddedImages, jepub, 'merge novel');
@@ -25450,10 +25454,10 @@ class MergeNovel {
     }
     /** 获取这个系列里所有小说的 id */
     async getNovelIds() {
-        const seriesContents = await _API__WEBPACK_IMPORTED_MODULE_9__.API.getNovelSeriesContent(this.seriesId, this.limit, this.last, 'asc');
+        const seriesContents = await _API__WEBPACK_IMPORTED_MODULE_10__.API.getNovelSeriesContent(this.seriesId, this.limit, this.last, 'asc');
         const list = seriesContents.body.page.seriesContents;
         for (const item of list) {
-            const check = await _filter_Filter__WEBPACK_IMPORTED_MODULE_18__.filter.check({
+            const check = await _filter_Filter__WEBPACK_IMPORTED_MODULE_19__.filter.check({
                 id: item.id,
                 isOriginal: item.isOriginal,
                 aiType: item.aiType,
@@ -25473,7 +25477,7 @@ class MergeNovel {
             else {
                 const order_title = `#${item.series.contentOrder} ${item.title}`;
                 const link = _Tools__WEBPACK_IMPORTED_MODULE_4__.Tools.createWorkLink(item.id, order_title, 'novel');
-                _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_排除小说') + ': ' + link);
+                _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_排除小说') + ': ' + link);
             }
         }
         this.last += list.length;
@@ -25484,7 +25488,7 @@ class MergeNovel {
         else {
             // 获取完毕
             if (this.novelIdList.length === 0) {
-                _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_这个系列里的所有小说都被排除了'));
+                _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_这个系列里的所有小说都被排除了'));
             }
         }
     }
@@ -25496,19 +25500,19 @@ class MergeNovel {
             // 自动合并系列小说时，可能会连续不断的合并多个系列，这些系列可能包含非常多的小说，所以需要添加等待时间，以减小出现 429 错误的概率
             // 另外获取设定资料时也有可能需要发送多个请求，但并不总是需要多次请求，所以获取设定资料时没有添加等待时间
             count++;
-            _Log__WEBPACK_IMPORTED_MODULE_8__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_获取小说数据进度', `${count} / ${total}`), 'getNovelDataProgress' + this.seriesId);
+            _Log__WEBPACK_IMPORTED_MODULE_9__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_获取小说数据进度', `${count} / ${total}`), 'getNovelDataProgress' + this.seriesId);
             // 优先从缓存中获取数据
-            let data = _store_CacheWorkData__WEBPACK_IMPORTED_MODULE_15__.cacheWorkData.get(id, 'novel');
+            let data = _store_CacheWorkData__WEBPACK_IMPORTED_MODULE_16__.cacheWorkData.get(id, 'novel');
             if (!data) {
                 try {
                     // 发送请求
                     await this.sleep(this.crawlInterval);
-                    data = await _API__WEBPACK_IMPORTED_MODULE_9__.API.getNovelData(id);
-                    _store_CacheWorkData__WEBPACK_IMPORTED_MODULE_15__.cacheWorkData.set(data);
+                    data = await _API__WEBPACK_IMPORTED_MODULE_10__.API.getNovelData(id);
+                    _store_CacheWorkData__WEBPACK_IMPORTED_MODULE_16__.cacheWorkData.set(data);
                 }
                 catch (error) {
                     // 请求小说的数据出错时跳过它，不重试（通常是 404 错误，没有必要重试）
-                    _Log__WEBPACK_IMPORTED_MODULE_8__.log.error('⏩' + _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_跳过这个小说'));
+                    _Log__WEBPACK_IMPORTED_MODULE_9__.log.error('⏩' + _Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_跳过这个小说'));
                     continue;
                 }
             }
@@ -25532,7 +25536,7 @@ class MergeNovel {
             }
             // 应用标签过滤器
             // 虽然这里也能检查其他过滤条件，但没有必要，因为前面已经检查过了
-            const check = await _filter_Filter__WEBPACK_IMPORTED_MODULE_18__.filter.check({
+            const check = await _filter_Filter__WEBPACK_IMPORTED_MODULE_19__.filter.check({
                 xRestrict: data.body.xRestrict,
                 tags,
             });
@@ -25544,7 +25548,7 @@ class MergeNovel {
                     id: novelId,
                     no: order,
                     updateDate: data.body.uploadDate,
-                    updateDateShort: _utils_DateFormat__WEBPACK_IMPORTED_MODULE_13__.DateFormat.format(data.body.uploadDate),
+                    updateDateShort: _utils_DateFormat__WEBPACK_IMPORTED_MODULE_14__.DateFormat.format(data.body.uploadDate),
                     title: _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.replaceUnsafeStr(title),
                     tags,
                     description: _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.htmlToText(_utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.htmlDecode(data.body.description)),
@@ -25557,16 +25561,16 @@ class MergeNovel {
             else {
                 const order_title = `#${order} ${title}`;
                 const link = _Tools__WEBPACK_IMPORTED_MODULE_4__.Tools.createWorkLink(novelId, order_title, 'novel');
-                _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_排除小说') + ': ' + link);
+                _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_排除小说') + ': ' + link);
             }
             // 如果处于快速合并模式，则跳过剩余小说
-            if (_store_States__WEBPACK_IMPORTED_MODULE_19__.states.quickMergeNovel) {
-                _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning('⏩quickMergeNovel: On，跳过剩余小说');
+            if (_store_States__WEBPACK_IMPORTED_MODULE_20__.states.quickMergeNovel) {
+                _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning('⏩quickMergeNovel: On，跳过剩余小说');
                 break;
             }
         }
         // 获取了所有小说的数据
-        _Log__WEBPACK_IMPORTED_MODULE_8__.log.persistentRefresh('getNovelDataProgress' + this.seriesId);
+        _Log__WEBPACK_IMPORTED_MODULE_9__.log.persistentRefresh('getNovelDataProgress' + this.seriesId);
         // 按照小说的序号进行升序排列
         this.allNovelData.sort(_utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.sortByProperty('no', 'asc'));
     }
@@ -25623,15 +25627,15 @@ class MergeNovel {
                 part = current.part;
             }
             // 为这个分割的文件生成新的文件名（添加了 part 编号）
-            name = _MergeNovelFileName__WEBPACK_IMPORTED_MODULE_16__.mergeNovelFileName.getName(this.seriesData, part + 1);
+            name = _MergeNovelFileName__WEBPACK_IMPORTED_MODULE_17__.mergeNovelFileName.getName(this.seriesData, part + 1);
         }
         // 保存合并的系列小说的文件时，如果已存在同名文件，不覆盖它而是添加序号。
         // 这是因为系列小说有更新的需要，例如第一次下载时，这个系列里有 10 篇小说；过段时间再次下载时，由于作者又更新了 10 篇小说，所以里面保存的可能是第 1 - 20 篇小说，也可能是第 11 - 20 篇小说（如果用户启用了“不抓取下载过的作品”）。所以这两次下载的文件的内容是不同的，不应该直接覆盖
         const blob = await jepub.generate('blob', (metadata) => { });
-        await _SendDownload__WEBPACK_IMPORTED_MODULE_17__.SendDownload.noReply(blob, name, 'uniquify');
+        await _SendDownload__WEBPACK_IMPORTED_MODULE_18__.SendDownload.noReply(blob, name, 'uniquify');
         // 当这个系列里的所有小说都下载完毕后，如果它被分割成了多个文件，则显示提示日志
         if (complete && this.sizeLog.length > 1) {
-            _Log__WEBPACK_IMPORTED_MODULE_8__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_由于这个系列小说里的图片体积很大所以分割成了x个文件', this.sizeLog.length.toString()));
+            _Log__WEBPACK_IMPORTED_MODULE_9__.log.warning(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_由于这个系列小说里的图片体积很大所以分割成了x个文件', this.sizeLog.length.toString()));
         }
     }
     /** 处理从 Pixiv API 里取得的字符串，将其转换为可以安全的用于 EPUB 小说的 description 的内容
@@ -25656,7 +25660,7 @@ class MergeNovel {
     }
     logDownloadSeriesCover() {
         const link = `<a href="https://www.pixiv.net/novel/series/${this.seriesId}" target="_blank">${this.seriesTitle}</a>`;
-        _Log__WEBPACK_IMPORTED_MODULE_8__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下载系列小说的封面图片', link));
+        _Log__WEBPACK_IMPORTED_MODULE_9__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下载系列小说的封面图片', link));
     }
     /** 下载设定资料里的图片时，显示对应的日志 */
     logDownloadGlossaryImage(item) {
@@ -25664,7 +25668,7 @@ class MergeNovel {
         // https://www.pixiv.net/novel/series/9114820/glossary/154698
         const glossaryUrl = `https://www.pixiv.net/novel/series/${this.seriesId}/glossary/${item.glossaryId}`;
         const link = _utils_Utils__WEBPACK_IMPORTED_MODULE_1__.Utils.createLinkHTML(glossaryUrl, item.glossaryTitle);
-        _Log__WEBPACK_IMPORTED_MODULE_8__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下载设定资料x里的图片', link));
+        _Log__WEBPACK_IMPORTED_MODULE_9__.log.log(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下载设定资料x里的图片', link));
     }
     reset() {
         this.seriesData = null;
@@ -25980,6 +25984,184 @@ class ProgressBar {
     }
 }
 const progressBar = new ProgressBar();
+
+
+
+/***/ }),
+
+/***/ "./src/ts/download/ReplaceNovelWords.ts":
+/*!**********************************************!*\
+  !*** ./src/ts/download/ReplaceNovelWords.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   replaceNovelWords: () => (/* binding */ replaceNovelWords)
+/* harmony export */ });
+/* harmony import */ var _EVT__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../EVT */ "./src/ts/EVT.ts");
+/* harmony import */ var _API__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../API */ "./src/ts/API.ts");
+/* harmony import */ var _Log__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Log */ "./src/ts/Log.ts");
+/* harmony import */ var _store_Store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/Store */ "./src/ts/store/Store.ts");
+/* harmony import */ var _Language__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Language */ "./src/ts/Language.ts");
+
+
+
+
+
+/** 替换小说里可置换的单词 */
+// 文档：notes/小说里置换单词的细节.md
+class ReplaceNovelWords {
+    constructor() {
+        // 在每次开始下载时，重新获取本地存储里的置换单词配置，这样如果用户修改了此项配置，就可以获取到新的配置
+        window.addEventListener(_EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.list.downloadStart, () => {
+            this.reset();
+        });
+    }
+    /** 是否需要重新读取本地存储里的置换单词配置 */
+    needGetUserData = true;
+    /** 本地存储里的置换单词配置。如果为 null，表示未获取，或者本地存储里没有这项数据 */
+    userData = null;
+    /** 每个系列已经解析好的替换词列表。key 是系列 id，value 是替换词列表 */
+    replaceWordMap = new Map();
+    /** 保存每个系列正在进行中的解析请求，用来避免一个系列 id 发送多次请求 */
+    requestMap = new Map();
+    /** 下载批次变化时递增，用来丢弃旧请求的结果 */
+    generation = 0;
+    reset() {
+        this.generation++;
+        this.needGetUserData = true;
+        this.userData = null;
+        this.replaceWordMap.clear();
+        this.requestMap.clear();
+    }
+    /** 接收系列 id 和小说正文文本，如果有对应的置换词就替换后返回 */
+    async replace(seriesId, content) {
+        if (seriesId === undefined || seriesId === null || content === '') {
+            return content;
+        }
+        const replaceWordList = await this.getReplaceWordList(seriesId);
+        if (replaceWordList.length === 0) {
+            return content;
+        }
+        let result = content;
+        for (const item of replaceWordList) {
+            const logKey = item.rawWord + ' ' + item.word;
+            _Log__WEBPACK_IMPORTED_MODULE_2__.log.log(_Language__WEBPACK_IMPORTED_MODULE_4__.lang.transl('_已置换单词', item.rawWord, item.word), logKey);
+            // 注意：不要替换 [] 及其内部的文字。这是因为内嵌的图片、分页标记等都是通过 [] 来标记的，如 [uploadedimage:13309543]。如果替换 [] 内的文字，可能导致标记里的部分文字被替换，从而变成错误的标记。这可能导致内嵌的图片的 id 发生变化，进而导致下载图片时失败。
+            result = result.replace(/(\[[^\[\]]*]|[^\[\]]+)/g, (text) => {
+                if (text.startsWith('[')) {
+                    return text;
+                }
+                return text.replaceAll(item.rawWord, item.word);
+            });
+        }
+        return result;
+    }
+    /** 获取当前登录用户保存的置换单词配置 */
+    async getUserData() {
+        if (!this.needGetUserData) {
+            return this.userData;
+        }
+        this.needGetUserData = false;
+        const userId = _store_Store__WEBPACK_IMPORTED_MODULE_3__.store.loggedUserID;
+        if (!userId) {
+            this.userData = null;
+            return this.userData;
+        }
+        const storeName = `novel_series_glossary_${userId}`;
+        const value = localStorage.getItem(storeName);
+        if (!value) {
+            this.userData = null;
+            return this.userData;
+        }
+        try {
+            this.userData = JSON.parse(value);
+        }
+        catch (error) {
+            _Log__WEBPACK_IMPORTED_MODULE_2__.log.warning(`Failed to parse ${storeName}: ${String(error)}`);
+            this.userData = null;
+        }
+        return this.userData;
+    }
+    /** 获取某个系列的替换词列表 */
+    async getReplaceWordList(seriesId) {
+        const key = seriesId.toString();
+        if (this.replaceWordMap.has(key)) {
+            return this.replaceWordMap.get(key) || [];
+        }
+        const existed = this.requestMap.get(key);
+        if (existed) {
+            return existed;
+        }
+        const generation = this.generation;
+        const promise = this.createReplaceWordList(key, generation)
+            .then((result) => {
+            if (generation === this.generation) {
+                this.replaceWordMap.set(key, result);
+            }
+            this.requestMap.delete(key);
+            return result;
+        })
+            .catch((error) => {
+            this.requestMap.delete(key);
+            throw error;
+        });
+        this.requestMap.set(key, promise);
+        return promise;
+    }
+    /** 生成某个系列的替换词列表 */
+    async createReplaceWordList(seriesId, generation) {
+        const userData = await this.getUserData();
+        if (generation !== this.generation) {
+            return [];
+        }
+        if (!userData) {
+            return [];
+        }
+        const setting = userData[seriesId];
+        if (!setting || setting.words.length === 0) {
+            return [];
+        }
+        let glossaryData;
+        try {
+            glossaryData = await _API__WEBPACK_IMPORTED_MODULE_1__.API.getNovelSeriesGlossary(seriesId);
+        }
+        catch (error) {
+            _Log__WEBPACK_IMPORTED_MODULE_2__.log.warning(`Failed to get novel glossary for series ${seriesId}`);
+            return [];
+        }
+        if (generation !== this.generation) {
+            return [];
+        }
+        const result = [];
+        for (const settingWord of setting.words) {
+            const rawWord = this.findRawWord(glossaryData.body.categories, settingWord.id);
+            if (rawWord) {
+                result.push({
+                    id: settingWord.id,
+                    rawWord,
+                    word: settingWord.word,
+                });
+            }
+        }
+        result.sort((a, b) => b.rawWord.length - a.rawWord.length);
+        return result;
+    }
+    /** 通过置换项 id 在系列设定资料里查找原单词 */
+    findRawWord(categories, id) {
+        for (const category of categories) {
+            for (const item of category.items) {
+                if (item.id === id) {
+                    return item.name;
+                }
+            }
+        }
+        return '';
+    }
+}
+const replaceNovelWords = new ReplaceNovelWords();
 
 
 
@@ -40128,6 +40310,14 @@ If you're worried about misoperation, you can turn off this feature.`,
         '삭제된 작품을 찾을 수 없습니다',
         'Не найдено удаленных работ',
     ],
+    _已置换单词: [
+        `已置换单词:{} ➡️ {}`,
+        `已置換單詞:{} ➡️ {}`,
+        `Replaced word:{} ➡️ {}`,
+        `置換された単語:{} ➡️ {}`,
+        `교체된 단어:{} ➡️ {}`,
+        `Замененное слово:{} ➡️ {}`,
+    ],
 };
 
 
@@ -50768,12 +50958,13 @@ class SaveNovelData {
                 rank: rank,
                 seriesTitle: seriesTitle,
                 seriesOrder: seriesOrder,
-                seriesId: body.seriesNavData ? body.seriesNavData.seriesId : null,
+                seriesId: body.seriesNavData?.seriesId || null,
                 viewCount: body.viewCount,
                 likeCount: body.likeCount,
                 commentCount: body.commentCount,
                 novelMeta: {
                     id: body.id,
+                    seriesId: body.seriesNavData?.seriesId || null,
                     title: title,
                     content: _Tools__WEBPACK_IMPORTED_MODULE_3__.Tools.replaceNovelContentFlag(body.content),
                     description: descriptionNoHtmlTag,

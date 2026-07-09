@@ -1730,13 +1730,15 @@ export interface GlossaryCategorie {
   }[]
 }
 
+/** 系列小说的设定资料 */
 // 有可置换单词的系列小说：
-// https://www.pixiv.net/novel/series/15721659
-// https://www.pixiv.net/ajax/novel/series/15721659/glossary?lang=zh
+// https://www.pixiv.net/novel/series/9114820
+// https://www.pixiv.net/ajax/novel/series/9114820/glossary
 export interface NovelSeriesGlossary {
   error: boolean
   message: string
   body: {
+    /** 保存设定资料的分类。每个分类里可以包含多条设定资料（items） */
     categories: GlossaryCategorie[]
     /** 这个系列小说里所有可置换的单词的 id 的列表。如果没有可置换的单词，则为空数组。
      *

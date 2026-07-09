@@ -10567,6 +10567,14 @@ If you're worried about misoperation, you can turn off this feature.`,
     '삭제된 작품을 찾을 수 없습니다',
     'Не найдено удаленных работ',
   ],
+  _已置换单词: [
+    `已置换单词:{} ➡️ {}`,
+    `已置換單詞:{} ➡️ {}`,
+    `Replaced word:{} ➡️ {}`,
+    `置換された単語:{} ➡️ {}`,
+    `교체된 단어:{} ➡️ {}`,
+    `Замененное слово:{} ➡️ {}`,
+  ],
 }
 
 export type LangTextKey = keyof typeof langText

@@ -9,6 +9,7 @@ import { DateFormat } from '../utils/DateFormat'
 import { Config } from '../Config'
 import { downloadNovelCover } from './DownloadNovelCover'
 import { downloadNovelEmbeddedImage } from './DownloadNovelEmbeddedImage'
+import { replaceNovelWords } from './ReplaceNovelWords'
 
 declare const jEpub: any
 
@@ -54,19 +55,19 @@ class MakeSingleNovelFile {
 
     await this.downloadCover(data.id, data.title, data.coverUrl, filename)
 
+    let content = await replaceNovelWords.replace(data.seriesId, data.content)
+
     // 下载小说里的内嵌图片
     await downloadNovelEmbeddedImage.TXT(
       data.id,
       data.title,
-      data.content,
+      content,
       data.embeddedImages,
       filename,
       'single novel'
     )
 
     this.busy = false
-
-    let content = data.content
 
     // 添加元数据
     if (settings.saveNovelMeta) {
@@ -90,7 +91,7 @@ class MakeSingleNovelFile {
 
     await this.downloadCover(data.id, data.title, data.coverUrl, filename)
 
-    let content = data.content
+    let content = await replaceNovelWords.replace(data.seriesId, data.content)
 
     // 添加元数据
     if (settings.saveNovelMeta) {

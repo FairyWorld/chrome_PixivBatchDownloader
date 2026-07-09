@@ -6,6 +6,7 @@ import { Tools } from '../Tools'
 import { downloadNovelCover } from '../download/DownloadNovelCover'
 import { downloadNovelEmbeddedImage } from './DownloadNovelEmbeddedImage'
 import { downloadNovelGlossaryImage } from './DownloadNovelGlossaryImage'
+import { replaceNovelWords } from './ReplaceNovelWords'
 import { log } from '../Log'
 import { API } from '../API'
 import { GlossaryCover, NovelSeriesData } from '../crawl/CrawlResult'
@@ -584,7 +585,11 @@ class MergeNovel {
         }
 
         // 组合封面图片和简介，使封面图片位于所有文字内容之前
-        let content = Tools.replaceEPUBTextWithP(data.content)
+        let content = await replaceNovelWords.replace(
+          this.seriesId,
+          data.content
+        )
+        content = Tools.replaceEPUBTextWithP(content)
         content = coverHtml + metaHtml + content
 
         // 添加小说里的图片
