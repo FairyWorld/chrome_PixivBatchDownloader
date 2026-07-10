@@ -24976,6 +24976,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// 合并系列小说，并生成 TXT 或 EPUB 文件进行保存
+// 文档：notes\MergeNovel 工作流程说明.md
 class MergeNovel {
     seriesId = '';
     seriesTitle = '';
@@ -24997,6 +24999,7 @@ class MergeNovel {
     slowMode = false;
     CRLF = '\n'; // 小说的换行符
     CRLF2 = '\n\n';
+    br = '<br/>';
     br2 = '<br/><br/>';
     // 由于每个系列里都可能含有多个小说和图片，所以下载器可能会发送很多请求。为了避免触发 Pixiv 的警告，下载器在合并时总是会添加间隔时间，以降低发送请求的频率。
     /** 抓取时的间隔时间，最低为 2400 ms。这不会触发 429 错误 */
@@ -25266,6 +25269,14 @@ class MergeNovel {
             result.push(this.seriesCaption);
             result.push(CRLF_2);
         }
+        // 本次合并包含的章节
+        result.push(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_本次合并包含的章节') + ': ');
+        result.push(CRLF_2);
+        for (const data of this.allNovelData) {
+            result.push(`${this.chapterNo(data.no)} ${data.title}`);
+            result.push(this.CRLF);
+        }
+        result.push(this.CRLF);
         // 设定资料
         if (this.seriesGlossaryText) {
             result.push(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_设定资料') + ': ');
@@ -25323,18 +25334,22 @@ class MergeNovel {
         let index = 0;
         // 把创建 EPUB 的步骤放到一个函数里，方便在需要分割文件时多次调用
         const generateEPUB = async () => {
+            // 如果需要保存设定资料里的图片，就先把 description 里的图片标记替换为 EPUB 中可用的图片标签
             const needSaveGlossaryImages = this.checkNeedSaveGlossaryImages(index);
             const currentDescription = this.buildEPUBDescriptionWithImages(description, needSaveGlossaryImages);
             this.pushSizeLog();
             this.addSize(currentDescription.length);
             const jepub = this.createEPUB(link, date, currentDescription);
+            // 实际下载设定资料里的图片
             await this.addGlossaryImagesToEPUB(jepub, needSaveGlossaryImages);
+            // 添加系列封面图片
             await this.addSeriesCoverToEPUB(jepub, body.cover.urls.original);
             const episodeCovers = [];
-            // 循环添加小说内容
+            // 循环添加每篇小说的内容
             for (; index < this.allNovelData.length; index++) {
                 const data = this.allNovelData[index];
                 const novelId = data.id;
+                // 添加这篇小说的封面图片、元数据、正文内容
                 const coverHtml = await this.buildEpisodeCoverHtml(data, episodeCovers, jepub);
                 const metaHtml = this.buildEpisodeMetaHtml(data);
                 let content = await this.buildEPUBChapterContent(data, coverHtml, metaHtml);
@@ -25379,16 +25394,27 @@ class MergeNovel {
             // 添加简介
             if (description) {
                 otherMeta.push(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_系列简介') + ': ');
-                otherMeta.push(this.br2);
+                otherMeta.push(this.br);
                 otherMeta.push(description);
-                otherMeta.push(this.br2);
+                otherMeta.push(this.br);
             }
+            // 本次合并包含的章节
+            otherMeta.push(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_本次合并包含的章节') + ': ');
+            otherMeta.push(this.br);
+            otherMeta.push('<p>');
+            for (const data of this.allNovelData) {
+                otherMeta.push(`${this.chapterNo(data.no)} ${data.title}`);
+                otherMeta.push(this.br);
+            }
+            otherMeta.pop();
+            otherMeta.push('</p>');
+            otherMeta.push(this.br);
             // 添加设定资料
             if (this.seriesGlossaryText) {
                 otherMeta.push(_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_设定资料') + ': ');
-                otherMeta.push(this.br2);
+                otherMeta.push(this.br);
                 otherMeta.push(this.handleEPUBDescription(this.seriesGlossaryText));
-                otherMeta.push(this.br2);
+                otherMeta.push(this.br);
             }
             description = otherMeta.join('');
         }
@@ -25536,7 +25562,7 @@ class MergeNovel {
         const date = `<p>${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_更新日期') + ': ' + data.updateDateShort}</p>`;
         const tags = `<p>${data.tags.map((tag) => `#${tag}`).join('<br/>')}</p>`;
         const meta = `${link}${date}${tags}${_Tools__WEBPACK_IMPORTED_MODULE_4__.Tools.replaceEPUBText(data.description)}`;
-        return meta + `<br/><br/>----- ${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下面是正文')} -----<br/><br/>`;
+        return (meta + `<br/><br/>----- ${_Language__WEBPACK_IMPORTED_MODULE_3__.lang.transl('_下面是正文')} -----<br/><br/>`);
     }
     /** 生成单篇小说章节正文的 HTML。 */
     async buildEPUBChapterContent(data, coverHtml, metaHtml) {
@@ -32920,6 +32946,14 @@ Note: Even if you disable this setting, some quick download methods will always 
         `Не удалось скачать изображения в романе`,
     ],
     _系列简介: [`简介`, `簡介`, `Caption`, `キャプション`, `캡션`, `Подпись`],
+    _本次合并包含的章节: [
+        `本次合并包含的章节`,
+        `本次合併包含的章節`,
+        `Chapters included in this merge`,
+        `今回のマージに含まれる章`,
+        `이번 병합에 포함된 장`,
+        `Главы, включенные в это слияние`,
+    ],
     _设定资料: [
         `设定资料`,
         `設定資料`,

@@ -83,6 +83,7 @@ class MergeNovel {
 
   private readonly CRLF = '\n' // 小说的换行符
   private readonly CRLF2 = '\n\n'
+  private readonly br = '<br/>'
   private readonly br2 = '<br/><br/>'
 
   // 由于每个系列里都可能含有多个小说和图片，所以下载器可能会发送很多请求。为了避免触发 Pixiv 的警告，下载器在合并时总是会添加间隔时间，以降低发送请求的频率。
@@ -429,6 +430,14 @@ class MergeNovel {
       result.push(this.seriesCaption)
       result.push(CRLF_2)
     }
+    // 本次合并包含的章节
+    result.push(lang.transl('_本次合并包含的章节') + ': ')
+    result.push(CRLF_2)
+    for (const data of this.allNovelData) {
+      result.push(`${this.chapterNo(data.no)} ${data.title}`)
+      result.push(this.CRLF)
+    }
+    result.push(this.CRLF)
     // 设定资料
     if (this.seriesGlossaryText) {
       result.push(lang.transl('_设定资料') + ': ')
@@ -587,16 +596,27 @@ class MergeNovel {
       // 添加简介
       if (description) {
         otherMeta.push(lang.transl('_系列简介') + ': ')
-        otherMeta.push(this.br2)
+        otherMeta.push(this.br)
         otherMeta.push(description)
-        otherMeta.push(this.br2)
+        otherMeta.push(this.br)
       }
+      // 本次合并包含的章节
+      otherMeta.push(lang.transl('_本次合并包含的章节') + ': ')
+      otherMeta.push(this.br)
+      otherMeta.push('<p>')
+      for (const data of this.allNovelData) {
+        otherMeta.push(`${this.chapterNo(data.no)} ${data.title}`)
+        otherMeta.push(this.br)
+      }
+      otherMeta.pop()
+      otherMeta.push('</p>')
+      otherMeta.push(this.br)
       // 添加设定资料
       if (this.seriesGlossaryText) {
         otherMeta.push(lang.transl('_设定资料') + ': ')
-        otherMeta.push(this.br2)
+        otherMeta.push(this.br)
         otherMeta.push(this.handleEPUBDescription(this.seriesGlossaryText))
-        otherMeta.push(this.br2)
+        otherMeta.push(this.br)
       }
       description = otherMeta.join('')
     }
