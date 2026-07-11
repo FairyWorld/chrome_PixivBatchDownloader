@@ -22748,10 +22748,17 @@ class DownloadControl {
             if (!this.isDownloadedMsg(msg)) {
                 return;
             }
-            // UUID 的情况
+            // 提示文件名变成了UUID 的情况
+            // 注意：有些文件是不会返回消息的，所以它们不会触发这个提示
             if (msg.data?.uuid) {
                 _Log__WEBPACK_IMPORTED_MODULE_4__.log.log(_Language__WEBPACK_IMPORTED_MODULE_5__.lang.transl('_uuid'), 'filenameUUID');
+                // 显示作品 id 和异常的文件名，方便用户重新下载这些文件
+                // 由于此时不确定这个 id 的类型，所以不显示作品链接，只显示 id
+                const tip = _Language__WEBPACK_IMPORTED_MODULE_5__.lang.transl('_显示作品id和异常的文件名', msg.data.id, msg.data.browserSetFilename || '');
+                // 一个 id 可能产生多个文件，所以可能显示多条提示，这是正常的。不需要给 log 语句添加 key
+                _Log__WEBPACK_IMPORTED_MODULE_4__.log.warning(tip);
                 _MsgBox__WEBPACK_IMPORTED_MODULE_20__.msgBox.once(this.uuidTip, _Language__WEBPACK_IMPORTED_MODULE_5__.lang.transl('_uuid'), 'show');
+                // 一旦检测到文件名异常，就会暂停下载
                 this.pauseDownload();
             }
             // 检测扩展名是 .jfif 的情况
@@ -31893,6 +31900,14 @@ So the file name set by the Downloader is lost, and the file name becomes the la
 Предположим, этот загрузчик задаёт пользовательское имя для файла: user/image.jpg. <br>
 Если другое расширение обрабатывают событие onDeterminingFilename, браузер запросит у него варианты имени файла (что даёт ему возможность изменить имя файла). Проблема в том, что браузер передал имя файла по умолчанию (последний путь в URL), а не имя файла, заданное загрузчиком. <br>
 Поэтому имя файла, заданное загрузчиком, теряется, и имя файла становится последним путем в URL. <br>`,
+    ],
+    _显示作品id和异常的文件名: [
+        `⚠️作品 ID: {}, 异常文件名: {}`,
+        `⚠️作品 ID: {}, 異常檔名: {}`,
+        `⚠️Work ID: {}, Abnormal file name: {}`,
+        `⚠️作品 ID: {}, 異常なファイル名: {}`,
+        `⚠️작품 ID: {}, 비정상적인 파일 이름: {}`,
+        `⚠️ID работы: {}, ненормальное имя файла: {}`,
     ],
     _账户可能被封禁的警告: [
         `<strong>警告</strong>：频繁和大量的抓取（和下载）可能会导致你的 Pixiv 账号被封禁。
