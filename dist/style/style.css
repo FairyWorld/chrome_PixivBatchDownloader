@@ -1802,7 +1802,7 @@ body.mobile #quickCrawlBtn {
 .centerWrap .centerWrap_con .settingForm .namingTipArea .name {
   cursor: pointer;
 }
-.centerWrap .centerWrap_con .settingForm .settingsPanel_downloadEmptyHint {
+.centerWrap .centerWrap_con .settingForm .secondary_hint {
   grid-column: 1 / -1;
   display: flex;
   align-items: flex-start;
@@ -1817,8 +1817,11 @@ body.mobile #quickCrawlBtn {
   font-size: 14px;
   line-height: 1.6;
 }
-.centerWrap .centerWrap_con .settingForm .settingsPanel_downloadEmptyHint.is-hidden {
+.centerWrap .centerWrap_con .settingForm .secondary_hint.is-hidden {
   display: none;
+}
+.centerWrap .centerWrap_con .settingForm .option .secondary_hint {
+  margin-top: 4px;
 }
 .centerWrap .centerWrap_con .settingForm .centerWrap_btns {
   padding: 0;

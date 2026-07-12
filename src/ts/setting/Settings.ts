@@ -909,7 +909,7 @@ class Settings {
     saveWorkDescription: false,
     saveEachDescription: true,
     summarizeDescription: false,
-    slowCrawlDealy: 1600,
+    slowCrawlDealy: 1800,
     downloadInterval: 1,
     downloadIntervalOnWorksNumber: 150,
     tipOpenWikiLink: true,
