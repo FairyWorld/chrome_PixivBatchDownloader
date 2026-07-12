@@ -15,6 +15,8 @@ import { pageType } from './PageType'
 import { store } from './store/Store'
 import { copyWorkInfo } from './CopyWorkInfo'
 import { showOneTimeMsg } from './ShowOneTimeMsg'
+import { DateFormat } from './utils/DateFormat'
+import { settings } from './setting/Settings'
 
 interface InitConfig {
   /** 作品 id，如果为空从会 url 中获取作品 id */
@@ -277,6 +279,12 @@ class ImageViewer {
     }
 
     // 配置新的看图组件
+    const date = this.workData?.body.uploadDate
+    let dateString = ''
+    if (date) {
+      dateString = DateFormat.format(date, settings.dateFormat)
+    }
+
     const handleToTop = this.moveToTop.bind(this)
     const pageCount = this.pageCount
     const firstImageURL = this.firstImageURL
@@ -323,8 +331,11 @@ class ImageViewer {
       // 取消一些动画，比如切换图片时，图片从小变大出现的动画
       transition: false,
       keyboard: true,
-      // 显示 title（图片名和宽高信息）
-      title: true,
+      // 显示 title（图片名、宽高、日期）
+      title: (image: HTMLImageElement, imageData: any) => {
+        // console.log(image, imageData)
+        return `${dateString} ${image.alt} (${imageData.naturalWidth} × ${imageData.naturalHeight})`
+      },
       // 不显示缩放比例
       tooltip: false,
     }
