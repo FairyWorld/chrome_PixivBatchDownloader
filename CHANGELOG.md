@@ -3,7 +3,7 @@
 在 Pixiv 的 console 里隐藏这些脚本的消息：
 -doubleclick.net -admanmedia.com -frame -popin -bpoadfkcbjbfhfodiogcnhhhpibjhbnh -_script.js -_app- -_app. -reach -ufs -pubads -google -tabool -openx -sync -userscript
 
-## next
+## 19.1.0 2026-07-13
 
 ### ✨在系列小说页面里，可以选择部分小说进行合并
 
@@ -49,7 +49,7 @@ https://www.pixiv.net/novel/series/9114820/glossary
 - 移除所有作品的标签
 - 取消收藏所有作品
 
-这两个功能是本来就有的，不过之前只会操作当前查看的一页作品，现在可以一次性操作所有作品了。
+这两个功能本来就有，不过之前的按钮每次只会操作当前查看的这一页作品，现在我添加了新的按钮，可以一次性操作所有作品。
 
 ### ✨优化了图片查看器
 
