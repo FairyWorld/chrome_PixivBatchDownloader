@@ -36474,12 +36474,12 @@ If the number of works shown on the page is greater than 0, it may be that Pixiv
         'Имена пользователей, на которых вы подписаны, будут иметь желтый фон или отображаться желтым цветом. <br>Это удобно для вас, чтобы подтвердить, подписаны ли вы на определенного пользователя',
     ],
     _正在加载关注用户列表: [
-        '正在加载关注用户列表',
-        '正在載入關注使用者列表',
-        'Loading list of followed users',
-        'フォローしているユーザーのリストを読み込み中',
-        '팔로우한 사용자 목록 로드 중',
-        'Загрузка списка отслеживаемых пользователей',
+        '正在加载关注用户列表。该数据会保存在本地，供一些附加功能使用',
+        '正在載入關注使用者列表。該資料會保存在本地，供一些附加功能使用',
+        'Loading the list of following users. The data will be saved locally for some additional features.',
+        'フォローしているユーザーのリストを読み込んでいます。データは一部の追加機能のためにローカルに保存されます。',
+        '팔로우하는 사용자 목록을 로드하고 있습니다. 데이터는 일부 추가 기능을 위해 로컬에 저장됩니다.',
+        'Загрузка списка следующих пользователей. Данные будут сохранены локально для некоторых дополнительных функций.',
     ],
     _已更新关注用户列表: [
         '已更新关注用户列表',
@@ -49971,6 +49971,10 @@ __webpack_require__.r(__webpack_exports__);
 class SettingsPanelShell {
     static shell;
     static allLangFlag = [];
+    /** 监听设置内容变化，以更新面板高度 */
+    static heightObserver;
+    /** 监听设置内容尺寸变化，以同步面板高度动画 */
+    static heightResizeObserver;
     static init() {
         if (this.shell) {
             return this.shell;
@@ -50077,6 +50081,7 @@ class SettingsPanelShell {
         if (!this.shell) {
             throw new Error('SettingsPanel shell not found');
         }
+        this.observeContentHeight();
         if (_Config__WEBPACK_IMPORTED_MODULE_3__.Config.mobile) {
             document.body.classList.add('mobile');
             this.shell.classList.add('mobile');
@@ -50171,7 +50176,9 @@ class SettingsPanelShell {
         });
     }
     static show() {
-        this.get().style.display = 'block';
+        const shell = this.get();
+        shell.style.display = 'flex';
+        this.updateHeight();
         _EVT__WEBPACK_IMPORTED_MODULE_4__.EVT.fire('centerPanelOpened');
     }
     static close() {
@@ -50181,13 +50188,58 @@ class SettingsPanelShell {
     static toggle() {
         const shell = this.get();
         const nowDisplay = shell.style.display;
-        nowDisplay === 'block' ? this.close() : this.show();
-        if (nowDisplay === 'block') {
+        nowDisplay === 'flex' ? this.close() : this.show();
+        if (nowDisplay === 'flex') {
             _EVT__WEBPACK_IMPORTED_MODULE_4__.EVT.fire('closeCenterPanel');
         }
         else {
             _EVT__WEBPACK_IMPORTED_MODULE_4__.EVT.fire('openCenterPanel');
         }
+    }
+    /** 监听会影响内容高度的 DOM 变化 */
+    static observeContentHeight() {
+        const content = this.get().querySelector('.centerWrap_con');
+        if (!content) {
+            throw new Error('Settings panel content not found');
+        }
+        const observeContentSize = () => {
+            const form = content.querySelector('.settingsPanel_form');
+            if (form) {
+                this.heightResizeObserver?.observe(form);
+            }
+        };
+        this.heightResizeObserver = new ResizeObserver(() => this.updateHeight());
+        observeContentSize();
+        this.heightObserver = new MutationObserver(() => {
+            observeContentSize();
+            this.updateHeight();
+        });
+        this.heightObserver.observe(content, {
+            attributes: true,
+            characterData: true,
+            childList: true,
+            subtree: true,
+        });
+        content.addEventListener('transitionend', (event) => {
+            if (event.target instanceof HTMLElement &&
+                event.target.matches('.settingsPanel_sectionContentShell') &&
+                event.propertyName === 'grid-template-rows') {
+                this.updateHeight();
+            }
+        });
+        window.addEventListener('resize', () => this.updateHeight());
+    }
+    /** 将面板高度调整为内容高度，并限制在可用视口内 */
+    static updateHeight() {
+        const shell = this.get();
+        if (shell.style.display !== 'flex') {
+            return;
+        }
+        shell.style.height = 'auto';
+        // 最小高度为 60vh，最大高度为 84vh。如果内容高度处于这个范围内，则使用内容高度
+        const minHeight = window.innerHeight * 0.6;
+        const maxHeight = window.innerHeight * 0.84;
+        shell.style.height = `${Math.min(Math.max(shell.scrollHeight + 2, minHeight), maxHeight)}px`;
     }
 }
 

@@ -1149,9 +1149,11 @@ body.mobile #quickCrawlBtn {
   --settings-panel-search-mark-bg: #ffe74b;
   display: none;
   box-sizing: border-box;
+  flex-direction: column;
   width: 925px;
   max-width: calc(100vw - 24px);
   max-height: 84vh;
+  min-height: 60vh;
   left: 50%;
   top: 10vh;
   margin-left: 0;
@@ -1254,6 +1256,7 @@ body.mobile #quickCrawlBtn {
   color: #fff !important;
 }
 .centerWrap .centerWrap_head {
+  flex: none;
   padding: 10px 10px 10px 20px;
   background: var(--settings-panel-head-bg);
   display: flex;
@@ -1425,12 +1428,12 @@ body.mobile #quickCrawlBtn {
 }
 .centerWrap .centerWrap_con {
   display: flex;
+  flex: 1;
   align-items: stretch;
   width: 100%;
   background: var(--settings-panel-con-bg);
   overflow: auto;
-  max-height: 76vh;
-  min-height: 600px;
+  min-height: 0;
 }
 .centerWrap .centerWrap_con slot[data-name='namingBtns'] button,
 .centerWrap .centerWrap_con slot[data-name='exportResult'] button {
