@@ -6488,12 +6488,12 @@ If the number of works shown on the page is greater than 0, it may be that Pixiv
     'Имена пользователей, на которых вы подписаны, будут иметь желтый фон или отображаться желтым цветом. <br>Это удобно для вас, чтобы подтвердить, подписаны ли вы на определенного пользователя',
   ],
   _正在加载关注用户列表: [
-    '正在加载关注用户列表',
-    '正在載入關注使用者列表',
-    'Loading list of followed users',
-    'フォローしているユーザーのリストを読み込み中',
-    '팔로우한 사용자 목록 로드 중',
-    'Загрузка списка отслеживаемых пользователей',
+    '正在加载关注用户列表。该数据会保存在本地，供一些附加功能使用',
+    '正在載入關注使用者列表。該資料會保存在本地，供一些附加功能使用',
+    'Loading the list of following users. The data will be saved locally for some additional features.',
+    'フォローしているユーザーのリストを読み込んでいます。データは一部の追加機能のためにローカルに保存されます。',
+    '팔로우하는 사용자 목록을 로드하고 있습니다. 데이터는 일부 추가 기능을 위해 로컬에 저장됩니다.',
+    'Загрузка списка следующих пользователей. Данные будут сохранены локально для некоторых дополнительных функций.',
   ],
   _已更新关注用户列表: [
     '已更新关注用户列表',
@@ -10587,127 +10587,55 @@ If you enable this setting, the downloader will merge all novels.`,
     `이 효과를 구현하려면 "폴더 및 파일 이름" - "명명 규칙"에 <span class="blue name">/{match_tag_folder1}/</span> 를 추가해야 합니다. 자세한 지침을 보려면 "도움말" 버튼을 클릭할 수 있습니다.`,
     `Чтобы достичь этого эффекта, вам также нужно добавить <span class="blue name">/{match_tag_folder1}/</span> в "Имена папок и файлов" - "Правила именования". Вы можете нажать кнопку "Помощь", чтобы увидеть подробные инструкции.`,
   ],
-  _版本更新说明19_1_0: [
-    `本次更新添加了一些新功能，主要优化了下载小说时的体验。<br>
-<strong>✨在系列小说页面里，可以选择部分小说进行合并</strong><br>
-之前下载器总是会合并所有小说，现在可以只合并部分小说了。<br>
-操作方法：先使用“手动选择作品”功能选择部分小说，然后点击“合并系列小说”按钮来合并它们。<br>
-<strong>✨在下载小说时，下载器会应用“置换单词”设置</strong><br>
-如果用户设置了替换的单词，那么下载器在保存小说时也会进行相应的替换。<br>
-<strong>✨新增设置：在合并系列小说时，只要有一篇小说符合过滤条件，就保存该系列里的所有小说</strong><br>
-举例说明：<br>
-假如你设置了收藏数量 > 100；某个系列里有 10 篇小说，其中只有 1 篇小说符合条件。<br>
-在默认情况下（未启用此设置），下载器只会合并这 1 篇小说。如果你启用了这个设置，那么下载器会合并所有小说。<br>
-<strong>✨在“下载小说里的内嵌图片”设置里添加了图片尺寸的选择</strong><br>
-有些小说里的图片体积很大，所以一些用户希望可以保存尺寸较小的图片。现在我添加了图片尺寸的设置。<br>
-<strong>✨在合并系列小说时，下载器会保存设定资料里的图片</strong><br>
-有些系列小说的设定资料里有图片，现在下载器可以保存这些图片了。<br>
-<strong>✨在收藏页面里新增了两个附加功能按钮</strong><br>
-- 移除所有作品的标签<br>
-- 取消收藏所有作品<br>
-<strong>🔄把关注页面里的一些按钮从“开始抓取”区域移动到了“附加功能”区域里</strong><br>
-<strong>🐞修复问题：在高 DPI 缩放里，设置面板的底部可能显示不完整</strong><br>
-<strong>😊优化了一些提示</strong><br>`,
-    `本次更新新增了一些新功能，主要優化了下載小說時的體驗。<br>
-<strong>✨在系列小說頁面裡，可以選擇部分小說進行合併</strong><br>
-之前下載器總是會合併所有小說，現在可以只合併部分小說了。<br>
-操作方法：先使用「手動選擇作品」功能選擇部分小說，然後點擊「合併系列小說」按鈕來合併它們。<br>
-<strong>✨在下載小說時，下載器會套用「置換單詞」設定</strong><br>
-如果使用者設定了要替換的單詞，那麼下載器在儲存小說時也會進行相應的替換。<br>
-<strong>✨新增設定：在合併系列小說時，只要有一篇小說符合過濾條件，就儲存該系列裡的所有小說</strong><br>
-舉例說明：<br>
-假如你設定了收藏數量 > 100；某個系列裡有 10 篇小說，其中只有 1 篇小說符合條件。<br>
-在預設情況下（未啟用此設定），下載器只會合併這 1 篇小說。如果你啟用了這個設定，那麼下載器會合併所有小說。<br>
-<strong>✨在「下載小說裡的內嵌圖片」設定裡新增了圖片尺寸的選擇</strong><br>
-有些小說裡的圖片體積很大，所以有些使用者希望可以儲存尺寸較小的圖片。現在我新增了圖片尺寸的設定。<br>
-<strong>✨在合併系列小說時，下載器會儲存 glossary 裡的圖片</strong><br>
-有些系列小說的 glossary 裡有圖片，現在下載器可以儲存這些圖片了。<br>
-<strong>✨在收藏頁面裡新增了兩個附加功能按鈕</strong><br>
-- 移除所有作品的標籤<br>
-- 取消收藏所有作品<br>
-<strong>🔄把關注頁面裡的一些按鈕從「開始抓取」區域移動到了「附加功能」區域裡</strong><br>
-<strong>🐞修正問題：在高 DPI 縮放裡，設定面板的底部可能顯示不完整</strong><br>
-<strong>😊優化了一些提示</strong><br>`,
-    `This update adds several new features, mainly improving the experience of downloading novels.<br>
-<strong>✨On series novel pages, you can now choose only some novels to merge</strong><br>
-Previously, the downloader always merged all novels. Now you can merge only part of them.<br>
-How to use it: first use the "Manually select works" feature to choose some novels, then click the "Merge series novels" button to merge them.<br>
-<strong>✨The downloader now applies the "Replace words" setting when downloading novels</strong><br>
-If you have set words to be replaced, the downloader will apply those replacements when saving the novel as well.<br>
-<strong>✨New setting: When merging series novels, as long as one novel meets the filtering criteria, all novels in the series will be saved</strong><br>
-Example:<br>
-Suppose you set the number of bookmarks > 100; there are 10 novels in a series, and only 1 novel meets the criteria.<br>
-By default (without enabling this setting), the downloader will only merge that 1 novel. If you enable this setting, it will merge all novels.<br>
-<strong>✨The "Download embedded images in novels" setting now includes image size options</strong><br>
-Some images in novels are very large, so some users wanted a way to save smaller versions. Now I have added image size settings.<br>
-<strong>✨When merging series novels, the downloader now saves images in the glossary</strong><br>
-Some series novels have images in their glossary, and now the downloader can save those images too.<br>
-<strong>✨Two new extra feature buttons have been added to the bookmark page</strong><br>
-- Remove tags from all works<br>
-- Unbookmark all works<br>
-<strong>🔄Some buttons on the following page have been moved from the "Start crawl" area to the "Extra features" area</strong><br>
-<strong>🐞Bug fix: On high-DPI scaling, the bottom of the settings panel could be displayed incompletely</strong><br>
-<strong>😊Improved some tips</strong><br>`,
-    `今回のアップデートではいくつかの新機能を追加し、主に小説ダウンロード時の使い勝手を改善しました。<br>
-<strong>✨シリーズ小説ページで、マージする小説を一部だけ選べるようになりました</strong><br>
-これまではダウンローダーが常にすべての小説をマージしていましたが、今は一部だけをマージできます。<br>
-操作方法：まず「手動選択作品」機能で一部の小説を選び、その後「シリーズ小説をマージ」ボタンをクリックしてマージしてください。<br>
-<strong>✨小説をダウンロードするとき、ダウンローダーが「置換単語」設定を適用するようになりました</strong><br>
-置換する単語を設定している場合、ダウンローダーは小説を保存するときにもその置換を適用します。<br>
-<strong>✨新しい設定を追加：シリーズ小説をマージするとき、1つの小説がフィルタリング条件を満たしていれば、シリーズ内のすべての小説を保存します</strong><br>
-例：<br>
-ブックマーク数 > 100 を設定したとします。あるシリーズに小説が 10 本あり、そのうち条件を満たすのは 1 本だけです。<br>
-デフォルトでは（この設定を有効にしていない場合）、ダウンローダーはその 1 本だけをマージします。この設定を有効にすると、すべての小説をマージします。<br>
-<strong>✨「小説内の埋め込み画像をダウンロード」設定に画像サイズの選択肢を追加しました</strong><br>
-小説内の画像の中にはサイズがかなり大きいものもあるため、もっと小さい画像を保存したいというユーザーがいました。そこで画像サイズ設定を追加しました。<br>
-<strong>✨シリーズ小説をマージするとき、ダウンローダーが glossary 内の画像も保存するようになりました</strong><br>
-シリーズ小説の glossary に画像が含まれていることがありますが、今はそれらの画像も保存できます。<br>
-<strong>✨ブックマークページに 2 つの追加機能ボタンを追加しました</strong><br>
-- すべての作品のタグを削除<br>
-- すべての作品のブックマークを解除<br>
-<strong>🔄フォローページの一部のボタンを「クロール開始」エリアから「追加機能」エリアへ移動しました</strong><br>
-<strong>🐞不具合修正：高 DPI スケーリング時に、設定パネル下部が完全に表示されないことがある問題を修正しました</strong><br>
-<strong>😊いくつかのヒントを改善しました</strong><br>`,
-    `이번 업데이트에서는 몇 가지 새 기능이 추가되었고, 특히 소설 다운로드 경험이 개선되었습니다.<br>
-<strong>✨시리즈 소설 페이지에서 일부 소설만 선택해서 병합할 수 있게 되었습니다</strong><br>
-이전에는 다운로더가 항상 모든 소설을 병합했지만, 이제는 일부만 병합할 수 있습니다.<br>
-사용 방법: 먼저 "수동으로 작품 선택" 기능으로 일부 소설을 선택한 다음, "시리즈 소설 병합" 버튼을 클릭해 병합하면 됩니다.<br>
-<strong>✨소설을 다운로드할 때 다운로더가 "단어 치환" 설정을 적용합니다</strong><br>
-치환할 단어를 설정해 두었다면, 다운로더가 소설을 저장할 때도 그 치환을 적용합니다.<br>
-<strong>✨새 설정 추가: 시리즈 소설을 병합할 때 하나의 소설만 필터링 조건을 충족해도 시리즈의 모든 소설을 저장합니다</strong><br>
-예:<br>
-북마크 수 > 100 으로 설정했다고 가정해 보겠습니다. 어떤 시리즈에 소설이 10편 있고, 그중 조건을 충족하는 것은 1편뿐입니다.<br>
-기본적으로(이 설정을 활성화하지 않은 경우) 다운로더는 그 1편만 병합합니다. 이 설정을 활성화하면 모든 소설을 병합합니다.<br>
-<strong>✨"소설 속 내장 이미지 다운로드" 설정에 이미지 크기 선택이 추가되었습니다</strong><br>
-일부 소설 속 이미지는 크기가 매우 커서, 더 작은 이미지를 저장하고 싶어 하는 사용자가 있었습니다. 그래서 이미지 크기 설정을 추가했습니다.<br>
-<strong>✨시리즈 소설을 병합할 때 다운로더가 glossary 안의 이미지도 저장합니다</strong><br>
-일부 시리즈 소설의 glossary 안에는 이미지가 있는데, 이제 다운로더가 그 이미지들도 저장할 수 있습니다.<br>
-<strong>✨북마크 페이지에 추가 기능 버튼 2개가 새로 추가되었습니다</strong><br>
-- 모든 작품의 태그 제거<br>
-- 모든 작품의 북마크 해제<br>
-<strong>🔄팔로잉 페이지의 일부 버튼을 "크롤링 시작" 영역에서 "추가 기능" 영역으로 옮겼습니다</strong><br>
-<strong>🐞버그 수정: 고 DPI 배율에서 설정 패널 하단이 완전히 표시되지 않을 수 있던 문제를 수정했습니다</strong><br>
-<strong>😊일부 안내를 개선했습니다</strong><br>`,
-    `Это обновление добавляет несколько новых функций и в основном улучшает работу при скачивании романов.<br>
-<strong>✨На странице серии романов теперь можно выбирать только часть романов для объединения</strong><br>
-Раньше загрузчик всегда объединял все романы, а теперь можно объединять только часть из них.<br>
-Как использовать: сначала выберите нужные романы с помощью функции "Ручной выбор работ", а затем нажмите кнопку "Объединить серии романов".<br>
-<strong>✨Теперь при скачивании романов загрузчик применяет настройку "Заменять слова"</strong><br>
-Если вы задали слова для замены, загрузчик применит эти замены и при сохранении романа.<br>
-<strong>✨Новая настройка: при объединении серийных романов, если хотя бы один роман соответствует критериям фильтрации, будут сохранены все романы серии</strong><br>
-Пример:<br>
-Допустим, вы установили количество закладок > 100; в серии есть 10 романов, и только 1 роман соответствует условиям.<br>
-По умолчанию (если эта настройка не включена) загрузчик объединит только этот 1 роман. Если включить эту настройку, он объединит все романы.<br>
-<strong>✨В настройку "Скачивать встроенные изображения в романах" добавлен выбор размера изображения</strong><br>
-Некоторые изображения в романах очень большие, поэтому некоторые пользователи хотели сохранять изображения меньшего размера. Теперь я добавил настройку размера изображения.<br>
-<strong>✨При объединении серийных романов загрузчик теперь сохраняет и изображения из glossary</strong><br>
-В glossary некоторых серийных романов есть изображения, и теперь загрузчик может сохранять и их.<br>
-<strong>✨На странице закладок добавлены две новые кнопки дополнительных функций</strong><br>
-- Удалить теги у всех работ<br>
-- Убрать все работы из закладок<br>
-<strong>🔄Некоторые кнопки на странице подписок были перенесены из области "Начать crawl" в область "Дополнительные функции"</strong><br>
-<strong>🐞Исправление: при высоком DPI-масштабировании нижняя часть панели настроек могла отображаться не полностью</strong><br>
-<strong>😊Улучшены некоторые подсказки</strong><br>`,
+  _版本更新说明19_1_1: [
+    `本次更新修复了一些 Bug。<br>
+<strong>🐞修复问题：在收藏页面里，“取消收藏所有已被删除的作品”功能会错误的取消收藏正常的作品</strong><br>
+<strong>🐞修复问题：当系统 DPI 和网页缩放比例大于 100% 时，设置区域的底部可能无法完全显示</strong><br>
+<strong>🐞修复问题：在手动选择作品时，点击动图的播放图标无法选择这个作品</strong><br>
+<strong>🐞修复问题：在移动端的作品页面里，快速收藏按钮（☆）带有默认样式</strong><br>
+<strong>😊优化导出和导入收藏列表的功能</strong><br>
+下载器在导出收藏列表时，会保存用户为作品添加的自定义标签（这可能不同于作品本身的标签）。<br>
+在批量添加收藏时，如果有自定义标签，就会优先添加这些标签。<br>`,
+    `本次更新修復了一些 Bug。<br>
+<strong>🐞修復問題：在收藏頁面裡，「取消收藏所有已被刪除的作品」功能會錯誤地取消收藏正常的作品</strong><br>
+<strong>🐞修復問題：當系統 DPI 和網頁縮放比例大於 100% 時，設定區域的底部可能無法完全顯示</strong><br>
+<strong>🐞修復問題：在手動選擇作品時，點擊動圖的播放圖示無法選擇這個作品</strong><br>
+<strong>🐞修復問題：在行動版的作品頁面裡，快速收藏按鈕（☆）帶有預設樣式</strong><br>
+<strong>😊優化匯出和匯入收藏列表的功能</strong><br>
+下載器在匯出收藏列表時，會保存使用者為作品新增的自訂標籤（這可能不同於作品本身的標籤）。<br>
+在批量新增收藏時，如果有自訂標籤，就會優先新增這些標籤。<br>`,
+    `This update fixes some bugs.<br>
+<strong>🐞Fixed: On the bookmarks page, the "Remove bookmarks from all deleted works" function could incorrectly remove bookmarks from normal works</strong><br>
+<strong>🐞Fixed: When the system DPI and webpage zoom level were greater than 100%, the bottom of the settings area might not be fully visible</strong><br>
+<strong>🐞Fixed: When manually selecting works, clicking the play icon of a Ugoira could not select the work</strong><br>
+<strong>🐞Fixed: On work pages on mobile devices, the quick bookmark button (☆) had the default style</strong><br>
+<strong>😊Improved the bookmark list export and import functions</strong><br>
+When exporting the bookmark list, the downloader saves the custom tags added to works by the user (these may differ from the tags of the works themselves).<br>
+When adding bookmarks in batches, custom tags are added first if available.<br>`,
+    `今回のアップデートでは、いくつかのバグを修正しました。<br>
+<strong>🐞修正：ブックマークページで「削除されたすべての作品のブックマークを解除」機能を使用すると、正常な作品のブックマークまで誤って解除される問題</strong><br>
+<strong>🐞修正：システムの DPI とウェブページのズーム倍率が 100% を超えている場合、設定エリアの下部が完全に表示されないことがある問題</strong><br>
+<strong>🐞修正：作品を手動で選択するとき、Ugoira の再生アイコンをクリックしても作品を選択できない問題</strong><br>
+<strong>🐞修正：モバイル端末の作品ページで、クイックブックマークボタン（☆）にデフォルトのスタイルが適用されていた問題</strong><br>
+<strong>😊ブックマークリストのエクスポートとインポート機能を改善しました</strong><br>
+ブックマークリストをエクスポートするとき、ダウンローダーはユーザーが作品に追加したカスタムタグを保存します（作品自体のタグとは異なる場合があります）。<br>
+ブックマークを一括追加するとき、カスタムタグがあれば、それらのタグが優先して追加されます。<br>`,
+    `이번 업데이트에서는 일부 버그를 수정했습니다.<br>
+<strong>🐞수정: 북마크 페이지에서 "삭제된 모든 작품의 북마크 취소" 기능을 사용하면 정상적인 작품의 북마크까지 잘못 취소되는 문제</strong><br>
+<strong>🐞수정: 시스템 DPI와 웹페이지 확대/축소 비율이 100%를 초과하면 설정 영역의 아래쪽이 완전히 표시되지 않을 수 있는 문제</strong><br>
+<strong>🐞수정: 작품을 수동으로 선택할 때 Ugoira의 재생 아이콘을 클릭해도 작품을 선택할 수 없는 문제</strong><br>
+<strong>🐞수정: 모바일 기기의 작품 페이지에서 빠른 북마크 버튼(☆)에 기본 스타일이 적용되는 문제</strong><br>
+<strong>😊북마크 목록 내보내기 및 가져오기 기능을 개선했습니다</strong><br>
+북마크 목록을 내보낼 때 다운로더는 사용자가 작품에 추가한 사용자 지정 태그를 저장합니다(작품 자체의 태그와 다를 수 있습니다).<br>
+북마크를 일괄 추가할 때 사용자 지정 태그가 있으면 해당 태그를 우선 추가합니다.<br>`,
+    `В этом обновлении исправлено несколько ошибок.<br>
+<strong>🐞Исправлено: на странице закладок функция «Удалить закладки всех удалённых работ» могла ошибочно удалить закладки обычных работ</strong><br>
+<strong>🐞Исправлено: если DPI системы и масштаб веб-страницы превышали 100%, нижняя часть области настроек могла отображаться не полностью</strong><br>
+<strong>🐞Исправлено: при ручном выборе работ нажатие на значок воспроизведения Ugoira не позволяло выбрать эту работу</strong><br>
+<strong>🐞Исправлено: на страницах работ на мобильных устройствах кнопка быстрого добавления в закладки (☆) имела стандартный стиль</strong><br>
+<strong>😊Улучшены функции экспорта и импорта списка закладок</strong><br>
+При экспорте списка закладок загрузчик сохраняет пользовательские теги, добавленные пользователем к работам (они могут отличаться от тегов самих работ).<br>
+При массовом добавлении закладок пользовательские теги добавляются в первую очередь, если они доступны.<br>`,
   ],
 }
 

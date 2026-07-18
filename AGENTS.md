@@ -25,7 +25,7 @@
 - `src/ts/EVT.ts`：事件系统。有许多模块会触发事件；监听事件有助于解耦。
 - `src/ts/Tools.ts`：与本项目耦合的工具类。
 - `src/ts/utils/`：该文件夹里的模块是通用的工具类，与本项目没有耦合关系。其中 `src/ts/utils/Utils.ts` 是最常用的。
-- `src/ts/Language.ts`：自制的 i18n 系统。
+- `src/ts/Language.ts`：自制的 i18n 系统，它会从 i18n 语句（保存在 `src\ts\langText.ts`）里获取目标语言的文本内容。
 - `src/style/`：Less 样式源码。
 - `dist/`：编译产物目录。
 - `notes/`：设计说明、调研记录、截图等。修改复杂功能前，先检查这里是否已有说明。

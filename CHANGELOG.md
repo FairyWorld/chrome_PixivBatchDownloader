@@ -3,6 +3,36 @@
 在 Pixiv 的 console 里隐藏这些脚本的消息：
 -doubleclick.net -admanmedia.com -frame -popin -bpoadfkcbjbfhfodiogcnhhhpibjhbnh -_script.js -_app- -_app. -reach -ufs -pubads -google -tabool -openx -sync -userscript
 
+## 19.1.1 2026-07-18
+
+### 🐞修复问题：在收藏页面里，“取消收藏所有已被删除的作品”功能会错误的取消收藏正常的作品
+
+### 🐞修复问题：当系统 DPI 和网页缩放比例大于 100% 时，设置区域的底部可能无法完全显示
+
+https://github.com/xuejianxianzun/PixivBatchDownloader/issues/643
+
+在高分屏容易发生此问题，通常情况是系统 DPI 缩放为 150%，浏览器缩放为 125% 时会出现此问题。
+
+上次修复失败了（因为当时我的配置不会出现此问题，所以也没有验证修复是否有效），这次我调整 DPI 缩放后复现了此问题，重新进行了修复。
+
+### 🐞修复问题：在手动选择作品时，点击动图的播放图标无法选择这个作品
+
+https://github.com/xuejianxianzun/PixivBatchDownloader/issues/629
+
+### 🐞修复问题：修复问题：在移动端的作品页面里，快速收藏按钮（☆）带有默认样式
+
+https://github.com/xuejianxianzun/PixivBatchDownloader/issues/644
+
+由于 button 的默认样式导致这个按钮不好看，现在修复。
+
+### 😊优化导出和导入收藏列表的功能
+
+下载器在导出收藏列表时，会保存用户为作品添加的自定义标签（这可能不同于作品本身的标签）。
+
+在批量添加收藏时，如果有自定义标签，就会优先添加这些标签。
+
+### 🕑更新了作品发布时间数据
+
 ## 19.1.0 2026-07-13
 
 ### ✨在系列小说页面里，可以选择部分小说进行合并
@@ -63,16 +93,6 @@ https://github.com/xuejianxianzun/PixivBatchDownloader/issues/642
 这些按钮本来就应该放在“附加功能”区域里，但旧版设置面板的“更多”页面效率不高，因此我把它们放到了第一屏，否则用户可能根本不知道还有这些按钮。
 
 现在重新设计了设置面板之后，可以把它们正常放到“附加功能”区域里了。
-
-### 🐞修复问题：当 DPI 和网页缩放比例大于 100% 时，设置区域的底部可能无法完全显示
-
-https://github.com/xuejianxianzun/PixivBatchDownloader/issues/643
-
-我没有遇到过这个问题，AI 给出的原因是：
-
-DPI 缩放 + 浏览器缩放 会让很多尺寸变成小数像素。比如 1 个 CSS px 映射到更多设备像素后，布局计算时容易出现四舍五入误差；原本刚好够放下的内容，在计算后可能差 1px~几 px，最后一项就被裁掉。这个问题在 flex + overflow 的组合里更明显。
-
-修复方式是给设置区域的容器添加了 `min-height: 0;` 以覆写默认的 `min-height: auto` 效果，这样该容器的高度会使用父元素的高度，避免了高度的计算误差。
 
 ### 🐞修复问题：在暗色模式下，命名规则的下拉框里的文字无法辨别的问题
 

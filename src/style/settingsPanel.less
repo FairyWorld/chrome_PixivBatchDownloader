@@ -135,9 +135,11 @@
 
   display: none;
   box-sizing: border-box;
+  flex-direction: column;
   width: 925px;
   max-width: calc(100vw - 24px);
   max-height: 84vh;
+  min-height: 60vh;
   left: 50%;
   top: 10vh;
   margin-left: 0;
@@ -257,6 +259,7 @@
   }
 
   .centerWrap_head {
+    flex: none;
     padding: 10px 10px 10px 20px;
     background: var(--settings-panel-head-bg);
     display: flex;
@@ -470,12 +473,12 @@
 
   .centerWrap_con {
     display: flex;
+    flex: 1;
     align-items: stretch;
     width: 100%;
     background: var(--settings-panel-con-bg);
     overflow: auto;
-    max-height: 76vh;
-    min-height: 600px;
+    min-height: 0;
 
     slot[data-name='namingBtns'] button,
     slot[data-name='exportResult'] button {
