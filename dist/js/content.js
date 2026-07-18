@@ -2212,8 +2212,13 @@ class Bookmark {
             // 如果这个作品已经被收藏过，就不会重复收藏它（这里没有检查 tag 列表）
             const find = oldList.find((old) => old.id === data.id && old.type === data.type);
             if (!find) {
+                // 决定添加收藏时使用的 tag 列表。如果有 bookmarkTags 就优先使用它，否则就使用作品本身的 tags
+                let useTags = data.tags;
+                if (data.bookmarkTags && data.bookmarkTags.length > 0) {
+                    useTags = data.bookmarkTags;
+                }
                 // 慢速收藏（添加等待时间）
-                await this.add(data.id, data.type, data.tags, undefined, undefined, true);
+                await this.add(data.id, data.type, useTags, undefined, undefined, true);
             }
             else {
                 skip++;
@@ -9715,10 +9720,12 @@ class SelectWork {
         }
         else {
             // 处理点击在动图的播放图标上的情况
-            // 如果不针对性处理，就会导致选择无效，直接进入这个动图的作品页面
-            if (el.nodeName === 'svg' || el.nodeName === 'path' || el.nodeName === 'circle') {
+            // 如果不针对性处理，就会导致选择无效，并正常进入这个动图的作品页面，打断选择操作
+            if (el.nodeName === 'svg' ||
+                el.nodeName === 'path' ||
+                el.nodeName === 'circle') {
                 a = el.closest('a');
-                // 此时插入目标点设置为 a 的父元素。不能插入到 svg 元素里，否则会导致已选择的标记无法显示
+                // 当在播放图标上点击时，把插入目标点设置为 a 的父元素，而非 svg 元素，否则会导致已选择的标记无法显示
                 addFlagTarget = a.parentElement;
             }
         }
@@ -19684,7 +19691,7 @@ class Bookmark404ActionBase extends _BookmarkPageBatchActionBase__WEBPACK_IMPORT
     // 获取被删除的作品列表
     get404IdList(workData) {
         if (Number.parseInt(workData.userId) === 0) {
-            this.idList404.push(workData.id);
+            this.idList404.push(Number.parseInt(workData.id));
             _Log__WEBPACK_IMPORTED_MODULE_1__.log.log(_Language__WEBPACK_IMPORTED_MODULE_2__.lang.transl('_当前有x个已被删除的作品', this.idList404.length.toString()), 'Bookmark404IdListCount');
         }
     }
@@ -19925,7 +19932,6 @@ __webpack_require__.r(__webpack_exports__);
 
 // 导出收藏的作品列表。会包含已被删除的作品
 class ExportBookmarkListAction extends _BookmarkPageBatchActionBase__WEBPACK_IMPORTED_MODULE_8__.BookmarkPageBatchActionBase {
-    exportList = [];
     constructor(btn) {
         super();
         btn.addEventListener('click', () => {
@@ -19937,7 +19943,6 @@ class ExportBookmarkListAction extends _BookmarkPageBatchActionBase__WEBPACK_IMP
             _Toast__WEBPACK_IMPORTED_MODULE_5__.toast.error(_Language__WEBPACK_IMPORTED_MODULE_2__.lang.transl('_当前任务尚未完成'));
             return;
         }
-        this.exportList = [];
         _EVT__WEBPACK_IMPORTED_MODULE_0__.EVT.fire('closeCenterPanel');
         const msg = _Language__WEBPACK_IMPORTED_MODULE_2__.lang.transl('_导出收藏列表');
         _Log__WEBPACK_IMPORTED_MODULE_3__.log.log(msg);
@@ -19948,7 +19953,7 @@ class ExportBookmarkListAction extends _BookmarkPageBatchActionBase__WEBPACK_IMP
         await this.run({
             crawlNumber: crawlNumber,
             slowCrawl: true,
-            collectWork: async (workData) => {
+            collectWork: async (workData, bookmarkTags) => {
                 const filterOpt = {
                     aiType: workData.aiType,
                     id: workData.id,
@@ -19968,16 +19973,16 @@ class ExportBookmarkListAction extends _BookmarkPageBatchActionBase__WEBPACK_IMP
                     type: workData.illustType === undefined
                         ? 'novels'
                         : 'illusts',
-                    tags: workData.tags,
                     restrict: workData.bookmarkData?.private || false,
+                    tags: workData.tags,
+                    bookmarkTags: bookmarkTags || [],
                 };
             },
             onCollected: async (bookmarkDataList) => {
-                this.exportList = bookmarkDataList;
-                if (this.exportList.length === 0) {
+                if (bookmarkDataList.length === 0) {
                     return;
                 }
-                const resultList = await _utils_Utils__WEBPACK_IMPORTED_MODULE_7__.Utils.json2BlobSafe(this.exportList);
+                const resultList = await _utils_Utils__WEBPACK_IMPORTED_MODULE_7__.Utils.json2BlobSafe(bookmarkDataList);
                 for (const result of resultList) {
                     _utils_Utils__WEBPACK_IMPORTED_MODULE_7__.Utils.downloadFile(result.url, `Bookmark list-total ${result.total}-from ${_Tools__WEBPACK_IMPORTED_MODULE_6__.Tools.getPageTitle()}-${_utils_Utils__WEBPACK_IMPORTED_MODULE_7__.Utils.replaceUnsafeStr(new Date().toLocaleString())}.json`);
                 }
@@ -20226,12 +20231,17 @@ class UnBookmarkAll404WorksAction extends _Bookmark404ActionBase__WEBPACK_IMPORT
                 slowCrawl: true,
                 collectWork: (workData, bookmarkTags) => {
                     this.get404IdList(workData);
-                    // 同时正常保存收藏数据，在取消收藏时使用
+                    // 保存所有收藏的作品的数据
                     return this.createBookmarkData(workData, bookmarkTags);
                 },
                 onCollected: async (bookmarkDataList) => {
                     this.exportBookmark404Ids();
-                    await _UnBookmarkWorks__WEBPACK_IMPORTED_MODULE_4__.unBookmarkWorks.start(bookmarkDataList);
+                    // const blob = Utils.json2Blob(bookmarkDataList)
+                    // const url = URL.createObjectURL(blob)
+                    // Utils.downloadFile(url, 'bookmarkData.json')
+                    // 过滤出 404 作品的数据，并取消收藏
+                    const bookmarkData404 = bookmarkDataList.filter((data) => this.idList404.includes(data.workID));
+                    await _UnBookmarkWorks__WEBPACK_IMPORTED_MODULE_4__.unBookmarkWorks.start(bookmarkData404);
                 },
             });
         });

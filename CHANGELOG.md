@@ -3,7 +3,9 @@
 在 Pixiv 的 console 里隐藏这些脚本的消息：
 -doubleclick.net -admanmedia.com -frame -popin -bpoadfkcbjbfhfodiogcnhhhpibjhbnh -_script.js -_app- -_app. -reach -ufs -pubads -google -tabool -openx -sync -userscript
 
-## next
+## 19.1.1 2026-07-18
+
+### 🐞修复问题：收藏页面里的“取消收藏所有已被删除的作品”会错误的取消收藏正常的作品
 
 ### 🐞修复问题：当 DPI 和网页缩放比例大于 100% 时，设置区域的底部可能无法完全显示
 
@@ -13,15 +15,19 @@ https://github.com/xuejianxianzun/PixivBatchDownloader/issues/643
 
 上次修复失败了（因为当时我的配置不会出现此问题，所以也没有验证修复是否有效），这次我调整 DPI 缩放后复现了此问题，重新进行了修复。
 
-### 🐞修复问题：在手动选择作品时，点击动图的播放图标是无法选择这个作品
+### 🐞修复问题：在手动选择作品时，点击动图的播放图标时无法选择这个作品
 
 https://github.com/xuejianxianzun/PixivBatchDownloader/issues/629
 
-### 🐞修复问题：移动端页面里的收藏按钮（☆）带有默认样式
+### 🐞修复问题：移动端作品页面里的快速收藏按钮（☆）带有默认样式
 
 https://github.com/xuejianxianzun/PixivBatchDownloader/issues/644
 
 由于 button 的默认样式导致这个按钮不好看，现在修复。
+
+### 😊导出收藏列表时，会附带用户为作品添加的自定义标签，并在导入收藏时重新添加这些标签（如果有）
+
+### 🕑更新了作品发布时间数据
 
 ## 19.1.0 2026-07-13
 
